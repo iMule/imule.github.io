@@ -1,57 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Natural Gas Pipelines Map</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <meta charset="UTF-8">
+    <title>D3 Bar Chart</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        .bar {
+            fill: steelblue;
+        }
+        .bar:hover {
+            fill: orange;
+        }
+        .axis-label {
+            font-size: 12px;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div id="map" style="width: 100%; height: 600px;"></div>
     <script>
-        // Initialize the map
-        var map = L.map('map').setView([37.8, -96], 4); // Centered on the contiguous United States
+        // Set dimensions and margins for the chart
+        const margin = {top: 20, right: 30, bottom: 40, left: 40},
+              width = 800 - margin.left - margin.right,
+              height = 400 - margin.top - margin.bottom;
 
-        // Add a base tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        // Append SVG object to the body
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Define a color mapping for operators/owners
-        var colorMapping = {
-            'Operator A': '#1f78b4',
-            'Operator B': '#33a02c',
-            'Operator C': '#e31a1c',
-            'Operator D': '#ff7f00',
-            'Operator E': '#6a3d9a',
-            // Add more operators/owners and their corresponding colors here
-        };
+        // Parse the CSV file
+        d3.csv("path/to/your/csvfile.csv").then(data => {
+            // Transform the data to get counts for each combination of Industry, Position, and Death Type
+            const nestedData = d3.rollups(data, v => v.length, d => d.Industry, d => d.Position, d => d['Death Type']);
 
-        // Function to get color based on operator/owner
-        function getColor(operator) {
-            return colorMapping[operator] || '#000000'; // Default color if operator not in the mapping
-        }
+            // Flatten the nested data structure for easier plotting
+            const flatData = [];
+            nestedData.forEach(([industry, positions]) => {
+                positions.forEach(([position, deathTypes]) => {
+                    deathTypes.forEach(([deathType, count]) => {
+                        flatData.push({ industry, position, deathType, count });
+                    });
+                });
+            });
 
-        // Style function for the pipelines
-        function style(feature) {
-            return {
-                color: getColor(feature.properties.operator), // Adjust 'operator' to match the correct property in your GeoJSON
-                weight: 2,
-                opacity: 1
-            };
-        }
+            // Create scales
+            const x = d3.scaleBand()
+                .domain(flatData.map(d => `${d.industry} - ${d.position} - ${d.deathType}`))
+                .range([0, width])
+                .padding(0.1);
 
-        // Load GeoJSON data
-        fetch('pipelines.geojson')
-            .then(response => response.json())
-            .then(data => {
-                L.geoJSON(data, {
-                style: style
-                }).addTo(map);
-            })
-            .catch(err => console.error(err));
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(flatData, d => d.count)])
+                .range([height, 0]);
+
+            // Add X axis
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+            // Add Y axis
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            // Add bars
+            svg.selectAll(".bar")
+                .data(flatData)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(`${d.industry} - ${d.position} - ${d.deathType}`))
+                .attr("y", d => y(d.count))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.count));
+
+            // Add X axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("text-anchor", "end")
+                .attr("x", width / 2 + margin.left)
+                .attr("y", height + margin.top + 30)
+                .text("Industry - Position - Death Type");
+
+            // Add Y axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("text-anchor", "end")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -margin.left + 20)
+                .attr("x", -margin.top - height / 2 + 20)
+                .text("Count");
+
+            // Add title
+            svg.append("text")
+                .attr("class", "title")
+                .attr("x", width / 2)
+                .attr("y", -margin.top / 2)
+                .attr("text-anchor", "middle")
+                .text("Death Type by Industry and Position");
+        });
     </script>
 </body>
 </html>
