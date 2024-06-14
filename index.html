@@ -25,15 +25,15 @@
             transition: opacity 0.2s;
         }
         .title {
-            text-align: center;
             font-size: 24px;
             font-weight: bold;
-            margin-top: 20px;
+            text-align: center;
+            margin-bottom: 5px;
         }
         .subtitle {
-            text-align: center;
             font-size: 16px;
-            margin-top: 5px;
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -60,11 +60,8 @@
         // Tooltip
         const tooltip = d3.select("#tooltip");
 
-        // Color scale
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
-
         // Default color for chords
-        const defaultChordColor = "rgba(0, 0, 0, 0.88)";
+        const defaultColor = "rgba(0, 0, 0, 0.88)";
         const hoverColor = "red";
 
         // Load the data
@@ -108,8 +105,8 @@
                 .enter().append("g");
 
             group.append("path")
-                .style("fill", d => color(d.index))
-                .style("stroke", d => color(d.index))
+                .style("fill", "red")
+                .style("stroke", "red")
                 .attr("d", arc);
 
             group.append("text")
@@ -129,18 +126,22 @@
                 .data(chords)
                 .enter().append("path")
                 .attr("d", ribbon)
-                .style("fill", defaultChordColor)
-                .style("stroke", defaultChordColor)
+                .style("fill", defaultColor)
+                .style("stroke", defaultColor)
                 .on("mouseover", function(event, d) {
+                    d3.select(this)
+                        .style("fill", hoverColor)
+                        .style("stroke", hoverColor);
                     tooltip.transition().duration(200).style("opacity", .9);
                     tooltip.html(`${deathTypes[d.source.index]} &rarr; ${industries[d.target.index - deathTypes.length]}: ${matrix[d.source.index][d.target.index]}`)
                         .style("left", (event.pageX) + "px")
                         .style("top", (event.pageY - 28) + "px");
-                    d3.select(this).style("fill", hoverColor).style("stroke", hoverColor);
                 })
                 .on("mouseout", function() {
+                    d3.select(this)
+                        .style("fill", defaultColor)
+                        .style("stroke", defaultColor);
                     tooltip.transition().duration(500).style("opacity", 0);
-                    d3.select(this).style("fill", defaultChordColor).style("stroke", defaultChordColor);
                 });
         });
     </script>
