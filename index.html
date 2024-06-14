@@ -24,9 +24,22 @@
             opacity: 0;
             transition: opacity 0.2s;
         }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
+    <div class="title">Don't Mess with 'the Putin'</div>
+    <div class="subtitle">Suspicious Russian deaths from February 2022 through April 2023</div>
     <div id="tooltip" class="tooltip"></div>
     <script>
         // Set dimensions and margins
@@ -49,6 +62,10 @@
 
         // Color scale
         const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // Default color for chords
+        const defaultChordColor = "rgba(0, 0, 0, 0.88)";
+        const hoverColor = "red";
 
         // Load the data
         d3.csv("Russian.Deaths.CSV.csv").then(data => {
@@ -107,21 +124,23 @@
                 .text(d => d.index < deathTypes.length ? deathTypes[d.index] : industries[d.index - deathTypes.length]);
 
             // Add the ribbons (connections)
-            svg.append("g")
+            const ribbons = svg.append("g")
                 .selectAll("path")
                 .data(chords)
                 .enter().append("path")
                 .attr("d", ribbon)
-                .style("fill", d => color(d.source.index))
-                .style("stroke", d => color(d.source.index))
+                .style("fill", defaultChordColor)
+                .style("stroke", defaultChordColor)
                 .on("mouseover", function(event, d) {
                     tooltip.transition().duration(200).style("opacity", .9);
                     tooltip.html(`${deathTypes[d.source.index]} &rarr; ${industries[d.target.index - deathTypes.length]}: ${matrix[d.source.index][d.target.index]}`)
                         .style("left", (event.pageX) + "px")
                         .style("top", (event.pageY - 28) + "px");
+                    d3.select(this).style("fill", hoverColor).style("stroke", hoverColor);
                 })
                 .on("mouseout", function() {
                     tooltip.transition().duration(500).style("opacity", 0);
+                    d3.select(this).style("fill", defaultChordColor).style("stroke", defaultChordColor);
                 });
         });
     </script>
