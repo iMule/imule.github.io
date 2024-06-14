@@ -48,9 +48,10 @@
             .then(response => response.json())
             .then(data => {
                 L.geoJSON(data, {
-                    style: style
+                style: style
                 }).addTo(map);
-            });
+            })
+            .catch(err => console.error(err));
     </script>
 </body>
 </html>
