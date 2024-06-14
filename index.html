@@ -36,7 +36,7 @@
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // Parse the CSV file
-        d3.csv("path/to/your/csvfile.csv").then(data => {
+        d3.csv("Russian.Deaths.CSV.csv").then(data => {
             // Transform the data to get counts for each combination of Industry, Position, and Death Type
             const nestedData = d3.rollups(data, v => v.length, d => d.Industry, d => d.Position, d => d['Death Type']);
 
