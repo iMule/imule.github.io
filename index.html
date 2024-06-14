@@ -2,30 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>D3 Bar Chart</title>
+    <title>D3 Chord Diagram</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-chord.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
     <style>
-        .bar {
-            fill: steelblue;
+        body {
+            font-family: 'Roboto Slab', serif;
         }
-        .bar:hover {
-            fill: orange;
-        }
-        .axis-label {
-            font-size: 12px;
-        }
-        .title {
-            font-size: 16px;
-            font-weight: bold;
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: auto;
+            padding: 8px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
         }
     </style>
 </head>
 <body>
+    <div id="tooltip" class="tooltip"></div>
     <script>
-        // Set dimensions and margins for the chart
-        const margin = {top: 20, right: 30, bottom: 40, left: 40},
+        // Set dimensions and margins
+        const margin = {top: 50, right: 50, bottom: 50, left: 50},
               width = 800 - margin.left - margin.right,
-              height = 400 - margin.top - margin.bottom;
+              height = 800 - margin.top - margin.bottom,
+              innerRadius = Math.min(width, height) * 0.5 - 40,
+              outerRadius = innerRadius + 10;
 
         // Append SVG object to the body
         const svg = d3.select("body")
@@ -33,80 +42,87 @@
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+            .attr("transform", `translate(${width / 2 + margin.left},${height / 2 + margin.top})`);
 
-        // Parse the CSV file
+        // Tooltip
+        const tooltip = d3.select("#tooltip");
+
+        // Color scale
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // Load the data
         d3.csv("Russian.Deaths.CSV.csv").then(data => {
-            // Transform the data to get counts for each combination of Industry, Position, and Death Type
-            const nestedData = d3.rollups(data, v => v.length, d => d.Industry, d => d.Position, d => d['Death Type']);
+            // Process the data to create a matrix of connections between Death Types and Industries
+            const deathTypes = Array.from(new Set(data.map(d => d['Death Type']))).sort();
+            const industries = Array.from(new Set(data.map(d => d.Industry))).sort();
 
-            // Flatten the nested data structure for easier plotting
-            const flatData = [];
-            nestedData.forEach(([industry, positions]) => {
-                positions.forEach(([position, deathTypes]) => {
-                    deathTypes.forEach(([deathType, count]) => {
-                        flatData.push({ industry, position, deathType, count });
-                    });
-                });
+            const indexByDeathType = new Map(deathTypes.map((d, i) => [d, i]));
+            const indexByIndustry = new Map(industries.map((d, i) => [d, i + deathTypes.length]));
+
+            const matrix = Array.from({ length: deathTypes.length + industries.length }, () => Array(deathTypes.length + industries.length).fill(0));
+
+            data.forEach(d => {
+                const deathTypeIndex = indexByDeathType.get(d['Death Type']);
+                const industryIndex = indexByIndustry.get(d.Industry);
+                matrix[deathTypeIndex][industryIndex]++;
+                matrix[industryIndex][deathTypeIndex]++;
             });
 
-            // Create scales
-            const x = d3.scaleBand()
-                .domain(flatData.map(d => `${d.industry} - ${d.position} - ${d.deathType}`))
-                .range([0, width])
-                .padding(0.1);
+            // Create the chord layout
+            const chord = d3.chord()
+                .padAngle(0.05)
+                .sortSubgroups(d3.descending);
 
-            const y = d3.scaleLinear()
-                .domain([0, d3.max(flatData, d => d.count)])
-                .range([height, 0]);
+            const chords = chord(matrix);
 
-            // Add X axis
+            // Create the arc generator
+            const arc = d3.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(outerRadius);
+
+            // Create the ribbon generator
+            const ribbon = d3.ribbon()
+                .radius(innerRadius);
+
+            // Add the groups (arcs)
+            const group = svg.append("g")
+                .selectAll("g")
+                .data(chords.groups)
+                .enter().append("g");
+
+            group.append("path")
+                .style("fill", d => color(d.index))
+                .style("stroke", d => color(d.index))
+                .attr("d", arc);
+
+            group.append("text")
+                .each(d => { d.angle = (d.startAngle + d.endAngle) / 2; })
+                .attr("dy", ".35em")
+                .attr("transform", d => `
+                    rotate(${(d.angle * 180 / Math.PI - 90)})
+                    translate(${outerRadius + 10})
+                    ${d.angle > Math.PI ? "rotate(180)" : ""}
+                `)
+                .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
+                .text(d => d.index < deathTypes.length ? deathTypes[d.index] : industries[d.index - deathTypes.length]);
+
+            // Add the ribbons (connections)
             svg.append("g")
-                .attr("transform", `translate(0,${height})`)
-                .call(d3.axisBottom(x))
-                .selectAll("text")
-                .attr("transform", "translate(-10,0)rotate(-45)")
-                .style("text-anchor", "end");
-
-            // Add Y axis
-            svg.append("g")
-                .call(d3.axisLeft(y));
-
-            // Add bars
-            svg.selectAll(".bar")
-                .data(flatData)
-                .enter()
-                .append("rect")
-                .attr("class", "bar")
-                .attr("x", d => x(`${d.industry} - ${d.position} - ${d.deathType}`))
-                .attr("y", d => y(d.count))
-                .attr("width", x.bandwidth())
-                .attr("height", d => height - y(d.count));
-
-            // Add X axis label
-            svg.append("text")
-                .attr("class", "axis-label")
-                .attr("text-anchor", "end")
-                .attr("x", width / 2 + margin.left)
-                .attr("y", height + margin.top + 30)
-                .text("Industry - Position - Death Type");
-
-            // Add Y axis label
-            svg.append("text")
-                .attr("class", "axis-label")
-                .attr("text-anchor", "end")
-                .attr("transform", "rotate(-90)")
-                .attr("y", -margin.left + 20)
-                .attr("x", -margin.top - height / 2 + 20)
-                .text("Count");
-
-            // Add title
-            svg.append("text")
-                .attr("class", "title")
-                .attr("x", width / 2)
-                .attr("y", -margin.top / 2)
-                .attr("text-anchor", "middle")
-                .text("Death Type by Industry and Position");
+                .selectAll("path")
+                .data(chords)
+                .enter().append("path")
+                .attr("d", ribbon)
+                .style("fill", d => color(d.source.index))
+                .style("stroke", d => color(d.source.index))
+                .on("mouseover", function(event, d) {
+                    tooltip.transition().duration(200).style("opacity", .9);
+                    tooltip.html(`${deathTypes[d.source.index]} &rarr; ${industries[d.target.index - deathTypes.length]}: ${matrix[d.source.index][d.target.index]}`)
+                        .style("left", (event.pageX) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function() {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                });
         });
     </script>
 </body>
