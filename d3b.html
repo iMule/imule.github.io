@@ -1,4 +1,4 @@
-.csv<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,13 +33,13 @@
     <svg id="alluvialChart" width="960" height="500"></svg>
     <svg id="bubbleChart" width="960" height="500"></svg>
     <script>
-        d3.csv("Russian.Deaths.CSV.csv").then(function(data) {
+        d3.csv("data.csv").then(function(data) {
             // Dimensions and margins for the charts
             const margin = {top: 10, right: 10, bottom: 30, left: 10},
                   width = 960 - margin.left - margin.right,
                   height = 500 - margin.top - margin.bottom;
 
-            // Create SVG container for the alluvial charts
+            // Create SVG container for the alluvial chart
             const svgAlluvial = d3.select("#alluvialChart")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -64,19 +64,50 @@
                 .nodePadding(10)
                 .extent([[1, 1], [width - 1, height - 6]]);
 
-            const {nodes, links} = sankey({
-                nodes: data.map(d => ({...d})),
-                links: data.map(d => ({
-                    source: d.'Death Type',
-                    target: d.Industry,
+            const graph = {nodes: [], links: []};
+
+            // Create nodes and links for sankey diagram
+            const nodeMap = {};
+            data.forEach(d => {
+                if (!nodeMap[d["Death Type"]]) {
+                    nodeMap[d["Death Type"]] = {name: d["Death Type"]};
+                    graph.nodes.push(nodeMap[d["Death Type"]]);
+                }
+                if (!nodeMap[d.Industry]) {
+                    nodeMap[d.Industry] = {name: d.Industry};
+                    graph.nodes.push(nodeMap[d.Industry]);
+                }
+                if (!nodeMap[d.Position]) {
+                    nodeMap[d.Position] = {name: d.Position};
+                    graph.nodes.push(nodeMap[d.Position]);
+                }
+                if (!nodeMap[d.Location]) {
+                    nodeMap[d.Location] = {name: d.Location};
+                    graph.nodes.push(nodeMap[d.Location]);
+                }
+                graph.links.push({
+                    source: nodeMap[d["Death Type"]],
+                    target: nodeMap[d.Industry],
                     value: +d.Value
-                }))
+                });
+                graph.links.push({
+                    source: nodeMap[d.Industry],
+                    target: nodeMap[d.Position],
+                    value: +d.Value
+                });
+                graph.links.push({
+                    source: nodeMap[d.Position],
+                    target: nodeMap[d.Location],
+                    value: +d.Value
+                });
             });
+
+            sankey(graph);
 
             // Draw the links
             svgAlluvial.append("g")
                 .selectAll("path")
-                .data(links)
+                .data(graph.links)
                 .enter().append("path")
                 .attr("class", "link")
                 .attr("d", d3.sankeyLinkHorizontal())
@@ -96,7 +127,7 @@
             // Draw the nodes
             svgAlluvial.append("g")
                 .selectAll("rect")
-                .data(nodes)
+                .data(graph.nodes)
                 .enter().append("rect")
                 .attr("x", d => d.x0)
                 .attr("y", d => d.y0)
@@ -108,7 +139,7 @@
 
             svgAlluvial.append("g")
                 .selectAll("text")
-                .data(nodes)
+                .data(graph.nodes)
                 .enter().append("text")
                 .attr("x", d => d.x0 - 6)
                 .attr("y", d => (d.y1 + d.y0) / 2)
@@ -120,7 +151,7 @@
                 .attr("text-anchor", "start");
 
             // Process data for bubble chart
-            const bubbleData = d3.rollups(data, v => v.length, d => d.'Death Type')
+            const bubbleData = d3.rollups(data, v => v.length, d => d["Death Type"])
                 .map(([name, value]) => ({name, value}));
 
             const bubble = d3.pack()
