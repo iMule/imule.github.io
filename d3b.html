@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+.csv<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,13 +33,13 @@
     <svg id="alluvialChart" width="960" height="500"></svg>
     <svg id="bubbleChart" width="960" height="500"></svg>
     <script>
-        d3.csv("data.csv").then(function(data) {
+        d3.csv("Russian.Deaths.CSV.csv").then(function(data) {
             // Dimensions and margins for the charts
             const margin = {top: 10, right: 10, bottom: 30, left: 10},
                   width = 960 - margin.left - margin.right,
                   height = 500 - margin.top - margin.bottom;
 
-            // Create SVG container for the alluvial chart
+            // Create SVG container for the alluvial charts
             const svgAlluvial = d3.select("#alluvialChart")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -67,7 +67,7 @@
             const {nodes, links} = sankey({
                 nodes: data.map(d => ({...d})),
                 links: data.map(d => ({
-                    source: d.TypeOrCauseOfDeath,
+                    source: d.'Death Type',
                     target: d.Industry,
                     value: +d.Value
                 }))
@@ -120,7 +120,7 @@
                 .attr("text-anchor", "start");
 
             // Process data for bubble chart
-            const bubbleData = d3.rollups(data, v => v.length, d => d.TypeOrCauseOfDeath)
+            const bubbleData = d3.rollups(data, v => v.length, d => d.'Death Type')
                 .map(([name, value]) => ({name, value}));
 
             const bubble = d3.pack()
