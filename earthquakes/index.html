@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Earthquakes — Interactive Web Map Demo</title>
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <!-- Turf for light spatial math (bounds padding) -->
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <style>
+    /* --- Layout & Aesthetic --- */
+    :root {
+      --bg: #0b0e13;
+      --panel: #131923;
+      --text: #e7edf6;
+      --muted: #9fb2c8;
+      --accent: #6bc0ff;
+      --accent-2: #a0ffa6;
+      --chip: #1e2733;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 16px;
+    }
+    html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    #app { height: 100%; display: grid; grid-template-rows: auto 1fr; }
+
+    /* Title bar */
+    .titlebar { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0)); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .titlebar h1 { margin: 0; font-size: clamp(18px, 2.5vw, 26px); letter-spacing: 0.2px; }
+    .subtitle { color: var(--muted); font-weight: 500; font-size: 12px; }
+
+    /* Map container */
+    #map { height: 100%; position: relative; z-index: 0; }
+
+    /* Controls panel */
+    .panel { position: absolute; top: 20px; left: 20px; z-index: 500; background: rgba(19,25,35,0.92); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); box-shadow: var(--shadow); width: 320px; max-width: calc(100% - 40px); }
+    .panel header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; }
+    .panel header h2 { font-size: 14px; margin: 0; letter-spacing: 0.3px; color: var(--muted); }
+    .panel .content { padding: 6px 14px 12px 14px; }
+    .chip { display: inline-block; padding: 6px 10px; margin-right: 8px; background: var(--chip); border-radius: 999px; font-size: 12px; color: var(--muted); }
+
+    .control { margin: 10px 0 6px; font-size: 13px; color: var(--text); }
+    .range { width: 100%; }
+    .labelrow { display:flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+    /* Collapsible legend */
+    .legend { position: absolute; bottom: 20px; left: 20px; z-index: 500; background: rgba(19,25,35,0.92); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); box-shadow: var(--shadow); width: 260px; max-width: calc(100% - 40px); overflow: hidden; }
+    .legend header { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+    .legend h3 { margin: 0; font-size: 13px; color: var(--muted); }
+    .legend .inner { padding: 0 12px 12px 12px; display: none; }
+    .legend.open .inner { display: block; }
+    .legend .row { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 12px; color: var(--text); }
+    .swatch { width: 18px; height: 18px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; margin-right: 6px; }
+
+    /* Floating buttons */
+    .btns { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 500; }
+    .btn { background: rgba(19,25,35,0.92); color: var(--text); border: 1px solid rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 999px; cursor: pointer; font-size: 13px; box-shadow: var(--shadow); }
+
+    /* Modal */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 900; }
+    .modal { background: var(--panel); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 18px; width: min(680px, 92vw); box-shadow: var(--shadow); }
+    .modal h3 { margin-top: 0; }
+    .modal .close { float: right; background: var(--chip); border: none; color: var(--text); border-radius: 999px; padding: 6px 10px; cursor: pointer; }
+
+    /* Leaflet cosmetics: hide default zoom, keep attribution */
+    .leaflet-control-zoom { display: none; }
+    .leaflet-container { background: #0b0e13; }
+    .leaflet-popup-content { font: 13px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: #0b0e13; }
+    .leaflet-popup-content b { color: #0b0e13; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .panel { width: calc(100% - 40px); }
+      .legend { width: calc(100% - 40px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="titlebar">
+      <div>
+        <h1>Live Earthquakes — Last 24 Hours (M≥2.5)</h1>
+        <div class="subtitle">Proportional circles by magnitude • Color by depth • Drag to explore</div>
+      </div>
+      <div class="subtitle">Demo by <a href="https://chat.openai.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper" target="_blank" style="color: var(--accent); text-decoration: none;">Web Mapper GPT</a></div>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <!-- Controls Panel -->
+  <div class="panel" id="panel">
+    <header>
+      <h2>Map Controls</h2>
+      <span class="chip" id="countChip">—</span>
+    </header>
+    <div class="content">
+      <div class="control">Minimum magnitude: <b id="magVal">2.5</b></div>
+      <input class="range" id="magRange" type="range" min="2.5" max="7" step="0.1" value="2.5" />
+      <div class="labelrow"><span>2.5</span><span>7.0</span></div>
+      <div style="margin-top:10px; font-size:12px; color: var(--muted);">Tip: tap circles for details. Double‑click a popup title to copy coordinates.</div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend open" id="legend">
+    <header>
+      <h3>Legend</h3>
+      <div style="color: var(--muted); font-size: 12px;">toggle</div>
+    </header>
+    <div class="inner">
+      <div class="row"><span class="dot" style="background:#90ee90"></span>Shallow (&lt;10 km)</div>
+      <div class="row"><span class="dot" style="background:#ffd966"></span>Intermediate (10–70 km)</div>
+      <div class="row"><span class="dot" style="background:#f4a261"></span>Deep (70–300 km)</div>
+      <div class="row"><span class="dot" style="background:#e76f51"></span>Very Deep (&gt;300 km)</div>
+      <div class="row" style="margin-top:8px;">
+        <div class="swatch" style="background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0) 60%), rgba(107,192,255,0.15);"></div>
+        <span>Circle size ∝ magnitude</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating buttons -->
+  <div class="btns">
+    <button class="btn" id="btnSources">Data Sources</button>
+    <button class="btn" id="btnReset">Reset View</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="close" id="modalClose">Close</button>
+      <h3 id="modalTitle">Sources & Credits</h3>
+      <p>
+        • Earthquake data: USGS GeoJSON Feed — <code>summary/2.5_day.geojson</code> (public domain).<br/>
+        • Basemap: © OpenStreetMap contributors, tiles by CARTO (Positron).<br/>
+        • Mapping: Leaflet, Turf.js. Design & code by Web Mapper GPT.
+      </p>
+      <p style="font-size: 12px; color: var(--muted);">
+        Usage note: This demo fetches live data client‑side. If the USGS feed is unreachable, the map will still load but show no points.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // --- Map Setup ---
+    const map = L.map('map', {
+      zoomControl: false, // per design defaults
+      worldCopyJump: true,
+      maxBoundsViscosity: 0.7
+    }).setView([20, 0], 2);
+
+    const positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap, © CARTO | Map by <a href="https://chat.openai.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper" target="_blank">Web Mapper GPT</a>',
+      minZoom: 1,
+      maxZoom: 7
+    }).addTo(map);
+
+    // --- UI wiring ---
+    const legend = document.getElementById('legend');
+    legend.querySelector('header').addEventListener('click', () => legend.classList.toggle('open'));
+
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const openModal = () => modalBackdrop.style.display = 'flex';
+    const closeModal = () => modalBackdrop.style.display = 'none';
+    document.getElementById('btnSources').onclick = openModal;
+    document.getElementById('modalClose').onclick = closeModal;
+    modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
+
+    document.getElementById('btnReset').onclick = () => {
+      if (dataBounds) map.fitBounds(dataBounds, { padding: [40,40] });
+    };
+
+    // --- Data layer ---
+    const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson';
+    let quakesLayer = L.layerGroup().addTo(map);
+    let features = [];
+    let dataBounds = null;
+
+    const magRange = document.getElementById('magRange');
+    const magVal = document.getElementById('magVal');
+    const countChip = document.getElementById('countChip');
+
+    magRange.addEventListener('input', () => {
+      magVal.textContent = magRange.value;
+      render();
+    });
+
+    function depthColor(d) {
+      if (d == null) return '#6bc0ff';
+      if (d < 10) return '#90ee90'; // shallow
+      if (d < 70) return '#ffd966';
+      if (d < 300) return '#f4a261';
+      return '#e76f51';
+    }
+
+    function radiusForMag(m) {
+      // perceptual area scaling; clamp for extremes
+      const r = Math.max(3, Math.min(28, m * 3.2));
+      return r;
+    }
+
+    function popupHTML(p) {
+      const dt = new Date(p.time);
+      const when = isNaN(dt) ? '—' : dt.toLocaleString();
+      const coords = `${p.coordinates[1].toFixed(3)}, ${p.coordinates[0].toFixed(3)}`;
+      return `
+        <div style="min-width:220px">
+          <div style="font-weight:700; margin-bottom:6px;">M${p.mag?.toFixed(1) ?? '—'} • ${p.place ?? 'Unknown'}</div>
+          <div><b>Depth:</b> ${(p.depth ?? '—')} km</div>
+          <div><b>When:</b> ${when}</div>
+          <div><b>Coords:</b> <span title="Double‑click to copy" style="user-select: all;">${coords}</span></div>
+          <div style="margin-top:6px; font-size:12px; color:#4b5563;">ID: ${p.id}</div>
+        </div>`;
+    }
+
+    function render() {
+      quakesLayer.clearLayers();
+      const minMag = parseFloat(magRange.value);
+      const shown = features.filter(f => (f.properties.mag ?? 0) >= minMag);
+      shown.forEach(f => {
+        const [lon, lat, depth] = f.geometry.coordinates;
+        const mag = f.properties.mag ?? 0;
+        const circle = L.circleMarker([lat, lon], {
+          radius: radiusForMag(mag),
+          color: 'rgba(255,255,255,0.85)',
+          weight: 1,
+          fillColor: depthColor(depth),
+          fillOpacity: 0.85
+        });
+        circle.bindPopup(popupHTML({
+          mag,
+          place: f.properties.place,
+          time: f.properties.time,
+          depth,
+          coordinates: [lon, lat],
+          id: f.id
+        }));
+        quakesLayer.addLayer(circle);
+      });
+      countChip.textContent = `${shown.length} of ${features.length}`;
+    }
+
+    function expandBoundsByDegrees(bounds, padDeg = 10) {
+      const sw = bounds.getSouthWest();
+      const ne = bounds.getNorthEast();
+      const padLat = padDeg; const padLon = padDeg;
+      return L.latLngBounds(
+        [Math.max(-85, sw.lat - padLat), Math.max(-180, sw.lng - padLon)],
+        [Math.min(85, ne.lat + padLat), Math.min(180, ne.lng + padLon)]
+      );
+    }
+
+    async function load() {
+      try {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        features = data.features || [];
+
+        // Calculate bounds of all points
+        if (features.length) {
+          const latlngs = features.map(f => [f.geometry.coordinates[1], f.geometry.coordinates[0]]);
+          const bounds = L.latLngBounds(latlngs);
+          map.fitBounds(bounds, { padding: [40,40] });
+          dataBounds = bounds.clone();
+          // Restrict panning/zooming to 10 degrees beyond data extent
+          map.setMaxBounds(expandBoundsByDegrees(bounds, 10));
+        } else {
+          // fallback bounds (global-ish)
+          map.setView([20,0], 2);
+          map.setMaxBounds(L.latLngBounds([[-85,-180],[85,180]]));
+        }
+
+        render();
+      } catch (e) {
+        console.error('Failed to load USGS feed', e);
+        // Still set safe world bounds
+        map.setMaxBounds(L.latLngBounds([[-85,-180],[85,180]]));
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1203 @@
+[
+  {
+    "park_name": "Afton State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00100#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Afton_State_Park_Beach.JPG/960px-Afton_State_Park_Beach.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Afton_State_Park",
+      "page_title": "Afton State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Afton_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Afton State Park",
+    "name_bare": "Afton",
+    "slug_full": "afton-state-park",
+    "slug_bare": "afton"
+  },
+  {
+    "park_name": "Banning State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00103#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Banning State Park",
+    "name_bare": "Banning",
+    "slug_full": "banning-state-park",
+    "slug_bare": "banning"
+  },
+  {
+    "park_name": "Bear Head Lake State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00109#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Mississippi_River_at_Itasca.jpg/960px-Mississippi_River_at_Itasca.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Itasca_State_Park",
+      "page_title": "Itasca State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Itasca_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Bear Head Lake State Park",
+    "name_bare": "Bear Head Lake",
+    "slug_full": "bear-head-lake-state-park",
+    "slug_bare": "bear-head-lake"
+  },
+  {
+    "park_name": "Beaver Creek Valley State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00112#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Mystery_Cave_passage.jpg/960px-Mystery_Cave_passage.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Forestville_Mystery_Cave_State_Park",
+      "page_title": "Forestville Mystery Cave State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Forestville_Mystery_Cave_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Beaver Creek Valley State Park",
+    "name_bare": "Beaver Creek Valley",
+    "slug_full": "beaver-creek-valley-state-park",
+    "slug_bare": "beaver-creek-valley"
+  },
+  {
+    "park_name": "Big Bog State Recreation Area",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00308#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Big_Bog_State_Recreation_Area.jpg/960px-Big_Bog_State_Recreation_Area.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Big_Bog_State_Recreation_Area",
+      "page_title": "Big Bog State Recreation Area",
+      "page_url": "https://en.wikipedia.org/wiki/Big_Bog_State_Recreation_Area",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Big Bog State Recreation Area",
+    "name_bare": "Big Bog",
+    "slug_full": "big-bog-state-recreation-area",
+    "slug_bare": "big-bog"
+  },
+  {
+    "park_name": "Big Stone Lake State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00115#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Mississippi_River_at_Itasca.jpg/960px-Mississippi_River_at_Itasca.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Itasca_State_Park",
+      "page_title": "Itasca State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Itasca_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Big Stone Lake State Park",
+    "name_bare": "Big Stone Lake",
+    "slug_full": "big-stone-lake-state-park",
+    "slug_bare": "big-stone-lake"
+  },
+  {
+    "park_name": "Blue Mounds State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00121#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/BlueMoundsStateParkMN.jpg/960px-BlueMoundsStateParkMN.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Blue_Mounds_State_Park",
+      "page_title": "Blue Mounds State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Blue_Mounds_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Blue Mounds State Park",
+    "name_bare": "Blue Mounds",
+    "slug_full": "blue-mounds-state-park",
+    "slug_bare": "blue-mounds"
+  },
+  {
+    "park_name": "Buffalo River State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00124#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Buffalo River State Park",
+    "name_bare": "Buffalo River",
+    "slug_full": "buffalo-river-state-park",
+    "slug_bare": "buffalo-river"
+  },
+  {
+    "park_name": "Camden State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00127#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Camden State Park",
+    "name_bare": "Camden",
+    "slug_full": "camden-state-park",
+    "slug_bare": "camden"
+  },
+  {
+    "park_name": "Carley State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00130#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/CarleyStateParkMinnesota2006-08.JPG/960px-CarleyStateParkMinnesota2006-08.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Carley_State_Park",
+      "page_title": "Carley State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Carley_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Carley State Park",
+    "name_bare": "Carley",
+    "slug_full": "carley-state-park",
+    "slug_bare": "carley"
+  },
+  {
+    "park_name": "Cascade River State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00133#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Cascade River State Park",
+    "name_bare": "Cascade River",
+    "slug_full": "cascade-river-state-park",
+    "slug_bare": "cascade-river"
+  },
+  {
+    "park_name": "Charles A. Lindbergh State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00136#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/b/b0/CharlesLindberghHouse.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Charles_A._Lindbergh_State_Park",
+      "page_title": "Charles A. Lindbergh State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Charles_A._Lindbergh_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Charles A. Lindbergh State Park",
+    "name_bare": "Charles A. Lindbergh",
+    "slug_full": "charles-a-lindbergh-state-park",
+    "slug_bare": "charles-a-lindbergh"
+  },
+  {
+    "park_name": "Crow Wing State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00139#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crow_Wing_Co._Courthouse.JPG/960px-Crow_Wing_Co._Courthouse.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Crow_Wing_County,_Minnesota",
+      "page_title": "Crow Wing County, Minnesota",
+      "page_url": "https://en.wikipedia.org/wiki/Crow_Wing_County,_Minnesota",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Crow Wing State Park",
+    "name_bare": "Crow Wing",
+    "slug_full": "crow-wing-state-park",
+    "slug_bare": "crow-wing"
+  },
+  {
+    "park_name": "Cuyuna Country State Recreation Area",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00302#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Cuyuna Country State Recreation Area",
+    "name_bare": "Cuyuna Country",
+    "slug_full": "cuyuna-country-state-recreation-area",
+    "slug_bare": "cuyuna-country"
+  },
+  {
+    "park_name": "Father Hennepin State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00142#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Father_Hennepin_MNSP_Marsh.JPG/960px-Father_Hennepin_MNSP_Marsh.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Father_Hennepin_State_Park",
+      "page_title": "Father Hennepin State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Father_Hennepin_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Father Hennepin State Park",
+    "name_bare": "Father Hennepin",
+    "slug_full": "father-hennepin-state-park",
+    "slug_bare": "father-hennepin"
+  },
+  {
+    "park_name": "Flandrau State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00145#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/SoudanMine_arf.JPG/960px-SoudanMine_arf.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "page_title": "Lake Vermilion-Soudan Underground Mine State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Flandrau State Park",
+    "name_bare": "Flandrau",
+    "slug_full": "flandrau-state-park",
+    "slug_bare": "flandrau"
+  },
+  {
+    "park_name": "Forestville/Mystery Cave State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00148#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Mystery_Cave_passage.jpg/960px-Mystery_Cave_passage.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Forestville_Mystery_Cave_State_Park",
+      "page_title": "Forestville Mystery Cave State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Forestville_Mystery_Cave_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Forestville/Mystery Cave State Park",
+    "name_bare": "Forestville/Mystery Cave",
+    "slug_full": "forestville-mystery-cave-state-park",
+    "slug_bare": "forestville-mystery-cave"
+  },
+  {
+    "park_name": "Fort Ridgely State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00151#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Fort Ridgely State Park",
+    "name_bare": "Fort Ridgely",
+    "slug_full": "fort-ridgely-state-park",
+    "slug_bare": "fort-ridgely"
+  },
+  {
+    "park_name": "Fort Snelling State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00154#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Thomas_C._Savage_Visitor_Center.jpg/960px-Thomas_C._Savage_Visitor_Center.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Fort_Snelling_State_Park",
+      "page_title": "Fort Snelling State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Fort_Snelling_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Fort Snelling State Park",
+    "name_bare": "Fort Snelling",
+    "slug_full": "fort-snelling-state-park",
+    "slug_bare": "fort-snelling"
+  },
+  {
+    "park_name": "Franz Jevne State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00157#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Franz Jevne State Park",
+    "name_bare": "Franz Jevne",
+    "slug_full": "franz-jevne-state-park",
+    "slug_bare": "franz-jevne"
+  },
+  {
+    "park_name": "Frontenac State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00160#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Frontenac State Park",
+    "name_bare": "Frontenac",
+    "slug_full": "frontenac-state-park",
+    "slug_bare": "frontenac"
+  },
+  {
+    "park_name": "Garden Island State Recreation Area",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00307#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Garden Island State Recreation Area",
+    "name_bare": "Garden Island",
+    "slug_full": "garden-island-state-recreation-area",
+    "slug_bare": "garden-island"
+  },
+  {
+    "park_name": "George H. Crosby Manitou State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00163#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/George_H._Crosby-Manitou_State_Park_WMRT.jpg/960px-George_H._Crosby-Manitou_State_Park_WMRT.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/George_H._Crosby_Manitou_State_Park",
+      "page_title": "George H. Crosby Manitou State Park",
+      "page_url": "https://en.wikipedia.org/wiki/George_H._Crosby_Manitou_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "George H. Crosby Manitou State Park",
+    "name_bare": "George H. Crosby Manitou",
+    "slug_full": "george-h-crosby-manitou-state-park",
+    "slug_bare": "george-h-crosby-manitou"
+  },
+  {
+    "park_name": "Glacial Lakes State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00166#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Kettle_Lake_GLSP.jpg/960px-Kettle_Lake_GLSP.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Glacial_Lakes_State_Park",
+      "page_title": "Glacial Lakes State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Glacial_Lakes_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Glacial Lakes State Park",
+    "name_bare": "Glacial Lakes",
+    "slug_full": "glacial-lakes-state-park",
+    "slug_bare": "glacial-lakes"
+  },
+  {
+    "park_name": "Glendalough State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00167#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Glendalough State Park",
+    "name_bare": "Glendalough",
+    "slug_full": "glendalough-state-park",
+    "slug_bare": "glendalough"
+  },
+  {
+    "park_name": "Gooseberry Falls State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00172#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/GooseberryFalls_Oct2005.JPG/960px-GooseberryFalls_Oct2005.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Gooseberry_Falls_State_Park",
+      "page_title": "Gooseberry Falls State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Gooseberry_Falls_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Gooseberry Falls State Park",
+    "name_bare": "Gooseberry Falls",
+    "slug_full": "gooseberry-falls-state-park",
+    "slug_bare": "gooseberry-falls"
+  },
+  {
+    "park_name": "Grand Portage State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00173#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/PigeonRiverHighFallsFlume.jpg/960px-PigeonRiverHighFallsFlume.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Grand_Portage_State_Park",
+      "page_title": "Grand Portage State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Grand_Portage_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Grand Portage State Park",
+    "name_bare": "Grand Portage",
+    "slug_full": "grand-portage-state-park",
+    "slug_bare": "grand-portage"
+  },
+  {
+    "park_name": "Great River Bluffs State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00244#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Great_River_Bluffs_State_Park_overlook.jpg/960px-Great_River_Bluffs_State_Park_overlook.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Great_River_Bluffs_State_Park",
+      "page_title": "Great River Bluffs State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Great_River_Bluffs_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Great River Bluffs State Park",
+    "name_bare": "Great River Bluffs",
+    "slug_full": "great-river-bluffs-state-park",
+    "slug_bare": "great-river-bluffs"
+  },
+  {
+    "park_name": "Hayes Lake State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00174#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Hayes Lake State Park",
+    "name_bare": "Hayes Lake",
+    "slug_full": "hayes-lake-state-park",
+    "slug_bare": "hayes-lake"
+  },
+  {
+    "park_name": "Interstate State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00178#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Interstate State Park",
+    "name_bare": "Interstate",
+    "slug_full": "interstate-state-park",
+    "slug_bare": "interstate"
+  },
+  {
+    "park_name": "Itasca State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00181#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Mississippi_River_at_Itasca.jpg/960px-Mississippi_River_at_Itasca.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Itasca_State_Park",
+      "page_title": "Itasca State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Itasca_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Itasca State Park",
+    "name_bare": "Itasca",
+    "slug_full": "itasca-state-park",
+    "slug_bare": "itasca"
+  },
+  {
+    "park_name": "Jay Cooke State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00187#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Jay_Cooke_State_Park_-_panoramio_-_Rosemarie_McKeon.jpg/960px-Jay_Cooke_State_Park_-_panoramio_-_Rosemarie_McKeon.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Jay_Cooke_State_Park",
+      "page_title": "Jay Cooke State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Jay_Cooke_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Jay Cooke State Park",
+    "name_bare": "Jay Cooke",
+    "slug_full": "jay-cooke-state-park",
+    "slug_bare": "jay-cooke"
+  },
+  {
+    "park_name": "John A. Latsch State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00177#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "John A. Latsch State Park",
+    "name_bare": "John A. Latsch",
+    "slug_full": "john-a-latsch-state-park",
+    "slug_bare": "john-a-latsch"
+  },
+  {
+    "park_name": "Judge C.R. Magney State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00193#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Devil%27s_Kettle_-_2015-09-13_-_1.jpg/960px-Devil%27s_Kettle_-_2015-09-13_-_1.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Judge_C._R._Magney_State_Park",
+      "page_title": "Judge C. R. Magney State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Judge_C._R._Magney_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Judge C.R. Magney State Park",
+    "name_bare": "Judge C.R. Magney",
+    "slug_full": "judge-c-r-magney-state-park",
+    "slug_bare": "judge-c-r-magney"
+  },
+  {
+    "park_name": "Kilen Woods State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00196#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hiking_Trail_at_Nerstrand_Big_Woods_State_Park_Minnesota_%2828919126133%29.jpg/960px-Hiking_Trail_at_Nerstrand_Big_Woods_State_Park_Minnesota_%2828919126133%29.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Nerstrand-Big_Woods_State_Park",
+      "page_title": "Nerstrand-Big Woods State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Nerstrand-Big_Woods_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Kilen Woods State Park",
+    "name_bare": "Kilen Woods",
+    "slug_full": "kilen-woods-state-park",
+    "slug_bare": "kilen-woods"
+  },
+  {
+    "park_name": "La Salle Lake State Recreation Area",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00311#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "La Salle Lake State Recreation Area",
+    "name_bare": "La Salle Lake",
+    "slug_full": "la-salle-lake-state-recreation-area",
+    "slug_bare": "la-salle-lake"
+  },
+  {
+    "park_name": "Lac qui Parle State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00197#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Lac_qui_Parle_County_Courthouse.jpg/960px-Lac_qui_Parle_County_Courthouse.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Lac_qui_Parle_County,_Minnesota",
+      "page_title": "Lac qui Parle County, Minnesota",
+      "page_url": "https://en.wikipedia.org/wiki/Lac_qui_Parle_County,_Minnesota",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lac qui Parle State Park",
+    "name_bare": "Lac qui Parle",
+    "slug_full": "lac-qui-parle-state-park",
+    "slug_bare": "lac-qui-parle"
+  },
+  {
+    "park_name": "Lake Bemidji State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00205#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lake Bemidji State Park",
+    "name_bare": "Lake Bemidji",
+    "slug_full": "lake-bemidji-state-park",
+    "slug_bare": "lake-bemidji"
+  },
+  {
+    "park_name": "Lake Bronson State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00208#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lake Bronson State Park",
+    "name_bare": "Lake Bronson",
+    "slug_full": "lake-bronson-state-park",
+    "slug_bare": "lake-bronson"
+  },
+  {
+    "park_name": "Lake Carlos State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00211#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lake Carlos State Park",
+    "name_bare": "Lake Carlos",
+    "slug_full": "lake-carlos-state-park",
+    "slug_bare": "lake-carlos"
+  },
+  {
+    "park_name": "Lake Louise State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00214#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Lake_Louise_State_Park.jpg/960px-Lake_Louise_State_Park.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Lake_Louise_State_Park",
+      "page_title": "Lake Louise State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Lake_Louise_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lake Louise State Park",
+    "name_bare": "Lake Louise",
+    "slug_full": "lake-louise-state-park",
+    "slug_bare": "lake-louise"
+  },
+  {
+    "park_name": "Lake Maria State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00217#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lake Maria State Park",
+    "name_bare": "Lake Maria",
+    "slug_full": "lake-maria-state-park",
+    "slug_bare": "lake-maria"
+  },
+  {
+    "park_name": "Lake Shetek State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00220#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/SoudanMine_arf.JPG/960px-SoudanMine_arf.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "page_title": "Lake Vermilion-Soudan Underground Mine State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lake Shetek State Park",
+    "name_bare": "Lake Shetek",
+    "slug_full": "lake-shetek-state-park",
+    "slug_bare": "lake-shetek"
+  },
+  {
+    "park_name": "Lake Vermilion-Soudan Underground Mine State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00285#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/SoudanMine_arf.JPG/960px-SoudanMine_arf.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "page_title": "Lake Vermilion-Soudan Underground Mine State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Lake Vermilion-Soudan Underground Mine State Park",
+    "name_bare": "Lake Vermilion-Soudan",
+    "slug_full": "lake-vermilion-soudan-underground-mine-state-park",
+    "slug_bare": "lake-vermilion-soudan"
+  },
+  {
+    "park_name": "Maplewood State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00229#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Maplewood State Park",
+    "name_bare": "Maplewood",
+    "slug_full": "maplewood-state-park",
+    "slug_bare": "maplewood"
+  },
+  {
+    "park_name": "McCarthy Beach State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00226#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "McCarthy Beach State Park",
+    "name_bare": "McCarthy Beach",
+    "slug_full": "mccarthy-beach-state-park",
+    "slug_bare": "mccarthy-beach"
+  },
+  {
+    "park_name": "Mille Lacs Kathio State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00232#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Mille_Lacs_Lake.jpg/960px-Mille_Lacs_Lake.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Mille_Lacs_Lake",
+      "page_title": "Mille Lacs Lake",
+      "page_url": "https://en.wikipedia.org/wiki/Mille_Lacs_Lake",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Mille Lacs Kathio State Park",
+    "name_bare": "Mille Lacs Kathio",
+    "slug_full": "mille-lacs-kathio-state-park",
+    "slug_bare": "mille-lacs-kathio"
+  },
+  {
+    "park_name": "Minneopa State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00235#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Minneopa State Park",
+    "name_bare": "Minneopa",
+    "slug_full": "minneopa-state-park",
+    "slug_bare": "minneopa"
+  },
+  {
+    "park_name": "Minnesota Valley State Recreation Area",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00304#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Minnesota Valley State Recreation Area",
+    "name_bare": "Minnesota Valley",
+    "slug_full": "minnesota-valley-state-recreation-area",
+    "slug_bare": "minnesota-valley"
+  },
+  {
+    "park_name": "Monson Lake State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00238#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Monson Lake State Park",
+    "name_bare": "Monson Lake",
+    "slug_full": "monson-lake-state-park",
+    "slug_bare": "monson-lake"
+  },
+  {
+    "park_name": "Moose Lake State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00239#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Dtmooselake.jpg/960px-Dtmooselake.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Moose_Lake,_Minnesota",
+      "page_title": "Moose Lake, Minnesota",
+      "page_url": "https://en.wikipedia.org/wiki/Moose_Lake,_Minnesota",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Moose Lake State Park",
+    "name_bare": "Moose Lake",
+    "slug_full": "moose-lake-state-park",
+    "slug_bare": "moose-lake"
+  },
+  {
+    "park_name": "Myre-Big Island State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00175#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Myre-Big Island State Park",
+    "name_bare": "Myre-Big Island",
+    "slug_full": "myre-big-island-state-park",
+    "slug_bare": "myre-big-island"
+  },
+  {
+    "park_name": "Nerstrand Big Woods State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00241#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hiking_Trail_at_Nerstrand_Big_Woods_State_Park_Minnesota_%2828919126133%29.jpg/960px-Hiking_Trail_at_Nerstrand_Big_Woods_State_Park_Minnesota_%2828919126133%29.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Nerstrand-Big_Woods_State_Park",
+      "page_title": "Nerstrand-Big Woods State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Nerstrand-Big_Woods_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Nerstrand Big Woods State Park",
+    "name_bare": "Nerstrand Big Woods",
+    "slug_full": "nerstrand-big-woods-state-park",
+    "slug_bare": "nerstrand-big-woods"
+  },
+  {
+    "park_name": "Old Mill State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00247#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Old Mill State Park",
+    "name_bare": "Old Mill",
+    "slug_full": "old-mill-state-park",
+    "slug_bare": "old-mill"
+  },
+  {
+    "park_name": "Red River State Recreation Area",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00309#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Red River State Recreation Area",
+    "name_bare": "Red River",
+    "slug_full": "red-river-state-recreation-area",
+    "slug_bare": "red-river"
+  },
+  {
+    "park_name": "Rice Lake State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00250#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Rice Lake State Park",
+    "name_bare": "Rice Lake",
+    "slug_full": "rice-lake-state-park",
+    "slug_bare": "rice-lake"
+  },
+  {
+    "park_name": "Sakatah Lake State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00256#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/SoudanMine_arf.JPG/960px-SoudanMine_arf.JPG",
+      "image_source": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "page_title": "Lake Vermilion-Soudan Underground Mine State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Lake_Vermilion-Soudan_Underground_Mine_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Sakatah Lake State Park",
+    "name_bare": "Sakatah Lake",
+    "slug_full": "sakatah-lake-state-park",
+    "slug_bare": "sakatah-lake"
+  },
+  {
+    "park_name": "Savanna Portage State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00259#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Savanna_Portage_State_Park.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Savanna_Portage_State_Park",
+      "page_title": "Savanna Portage State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Savanna_Portage_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Savanna Portage State Park",
+    "name_bare": "Savanna Portage",
+    "slug_full": "savanna-portage-state-park",
+    "slug_bare": "savanna-portage"
+  },
+  {
+    "park_name": "Scenic State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00262#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Scenic State Park",
+    "name_bare": "Scenic",
+    "slug_full": "scenic-state-park",
+    "slug_bare": "scenic"
+  },
+  {
+    "park_name": "Schoolcraft State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00263#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Schoolcraft State Park",
+    "name_bare": "Schoolcraft",
+    "slug_full": "schoolcraft-state-park",
+    "slug_bare": "schoolcraft"
+  },
+  {
+    "park_name": "Sibley State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00265#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Sibley State Park",
+    "name_bare": "Sibley",
+    "slug_full": "sibley-state-park",
+    "slug_bare": "sibley"
+  },
+  {
+    "park_name": "Split Rock Creek State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00267#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/SplitRockLighthouseEllingsonIslandMN.jpg/960px-SplitRockLighthouseEllingsonIslandMN.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Split_Rock_Lighthouse_State_Park",
+      "page_title": "Split Rock Lighthouse State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Split_Rock_Lighthouse_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Split Rock Creek State Park",
+    "name_bare": "Split Rock Creek",
+    "slug_full": "split-rock-creek-state-park",
+    "slug_bare": "split-rock-creek"
+  },
+  {
+    "park_name": "Split Rock Lighthouse State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00266#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/SplitRockLighthouseEllingsonIslandMN.jpg/960px-SplitRockLighthouseEllingsonIslandMN.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Split_Rock_Lighthouse_State_Park",
+      "page_title": "Split Rock Lighthouse State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Split_Rock_Lighthouse_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Split Rock Lighthouse State Park",
+    "name_bare": "Split Rock Lighthouse",
+    "slug_full": "split-rock-lighthouse-state-park",
+    "slug_bare": "split-rock-lighthouse"
+  },
+  {
+    "park_name": "St. Croix State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00253#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/St._Croix_Crossing-3.jpg/960px-St._Croix_Crossing-3.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/St._Croix_River_(Wisconsin%E2%80%93Minnesota)",
+      "page_title": "St. Croix River (Wisconsin–Minnesota)",
+      "page_url": "https://en.wikipedia.org/wiki/St._Croix_River_(Wisconsin%E2%80%93Minnesota)",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "St. Croix State Park",
+    "name_bare": "St. Croix",
+    "slug_full": "st-croix-state-park",
+    "slug_bare": "st-croix"
+  },
+  {
+    "park_name": "Temperance River State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00268#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Temperance River State Park",
+    "name_bare": "Temperance River",
+    "slug_full": "temperance-river-state-park",
+    "slug_bare": "temperance-river"
+  },
+  {
+    "park_name": "Tettegouche State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00269#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Northern_MN_Spring_2005_099.jpg/960px-Northern_MN_Spring_2005_099.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Tettegouche_State_Park",
+      "page_title": "Tettegouche State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Tettegouche_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Tettegouche State Park",
+    "name_bare": "Tettegouche",
+    "slug_full": "tettegouche-state-park",
+    "slug_bare": "tettegouche"
+  },
+  {
+    "park_name": "Whitewater State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00280#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Whitewater_State_Park.jpg/960px-Whitewater_State_Park.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Whitewater_State_Park",
+      "page_title": "Whitewater State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Whitewater_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Whitewater State Park",
+    "name_bare": "Whitewater",
+    "slug_full": "whitewater-state-park",
+    "slug_bare": "whitewater"
+  },
+  {
+    "park_name": "Wild River State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00254#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Wild River State Park",
+    "name_bare": "Wild River",
+    "slug_full": "wild-river-state-park",
+    "slug_bare": "wild-river"
+  },
+  {
+    "park_name": "William O'Brien State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00283#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Minnesota_Locator_Map.PNG",
+      "image_source": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "page_title": "List of Minnesota state parks",
+      "page_url": "https://en.wikipedia.org/wiki/List_of_Minnesota_state_parks",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "William O'Brien State Park",
+    "name_bare": "William O'Brien",
+    "slug_full": "william-o-brien-state-park",
+    "slug_bare": "william-o-brien"
+  },
+  {
+    "park_name": "Zippel Bay State Park",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=spk00284#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": {
+      "image_thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Zippel_Bay_State_Park%2C_Minnesota_-_Sunset_on_Lake_of_the_Woods.jpg/960px-Zippel_Bay_State_Park%2C_Minnesota_-_Sunset_on_Lake_of_the_Woods.jpg",
+      "image_source": "https://en.wikipedia.org/wiki/Zippel_Bay_State_Park",
+      "page_title": "Zippel Bay State Park",
+      "page_url": "https://en.wikipedia.org/wiki/Zippel_Bay_State_Park",
+      "credit": "Image via Wikipedia/Wikimedia Commons (license varies by file)."
+    },
+    "name_full": "Zippel Bay State Park",
+    "name_bare": "Zippel Bay",
+    "slug_full": "zippel-bay-state-park",
+    "slug_bare": "zippel-bay"
+  },
+  {
+    "park_name": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00310#homepage",
+    "official_url": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00310#homepage",
+    "highlights": [],
+    "hours": null,
+    "image": null,
+    "name_full": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00310#homepage",
+    "name_bare": "https://www.dnr.state.mn.us/state_parks/park.html?id=sra00310#homepage",
+    "slug_full": "https-www-dnr-state-mn-us-state-parks-park-html-id-sra00310-homepage",
+    "slug_bare": "https-www-dnr-state-mn-us-state-parks-park-html-id-sra00310-homepage"
+  }
+]

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iowa Wind Turbines — USWTDB</title>
+
+  <!-- Leaflet & MarkerCluster CDN -->
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
+  <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" rel="stylesheet" />
+  <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" rel="stylesheet" />
+
+  <!-- App styles -->
+  <link href="./styles/style.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Title -->
+  <header id="appHeader">
+    <h1>Iowa Wind Turbines</h1>
+    <p class="subtitle">United States Wind Turbine Database (USWTDB) — live Iowa subset</p>
+  </header>
+
+  <!-- Map -->
+  <div id="map" role="region" aria-label="Map of wind turbines in Iowa"></div>
+
+  <!-- Collapsible Legend -->
+  <aside id="legend" class="card">
+    <button id="legendToggle" aria-expanded="true" aria-controls="legendBody">Legend</button>
+    <div id="legendBody">
+      <div class="legend-row">
+        <span class="dot" style="--r:8px"></span><span>~1.5 MW</span>
+      </div>
+      <div class="legend-row">
+        <span class="dot" style="--r:12px"></span><span>~2.5 MW</span>
+      </div>
+      <div class="legend-row">
+        <span class="dot" style="--r:16px"></span><span>3.5 MW+</span>
+      </div>
+      <hr />
+      <p class="legend-note">Dot size scales with turbine rated capacity (kW). Clusters show counts; zoom in to separate turbines.</p>
+    </div>
+  </aside>
+
+  <!-- Data Info Button / Panel -->
+  <button id="infoBtn" class="info-btn" aria-haspopup="dialog" aria-controls="infoPanel" title="Data, methods, and credits">i</button>
+  <div id="infoPanel" class="info-panel" aria-modal="true" role="dialog" aria-labelledby="infoTitle" hidden>
+    <div class="info-content card">
+      <h2 id="infoTitle">About this map & data</h2>
+      <p><strong>Source:</strong> United States Wind Turbine Database (USWTDB) <em>v8.1</em> (May 22, 2025) — USGS, LBNL, ACP.</p>
+      <p>This map queries turbines where <code>t_state = IA</code> via the official USWTDB API and converts them to points at runtime. Attributes shown include project, online year, rated capacity, manufacturer/model, and heights. Confidence values (1–3) reflect attribute and location certainty.</p>
+      <p><strong>Suggested citation:</strong> Hoen, B.D., Diffendorfer, J.E., Rand, J.T., Kramer, L.A., Garrity, C.P., and Hunt, H.E., 2018, United States Wind Turbine Database V8.1 (May 22, 2025): U.S. Geological Survey, American Clean Power Association, and Lawrence Berkeley National Laboratory data release, DOI:10.5066/F7TX3DN0.</p>
+      <p class="fine">Map design & build: <a href="https://chatgpt.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper" target="_blank" rel="noopener">Web Mapper GPT</a>.</p>
+      <button id="closeInfo" class="close-btn" aria-label="Close info">Close</button>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading" class="loading">
+    <div class="spinner" aria-hidden="true"></div>
+    <div class="loading-text">Loading Iowa turbines…</div>
+  </div>
+
+  <!-- JS libs -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- App logic -->
+  <script src="./scripts/script.js"></script>
+</body>
+</html>

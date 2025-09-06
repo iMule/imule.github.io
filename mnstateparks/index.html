@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Visit Minnesota's State Parks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Title -->
+  <header class="titlebar">
+    <h1>Visit Minnesota's State Parks</h1>
+  </header>
+
+  <!-- UI Panel -->
+  <aside id="panel" class="panel">
+    <button id="panelToggle" class="panel__toggle" aria-expanded="true" aria-controls="panelContents">Filters</button>
+    <div id="panelContents" class="panel__contents">
+      <label class="label">Find a park</label>
+      <input id="searchInput" class="input" type="search" placeholder="Type a park name…" aria-label="Search for a park by name" />
+
+      <label class="label mt">Filter by highlight</label>
+      <select id="highlightSelect" class="select">
+        <option value="">All highlights</option>
+      </select>
+
+      <div class="legend mt">
+        <div class="legend__swatch"></div>
+        <div>
+          <div class="legend__title">State parks, recreation areas & waysides</div>
+          <div class="legend__note">Hover to preview • click for full details</div>
+        </div>
+      </div>
+
+      <div class="panel__footer">
+        <span>Basemap switches to topo at close zoom (≥18).</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Map -->
+  <div id="map" role="region" aria-label="Map of Minnesota state parks"></div>
+
+  <!-- Info button -->
+  <button id="infobtn" class="infobtn" title="About this map" aria-label="About this map">i</button>
+  <div id="infobox" class="infobox" hidden>
+    <div class="infobox__header">
+      <strong>About</strong>
+      <button id="infoclose" class="infobox__close" aria-label="Close">×</button>
+    </div>
+    <div class="infobox__body">
+      <p>This promotional map highlights Minnesota’s state parks, recreation areas, and waysides with official “Park highlights,” hours, and links. Imagery appears where a Wikimedia/Wikipedia photo is available. Colors reflect Minnesota’s new state flag (light blue, dark blue, yellow, white). Designed by <a href="#" target="_blank" rel="noopener">Web Mapper GPT</a>.</p>
+      <p class="small">Data: MN DNR statutory boundaries (polygons), park listings & details from the MN DNR parks A–Z site. Photos: Wikipedia/Wikimedia (licenses vary).</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="script.js"></script>
+</body>
+</html>
