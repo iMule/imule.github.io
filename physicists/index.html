@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Birthplaces of Renowned Physicists (1400–Present)</title>
+
+  <!-- Leaflet & MarkerCluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="styles/style.css" />
+
+  <meta name="description" content="An interactive map of birthplaces of famous physicists with brief bios and citations." />
+</head>
+<body>
+  <!-- Top bar -->
+  <header class="wm-topbar">
+    <div class="wm-title">
+      Birthplaces of Renowned Physicists <span class="wm-sub">1400–Present</span>
+    </div>
+    <div class="wm-controls">
+      <input id="searchInput" type="search" placeholder="Search by name… (e.g., Einstein)" aria-label="Search physicists by name" />
+      <select id="centuryFilter" aria-label="Filter by century">
+        <option value="all" selected>All centuries</option>
+        <option value="15">1400s (15th)</option>
+        <option value="16">1500s (16th)</option>
+        <option value="17">1600s (17th)</option>
+        <option value="18">1700s (18th)</option>
+        <option value="19">1800s (19th)</option>
+        <option value="20">1900s (20th)</option>
+        <option value="21">2000s (21st)</option>
+      </select>
+      <button id="resetBtn" class="wm-btn" type="button" title="Reset filters">Reset</button>
+      <button id="legendToggle" class="wm-btn" type="button" aria-expanded="false" aria-controls="legendPanel">Legend</button>
+      <button id="infoBtn" class="wm-btn" type="button" aria-haspopup="dialog" aria-controls="sourcePanel">Data & Sources</button>
+    </div>
+  </header>
+
+  <!-- Map -->
+  <div id="map" role="region" aria-label="Map of physicists' birthplaces"></div>
+
+  <!-- Legend -->
+  <aside id="legendPanel" class="wm-panel" hidden>
+    <div class="wm-panel-head">
+      <strong>Legend</strong>
+      <button id="legendClose" class="wm-x" type="button" aria-label="Close legend">×</button>
+    </div>
+    <div class="wm-panel-body">
+      <p>Markers show birthplaces of major physicists. Colors indicate rough era:</p>
+      <ul class="wm-legend">
+        <li><span class="dot era-15"></span> 1400s–1500s</li>
+        <li><span class="dot era-17"></span> 1600s–1700s</li>
+        <li><span class="dot era-19"></span> 1800s</li>
+        <li><span class="dot era-20"></span> 1900s</li>
+        <li><span class="dot era-21"></span> 2000s</li>
+      </ul>
+      <p>Use the name search and century filter to refine the view.</p>
+    </div>
+  </aside>
+
+  <!-- Sources / About -->
+  <dialog id="sourcePanel" class="wm-dialog">
+    <div class="wm-dialog-head">
+      <strong>Dataset & Sources</strong>
+      <button id="sourceClose" class="wm-x" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="wm-dialog-body">
+      <p><em>Compiled:</em> August 30, 2025.</p>
+      <p><em>Method:</em> Curated list of 100 influential physicists born since 1400. For each, a short original bio is shown with at least one source link (e.g., Wikipedia, Britannica, NobelPrize.org). Coordinates correspond to the stated birthplace (city center when needed).</p>
+      <p><em>Primary reference hubs:</em> Wikipedia, Encyclopædia Britannica, NobelPrize.org. See each popup’s <strong>Source</strong> link(s).</p>
+      <p><em>Attribution:</em> Basemap © OpenStreetMap &amp; CARTO. Map design © <a href="https://chatgpt.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper" target="_blank" rel="noopener">Web Mapper GPT</a>.</p>
+    </div>
+  </dialog>
+
+  <!-- Bottom-left credit link (inline SVG icon) -->
+  <a class="wm-brand" href="https://chatgpt.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper" target="_blank" rel="noopener" title="Web Mapper GPT">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="#fff">WM</text></svg>
+  </a>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="scripts/script.js"></script>
+</body>
+</html>
