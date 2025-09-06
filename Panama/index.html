@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panama Wells & Springs — Web Mapper GPT</title>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <!-- Esri attribution requires display; we use public XYZ endpoints -->
+  
+  <style>
+    :root{
+      --bg:#0b0f14;          /* app background */
+      --panel:#121821;       /* control panel bg */
+      --panel-2:#0e141c;     /* secondary */
+      --ink:#e6edf3;         /* primary text */
+      --muted:#9fb0c3;       /* secondary text */
+      --accent:#5cc8ff;      /* accent */
+      --ok:#4ade80;          /* good */
+      --warn:#fbbf24;        /* warning */
+      --danger:#fb7185;      /* error */
+      --chip:#1f2937;        /* chip bg */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    html, body { height:100%; margin:0; background:var(--bg); color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    #app { display:grid; grid-template-rows:auto 1fr; height:100%; }
+    header{ display:flex; gap:.75rem; align-items:center; padding:.75rem 1rem; border-bottom:1px solid #1b2430; position:relative; }
+    header h1{ font-size:clamp(18px,2vw,22px); margin:0; font-weight:700; letter-spacing:.2px; }
+    header .subtitle{ font-size:12px; color:var(--muted); }
+    #map{ height:100%; width:100%; z-index:0; }
+
+    /* Panels */
+    .panel{ position:absolute; top:80px; left:14px; width:min(360px, calc(100vw - 24px)); background:var(--panel); border-radius:18px; box-shadow:var(--shadow); z-index:1000; border:1px solid #1b2430; overflow:hidden; }
+    .panel header{ padding:.75rem 1rem; border:0; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0)); }
+    .panel h2{ margin:0; font-size:14px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
+    .panel .content{ padding: .5rem 1rem 1rem; max-height:58vh; overflow:auto; }
+
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin:.5rem 0; }
+    .row-1{ display:block; margin:.5rem 0; }
+    label{ font-size:12px; color:var(--muted); display:block; margin:.25rem 0; }
+    select, input[type="range"], .multiselect, .chip{
+      width:100%; background:var(--panel-2); border:1px solid #243244; color:var(--ink); border-radius:12px; padding:.5rem .6rem; font-size:13px;
+    }
+    .group{ margin:.5rem 0 1rem; }
+    .chips{ display:flex; flex-wrap:wrap; gap:.35rem; }
+    .chip{ display:inline-flex; gap:.5rem; align-items:center; padding:.35rem .6rem; border-radius:999px; cursor:pointer; user-select:none; }
+    .chip input{ margin-right:.35rem; }
+
+    .stats{ position:absolute; right:14px; bottom:14px; background:rgba(18,24,33,.9); border:1px solid #1b2430; padding:.75rem 1rem; border-radius:14px; box-shadow:var(--shadow); z-index:1000; min-width:240px; }
+    .stats h3{ margin:.1rem 0 .5rem; font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.12em; }
+    .stats .val{ display:flex; justify-content:space-between; align-items:center; margin:.2rem 0; font-size:14px; }
+    .stats .val strong{ font-size:18px; }
+
+    .legend{ position:absolute; right:14px; top:80px; background:rgba(18,24,33,.9); border:1px solid #1b2430; padding:.75rem 1rem; border-radius:14px; box-shadow:var(--shadow); z-index:1000; min-width:210px; }
+    .legend h3{ margin:.1rem 0 .5rem; font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.12em; display:flex; justify-content:space-between; align-items:center; }
+    .legend .toggle{ cursor:pointer; font-size:12px; color:var(--accent); }
+    .legend ul{ list-style:none; margin:0; padding:0; display:grid; gap:.2rem; }
+    .legend li{ display:flex; align-items:center; gap:.5rem; font-size:13px; }
+    .sym{ width:18px; height:18px; display:inline-grid; place-items:center; border:1px solid rgba(0,0,0,.35); border-radius:4px; }
+    .tri{ width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-bottom:14px solid currentColor; }
+    .sq{ width:12px; height:12px; background:currentColor; }
+
+    .btnbar{ margin-left:auto; display:flex; gap:.4rem; }
+    .btn{ background:var(--panel-2); color:var(--ink); border:1px solid #243244; padding:.45rem .65rem; font-size:12px; border-radius:10px; cursor:pointer; }
+    .btn:hover{ border-color:#335173; }
+
+    .sourceModal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); z-index:2000; }
+    .sourceModal .card{ width:min(520px,90vw); background:var(--panel); border:1px solid #1b2430; border-radius:16px; padding:1rem; box-shadow:var(--shadow); }
+    .sourceModal h4{ margin:.2rem 0 1rem; }
+    .sourceModal a{ color:var(--accent); }
+
+    /* Marker icons as CSS shapes via DivIcon */
+    .wm-marker{ width:18px; height:18px; display:grid; place-items:center; }
+    .wm-inner{ width:14px; height:14px; background:currentColor; }
+    .wm-square .wm-inner{ border-radius:3px; }
+    .wm-triangle .wm-inner{ width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid currentColor; background:none; }
+    .wm-outline{ filter: drop-shadow(0 0 1px rgba(0,0,0,.8)) drop-shadow(0 1px 2px rgba(0,0,0,.7)); }
+
+    /* Popup styling */
+    .leaflet-popup-content-wrapper{ background:#0f1520; color:#e6edf3; border:1px solid #223046; border-radius:14px; box-shadow:var(--shadow); }
+    .leaflet-popup-tip{ background:#0f1520; border:1px solid #223046; }
+    .popup{ display:grid; gap:.5rem; }
+    .kv{ display:flex; justify-content:space-between; gap:1rem; font-size:13px; }
+    .kv .k{ color:var(--muted); }
+    .viz{ background:#0c121a; border:1px solid #223046; border-radius:10px; padding:.4rem .5rem; }
+    .viz svg{ width:100%; height:10px; display:block; }
+    .use-chip{ display:inline-flex; align-items:center; gap:.4rem; padding:.2rem .5rem; border-radius:999px; background:#0e141c; font-size:12px; border:1px solid #243244; }
+    .use-dot{ width:10px; height:10px; border-radius:3px; display:inline-block; background:currentColor; }
+
+    /* Attribution line tweak */
+    .leaflet-control-attribution{ background:rgba(18,24,33,.8); color:#9fb0c3; border:1px solid #1b2430; border-radius:10px; padding:2px 6px; }
+    .leaflet-container a{ color:#7fc7ff; }
+
+    @media (max-width: 780px){
+      .panel{ width: calc(100vw - 28px); left:14px; right:14px; top:auto; bottom:14px; }
+      .legend{ top:unset; bottom:90px; }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1 id="title">Panama Wells & Springs</h1>
+    <div class="subtitle" id="subtitle">Symbolized by primary use; squares = wells, triangles = springs.</div>
+    <div class="btnbar">
+      <button class="btn" id="langBtn" title="Translate UI">ES</button>
+      <button class="btn" id="srcBtn" title="Data Sources">Sources</button>
+    </div>
+  </header>
+  <div id="map"></div>
+
+  <!-- Filter Panel -->
+  <div class="panel" id="filterPanel" aria-live="polite">
+    <header><h2 id="filtersLbl">Filters</h2></header>
+    <div class="content">
+      <!-- Type chips -->
+      <div class="group">
+        <label id="typeLbl">Feature types</label>
+        <div class="chips" id="typeChips"></div>
+      </div>
+
+      <!-- Use types -->
+      <div class="group">
+        <label id="useLbl">Use types</label>
+        <div class="chips" id="useChips"></div>
+      </div>
+
+      <!-- Admin -->
+      <div class="row">
+        <div>
+          <label id="provLbl">Province</label>
+          <select id="provSelect"></select>
+        </div>
+        <div>
+          <label id="distLbl">District</label>
+          <select id="distSelect"></select>
+        </div>
+      </div>
+      <div class="row-1">
+        <label id="subdLbl">Subdistrict</label>
+        <select id="subdSelect"></select>
+      </div>
+
+      <!-- Elevation slider -->
+      <div class="group">
+        <label id="elevLbl">Elevation (m)</label>
+        <input type="range" id="elevMin" min="0" max="100" value="0" step="1" />
+        <input type="range" id="elevMax" min="0" max="100" value="100" step="1" />
+        <div class="kv"><div class="k" id="elevMinTxt"></div><div id="elevMaxTxt"></div></div>
+      </div>
+
+      <!-- Depth slider (wells only) -->
+      <div class="group" id="depthGroup">
+        <label id="depthLbl">Depth (m) — wells only</label>
+        <input type="range" id="depthMin" min="0" max="100" value="0" step="1" />
+        <input type="range" id="depthMax" min="0" max="100" value="100" step="1" />
+        <div class="kv"><div class="k" id="depthMinTxt"></div><div id="depthMaxTxt"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Stats -->
+  <div class="stats" id="statsBox">
+    <h3 id="statsHdr">Live Averages (Filtered)</h3>
+    <div class="val"><span id="avgElevLbl">Avg. Elevation</span><strong id="avgElevVal">—</strong></div>
+    <div class="val"><span id="avgDepthLbl">Avg. Well Depth</span><strong id="avgDepthVal">—</strong></div>
+  </div>
+
+  <!-- Legend -->
+  <aside class="legend" id="legend">
+    <h3><span id="legendHdr">Legend</span> <span class="toggle" id="legendToggle">−</span></h3>
+    <div id="legendBody">
+      <ul id="legendList"></ul>
+      <div style="margin-top:.4rem; font-size:12px; color:var(--muted);">□ = <span id="wellLbl">Well</span>, ▲ = <span id="springLbl">Spring</span></div>
+    </div>
+  </aside>
+
+  <!-- Sources Modal -->
+  <div class="sourceModal" id="sourceModal" role="dialog" aria-modal="true" aria-labelledby="srcTitle">
+    <div class="card">
+      <h4 id="srcTitle">Data & Credits</h4>
+      <p>Dataset: <em>Wells.geojson</em> (user-provided). Country: Panama. Fields: Unique ID, Source (Well/Spring), Use, Elevation (m), Depth (m), Province, District, SubDistrict. Popups and filters use these fields.</p>
+      <p>Basemap: Esri World Topographic Map; Hillshade: Esri World Hillshade. © Esri, FAO, NOAA, USGS, © OpenStreetMap contributors.</p>
+      <p>Map UI & code created by <a href="#" target="_blank" rel="noopener">Web Mapper GPT</a>. Attribution: "Created using Web Mapper GPT".</p>
+      <p>Licensing: No third-party photos used.</p>
+      <div style="text-align:right; margin-top:.6rem;"><button class="btn" id="closeSrc">Close</button></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Embed data inline to avoid cross-origin issues -->
+<script id="data" type="application/json"></script>
+
+<script>
+// ====== I18N (English/Spanish) ======
+const I18N = {
+  en: {
+    title: 'Panama Wells & Springs',
+    subtitle: 'Symbolized by primary use; squares = wells, triangles = springs.',
+    filters: 'Filters',
+    featureTypes: 'Feature types',
+    useTypes: 'Use types',
+    province: 'Province',
+    district: 'District',
+    subdistrict: 'Subdistrict',
+    elevation: 'Elevation (m)',
+    depth: 'Depth (m) — wells only',
+    liveAvgs: 'Live Averages (Filtered)',
+    avgElevation: 'Avg. Elevation',
+    avgDepth: 'Avg. Well Depth',
+    legend: 'Legend',
+    well: 'Well',
+    spring: 'Spring',
+    sources: 'Sources',
+  },
+  es: {
+    title: 'Pozos y Manantiales de Panamá',
+    subtitle: 'Simbología por uso principal; cuadrados = pozos, triángulos = manantiales.',
+    filters: 'Filtros',
+    featureTypes: 'Tipos de elemento',
+    useTypes: 'Tipos de uso',
+    province: 'Provincia',
+    district: 'Distrito',
+    subdistrict: 'Corregimiento',
+    elevation: 'Elevación (m)',
+    depth: 'Profundidad (m) — solo pozos',
+    liveAvgs: 'Promedios en vivo (filtrado)',
+    avgElevation: 'Elevación prom.',
+    avgDepth: 'Profundidad prom. de pozos',
+    legend: 'Leyenda',
+    well: 'Pozo',
+    spring: 'Manantial',
+    sources: 'Fuentes',
+  }
+};
+let LANG = 'en';
+function setLang(k){
+  LANG=k; const t=I18N[k];
+  byId('title').textContent=t.title;
+  byId('subtitle').textContent=t.subtitle;
+  byId('filtersLbl').textContent=t.filters;
+  byId('typeLbl').textContent=t.featureTypes;
+  byId('useLbl').textContent=t.useTypes;
+  byId('provLbl').textContent=t.province;
+  byId('distLbl').textContent=t.district;
+  byId('subdLbl').textContent=t.subdistrict;
+  byId('elevLbl').textContent=t.elevation;
+  byId('depthLbl').textContent=t.depth;
+  byId('statsHdr').textContent=t.liveAvgs;
+  byId('avgElevLbl').textContent=t.avgElevation;
+  byId('avgDepthLbl').textContent=t.avgDepth;
+  byId('legendHdr').textContent=t.legend;
+  byId('wellLbl').textContent=t.well;
+  byId('springLbl').textContent=t.spring;
+  byId('langBtn').textContent=(k==='en'?'ES':'EN');
+}
+
+function byId(id){return document.getElementById(id)}
+
+// ====== Embedded dataset payload (injected below) ======
+const GEOJSON = null; // placeholder; will be assigned after injection
+
+// ====== Colors (by Use) ======
+const PALETTE = {
+  'Domestic': '#5cc8ff',
+  'Commercial': '#f59e0b',
+  'Farming': '#22c55e',
+  'Industrial': '#ef4444',
+  'Tourism': '#a78bfa',
+  'Scenic': '#f472b6',
+  'Unknown': '#9ca3af'
+};
+
+// ====== Leaflet setup ======
+const map = L.map('map', { zoomControl:false, preferCanvas:true });
+
+// Colorful topo + hillshade stack
+const esriTopo = L.tileLayer('https://{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+  subdomains: ['server','services'],
+  attribution: 'Tiles © Esri — Esri, FAO, NOAA, USGS, © OpenStreetMap contributors | Created using Web Mapper GPT'
+}).addTo(map);
+const hillshade = L.tileLayer('https://{s}.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}', {
+  subdomains: ['server','services'], opacity: 0.45, attribution: ''
+}).addTo(map);
+
+// Container for markers
+const layerGroup = L.layerGroup().addTo(map);
+
+// State
+let features = []; // normalized feature objects
+let extent = {minX: 180, minY: 90, maxX: -180, maxY: -90};
+let wellsElev = [], wellsDepth = [];
+let elevMin=0, elevMax=0, depthMin=0, depthMax=0;
+
+// UI elements
+const typeChips = byId('typeChips');
+const useChips = byId('useChips');
+const provSelect = byId('provSelect');
+const distSelect = byId('distSelect');
+const subdSelect = byId('subdSelect');
+
+const elevMinR = byId('elevMin');
+const elevMaxR = byId('elevMax');
+const elevMinTxt = byId('elevMinTxt');
+const elevMaxTxt = byId('elevMaxTxt');
+const depthGroup = byId('depthGroup');
+const depthMinR = byId('depthMin');
+const depthMaxR = byId('depthMax');
+const depthMinTxt = byId('depthMinTxt');
+const depthMaxTxt = byId('depthMaxTxt');
+
+// Legend
+const legendList = byId('legendList');
+
+// Stats box
+const avgElevVal = byId('avgElevVal');
+const avgDepthVal = byId('avgDepthVal');
+
+// ====== Helpers ======
+function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+function avg(arr){ return arr.length ? (arr.reduce((s,x)=>s+x,0)/arr.length) : NaN; }
+function pct(val, min, max){ if(max===min) return 0; return clamp((val-min)/(max-min),0,1); }
+function fmt(n){ return Number.isFinite(n) ? n.toLocaleString(undefined,{maximumFractionDigits:2}) : '—'; }
+function uniq(arr){ return [...new Set(arr)].sort((a,b)=> String(a).localeCompare(String(b))); }
+function makeOption(txt){ const o=document.createElement('option'); o.value=txt; o.textContent=txt; return o; }
+function clearChildren(el){ while(el.firstChild) el.removeChild(el.firstChild); }
+
+function updateExtent([x,y]){
+  extent.minX = Math.min(extent.minX, x);
+  extent.maxX = Math.max(extent.maxX, x);
+  extent.minY = Math.min(extent.minY, y);
+  extent.maxY = Math.max(extent.maxY, y);
+}
+
+// Create a Leaflet DivIcon marker with square or triangle shape, filled with use-color
+function makeMarker(f){
+  const color = PALETTE[f.use] || '#9ca3af';
+  const isWell = f.type === 'Well';
+  const cls = isWell ? 'wm-square' : 'wm-triangle';
+  const html = `<div class="wm-marker wm-outline ${cls}" style="color:${color}"><div class="wm-inner"></div></div>`;
+  const icon = L.divIcon({ html, className: 'wm-icon', iconSize:[18,18], iconAnchor:[9,9] });
+  return L.marker([f.lat, f.lng], { icon });
+}
+
+// Popup small viz bar (percentile marker)
+function smallViz(value, min, max, label){
+  const p = pct(value, min, max); // 0..1
+  const pos = (p*100).toFixed(1)+'%';
+  return `
+  <div class="viz">
+    <svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-label="${label}">
+      <rect x="0" y="3" width="100" height="2" fill="#223046" />
+      <rect x="0" y="3" width="${p*100}" height="2" />
+      <circle cx="${p*100}" cy="4" r="2.5" />
+    </svg>
+    <div class="kv"><div class="k">${label}</div><div>${fmt(value)} (P${Math.round(p*100)})</div></div>
+  </div>`;
+}
+
+function buildPopup(f){
+  const color = PALETTE[f.use] || '#9ca3af';
+  const t = I18N[LANG];
+  const elViz = smallViz(f.elev, elevMin, elevMax, t.elevation);
+  const depthViz = f.type==='Well' ? smallViz(f.depth, depthMin, depthMax, t.depth) : '';
+  const useChip = `<span class="use-chip" style="color:${color}"><span class="use-dot"></span>${f.use}</span>`;
+  const typeLabel = f.type==='Well'? t.well : t.spring;
+  return `
+    <div class="popup">
+      <div class="kv"><div class="k">ID</div><div>${f.id}</div></div>
+      <div class="kv"><div class="k">Type</div><div>${typeLabel}</div></div>
+      <div class="kv"><div class="k">${t.province}</div><div>${f.province}</div></div>
+      <div class="kv"><div class="k">${t.district}</div><div>${f.district}</div></div>
+      <div class="kv"><div class="k">${t.subdistrict}</div><div>${f.subdistrict}</div></div>
+      <div class="kv"><div class="k">Use</div><div>${useChip}</div></div>
+      <div class="kv"><div class="k">${t.elevation}</div><div>${fmt(f.elev)} m</div></div>
+      ${elViz}
+      ${f.type==='Well' ? `<div class="kv"><div class="k">${t.depth}</div><div>${fmt(f.depth)} m</div></div>` : ''}
+      ${depthViz}
+    </div>`;
+}
+
+function applyMaxBounds(){
+  const pad = 10; // degrees per requirement
+  const sw = L.latLng(extent.minY - pad, extent.minX - pad);
+  const ne = L.latLng(extent.maxY + pad, extent.maxX + pad);
+  const bounds = L.latLngBounds(sw, ne);
+  map.setMaxBounds(bounds);
+  map.fitBounds([[extent.minY, extent.minX],[extent.maxY, extent.maxX]], { padding:[20,20] });
+}
+
+// ====== Filtering ======
+const state = {
+  types: new Set(['Well','Spring']),
+  uses: new Set(), // empty means all
+  province: 'All',
+  district: 'All',
+  subdistrict: 'All',
+  elevMin: null, elevMax: null,
+  depthMin: null, depthMax: null,
+};
+
+function passesFilters(f){
+  if(!state.types.has(f.type)) return false;
+  if(state.uses.size && !state.uses.has(f.use)) return false;
+  if(state.province!=='All' && f.province!==state.province) return false;
+  if(state.district!=='All' && f.district!==state.district) return false;
+  if(state.subdistrict!=='All' && f.subdistrict!==state.subdistrict) return false;
+  if(state.elevMin!=null && f.elev < state.elevMin) return false;
+  if(state.elevMax!=null && f.elev > state.elevMax) return false;
+  if(f.type==='Well'){
+    if(state.depthMin!=null && f.depth < state.depthMin) return false;
+    if(state.depthMax!=null && f.depth > state.depthMax) return false;
+  }
+  return true;
+}
+
+function refresh(){
+  layerGroup.clearLayers();
+  const inView = [];
+  for(const f of features){
+    if(!passesFilters(f)) continue;
+    const m = makeMarker(f).addTo(layerGroup);
+    m.bindPopup(buildPopup(f));
+    inView.push(f);
+  }
+  // Update stats
+  const elevs = inView.map(d=>d.elev).filter(Number.isFinite);
+  const depths = inView.filter(d=>d.type==='Well').map(d=>d.depth).filter(Number.isFinite);
+  avgElevVal.textContent = elevs.length? `${fmt(avg(elevs))} m` : '—';
+  avgDepthVal.textContent = depths.length? `${fmt(avg(depths))} m` : '—';
+
+  // Depth UI visibility: only show when wells are part of selection
+  const anyWell = state.types.has('Well');
+  depthGroup.style.display = anyWell ? 'block' : 'none';
+}
+
+// ====== UI wiring ======
+function chip(label, value, checked, onChange){
+  const el=document.createElement('label'); el.className='chip';
+  const input=document.createElement('input'); input.type='checkbox'; input.checked=checked; input.addEventListener('change', e=> onChange(e.target.checked));
+  el.appendChild(input); el.appendChild(document.createTextNode(label));
+  return el;
+}
+
+function buildTypeChips(){
+  clearChildren(typeChips);
+  const items = [ ['Well', I18N[LANG].well], ['Spring', I18N[LANG].spring] ];
+  for(const [val, lab] of items){
+    const c = chip(lab, val, state.types.has(val), (ck)=>{ ck? state.types.add(val) : state.types.delete(val); refresh(); });
+    typeChips.appendChild(c);
+  }
+}
+
+function buildUseChips(){
+  clearChildren(useChips);
+  const uses = uniq(features.map(f=>f.use));
+  for(const u of uses){
+    const c = chip(u, u, state.uses.size? state.uses.has(u) : true, (ck)=>{
+      if(!state.uses.size){ // initialize with all on first interaction
+        state.uses = new Set(uses);
+      }
+      ck? state.uses.add(u) : state.uses.delete(u);
+      // If none selected, interpret as all
+      if(state.uses.size===0){ state.uses = new Set(); }
+      refresh();
+    });
+    // color pip
+    c.style.borderColor = '#243244'; c.style.background = 'var(--chip)'; c.style.color = PALETTE[u]||'#9ca3af';
+    useChips.appendChild(c);
+  }
+}
+
+function buildAdminSelects(){
+  const provinces = ['All', ...uniq(features.map(f=>f.province))];
+  clearChildren(provSelect); provinces.forEach(v=>provSelect.appendChild(makeOption(v)));
+  const updateDistricts = ()=>{
+    const dists = ['All', ...uniq(features.filter(f=> state.province==='All' || f.province===state.province).map(f=>f.district))];
+    clearChildren(distSelect); dists.forEach(v=>distSelect.appendChild(makeOption(v)));
+    state.district='All';
+    updateSubdistricts();
+  };
+  const updateSubdistricts = ()=>{
+    const subs = ['All', ...uniq(features.filter(f=> (state.province==='All' || f.province===state.province) && (state.district==='All' || f.district===state.district)).map(f=>f.subdistrict))];
+    clearChildren(subdSelect); subs.forEach(v=>subdSelect.appendChild(makeOption(v)));
+    state.subdistrict='All';
+  };
+  provSelect.onchange = ()=>{ state.province=provSelect.value; updateDistricts(); refresh(); };
+  distSelect.onchange = ()=>{ state.district=distSelect.value; updateSubdistricts(); refresh(); };
+  subdSelect.onchange = ()=>{ state.subdistrict=subdSelect.value; refresh(); };
+  updateDistricts();
+}
+
+function buildSliders(){
+  elevMinR.min = elevMin; elevMinR.max = elevMax; elevMaxR.min = elevMin; elevMaxR.max = elevMax; elevMinR.value = elevMin; elevMaxR.value = elevMax;
+  depthMinR.min = depthMin; depthMinR.max = depthMax; depthMaxR.min = depthMin; depthMaxR.max = depthMax; depthMinR.value = depthMin; depthMaxR.value = depthMax;
+  const syncElev = ()=>{ state.elevMin = +elevMinR.value; state.elevMax = +elevMaxR.value; if(state.elevMin>state.elevMax){ [state.elevMin,state.elevMax]=[state.elevMax,state.elevMin]; elevMinR.value=state.elevMin; elevMaxR.value=state.elevMax; } elevMinTxt.textContent = fmt(state.elevMin)+' m'; elevMaxTxt.textContent = fmt(state.elevMax)+' m'; refresh(); };
+  const syncDepth = ()=>{ state.depthMin = +depthMinR.value; state.depthMax = +depthMaxR.value; if(state.depthMin>state.depthMax){ [state.depthMin,state.depthMax]=[state.depthMax,state.depthMin]; depthMinR.value=state.depthMin; depthMaxR.value=state.depthMax; } depthMinTxt.textContent = fmt(state.depthMin)+' m'; depthMaxTxt.textContent = fmt(state.depthMax)+' m'; refresh(); };
+  ['input','change'].forEach(ev=>{ elevMinR.addEventListener(ev, syncElev); elevMaxR.addEventListener(ev, syncElev); depthMinR.addEventListener(ev, syncDepth); depthMaxR.addEventListener(ev, syncDepth); });
+  // initialize text
+  state.elevMin = elevMin; state.elevMax = elevMax; elevMinTxt.textContent = fmt(elevMin)+' m'; elevMaxTxt.textContent = fmt(elevMax)+' m';
+  state.depthMin = depthMin; state.depthMax = depthMax; depthMinTxt.textContent = fmt(depthMin)+' m'; depthMaxTxt.textContent = fmt(depthMax)+' m';
+}
+
+function buildLegend(){
+  clearChildren(legendList);
+  const uses = Object.keys(PALETTE);
+  for(const u of uses){
+    const li=document.createElement('li');
+    li.innerHTML = `<span class="sym" style="color:${PALETTE[u]}"><span class="sq"></span></span> <span>${u}</span>`;
+    legendList.appendChild(li);
+  }
+}
+
+function wireLegendToggle(){
+  const t=byId('legendToggle');
+  const body=byId('legendBody');
+  let open=true; t.onclick=()=>{ open=!open; body.style.display=open?'block':'none'; t.textContent=open?'−':'+'; };
+}
+
+function wireModals(){
+  const modal=byId('sourceModal');
+  byId('srcBtn').onclick=()=>{ modal.style.display='flex'; };
+  byId('closeSrc').onclick=()=>{ modal.style.display='none'; };
+  modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.style.display='none'; });
+}
+
+// Language toggle button
+byId('langBtn').addEventListener('click', ()=> setLang(LANG==='en'?'es':'en'));
+
+// ====== Boot ======
+(async function init(){
+  // Inject geojson text from <script id="data">
+  const gj = await fetch('Wells.geojson').then(r => r.json());
+
+  // Normalize features
+  for(const f of gj.features){
+    const p=f.properties||{}; const c=f.geometry&&f.geometry.coordinates; if(!c) continue;
+    const obj = {
+      id: p['Unique ID'],
+      type: p['Source'],                         // 'Well' | 'Spring'
+      use: p['Use'] || 'Unknown',
+      elev: +p['Elevation ('],                   // meters (field is named "Elevation (" in file)
+      depth: +p['Depth (m)'],                    // meters (may be 0 for springs)
+      province: p['Province']||'Unknown',
+      district: p['District']||'Unknown',
+      subdistrict: p['SubDistrict']||'Unknown',
+      lng: +c[0], lat:+c[1]
+    };
+    features.push(obj);
+    updateExtent([obj.lng,obj.lat]);
+    if(obj.type==='Well'){
+      wellsElev.push(obj.elev);
+      if(Number.isFinite(obj.depth)) wellsDepth.push(obj.depth);
+    }
+  }
+
+  elevMin = Math.floor(Math.min(...features.map(d=>d.elev)));
+  elevMax = Math.ceil(Math.max(...features.map(d=>d.elev)));
+  depthMin = Math.floor(Math.min(...wellsDepth));
+  depthMax = Math.ceil(Math.max(...wellsDepth));
+
+  applyMaxBounds();
+  buildTypeChips();
+  buildUseChips();
+  buildAdminSelects();
+  buildSliders();
+  buildLegend();
+  wireLegendToggle();
+  wireModals();
+  setLang('en');
+  refresh();
+})();
+</script>
+
+<!-- Inject the GeoJSON payload (serialized below by Web Mapper GPT) -->
+<script>
+// Place a copy of `Wells.geojson` in the same folder as this HTML file. The app will fetch it at runtime.
+</script>
+
+</body>
+</html>
