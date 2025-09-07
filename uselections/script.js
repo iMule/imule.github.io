@@ -46,41 +46,138 @@
   };
   const pad2 = (s) => (s==null? "": String(s).padStart(2,"0"));
 
-  // ---------- Fetch / cache dataset ----------
-  async function getDataset() {
-    const key = "usPres_1948_2020_v1";
-    const cached = localStorage.getItem(key);
-    if (cached) return JSON.parse(cached);
+  // --- Data sources ---
+  const MEDSL_URL = "https://dataverse.harvard.edu/api/access/datafile/3440651"; // President 1976–2020, state-level CSV
+  // 1) Local optional file you can provide (fastest & offline)
+  const LOCAL_48_72 = "data/elections-1948-1972.json"; // if present, we use it
+  // 2) CSV mirror compiled from Wikipedia (state-level, 1864–2020) — we'll filter to 1948–1972
+  // If this mirror is down, we fall back to (3). (You can swap this to your own mirror easily.)
+  const WIKI_STATE_CSV = "https://raw.githubusercontent.com/jaytimm/PresElectionResults/master/data-raw/pres_by_state.csv";
 
-    // Fetch 1948–1972 (precompiled from Wikipedia)
-    const oldRows = await fetch(WIKI48_72).then(r=>r.json());
+  // tiny toast
+  function toast(msg){ 
+    const t = document.body.appendChild(Object.assign(document.createElement('div'), {className:'toast', textContent: msg}));
+    setTimeout(()=>t.remove(), 4000);
+  }
 
-    // Fetch MEDSL 1976–2020 CSV (state returns)
-    const medsl = await fetch(MEDSL_URL).then(r=>r.text());
-    const rows = csvParseSimple(medsl)
-      .filter(r => r.office === "President" && r.state_po && +r.year >= 1976)
-      .map(r => {
-        // Try flexible field names (MEDSL schema revs)
+  // simple CSV parser (no quotes in source)
+  function parseCSV(text){
+    const [header,...rows]=text.trim().split(/\r?\n/);
+    const cols = header.split(",");
+    return rows.map(r=>{
+      const v = r.split(",");
+      const o={}; cols.forEach((c,i)=>o[c]=v[i]); return o;
+    });
+  }
+  const pct = (x)=> (x==null||x==="")? null : (+x>1? +x/100 : +x);
+  const pad2 = s => String(s??"").padStart(2,"0");
+
+  // live Wikipedia fallback (per year) — robust against single-URL 404s
+  async function fetchWikiPerYear(start=1948,end=1972){
+    const out=[];
+    for(let y=start;y<=end;y+=4){
+      const url = `https://en.wikipedia.org/api/rest_v1/page/html/${y}_United_States_presidential_election`;
+      try{
+        const html = await fetch(url, {headers:{'accept':'text/html'}}).then(r=>r.ok?r.text():Promise.reject());
+        // very lightweight parse: look for the "Results by state" table rows
+        // Each row includes state abbrev in parentheses or a "EV" cell; we grab DEM/REP/OTH %, EV, winner color (approx).
+        // NOTE: Wikipedia tables vary slightly; this grabs the common case and skips rows that don't match.
+        const dom = new DOMParser().parseFromString(html, "text/html");
+        const tables = Array.from(dom.querySelectorAll("table")).filter(t=>/Results by state/i.test(t.textContent));
+        const tb = tables[0] || dom.querySelector("table.wikitable");
+        if(!tb){ toast(`Couldn’t parse ${y} from Wikipedia (no table)`); continue; }
+        const rows = Array.from(tb.querySelectorAll("tr")).slice(1);
+        rows.forEach(tr=>{
+          const cells = tr.querySelectorAll("td,th");
+          if(cells.length < 6) return;
+          const stateCell = cells[0].textContent.trim();
+          const m = stateCell.match(/\b([A-Z]{2})\b/); // pull USPS abbrev if present
+          const abbr = m ? m[1] : null;
+          if(!abbr) return;
+          const getPct = td => {
+            const m = td.textContent.replace(/[^0-9.\-]/g,"").match(/[0-9.]+/);
+            return m ? +m[0]/100 : null;
+          };
+          // heuristic: DEM %, REP %, OTH % appear in nearby cells; EV is a cell with small integer
+          const ev = +(cells[cells.length-1].textContent.replace(/[^\d]/g,"")) || null;
+          // find three largest percentages in row and map by the color labels if present
+          const pcts = Array.from(cells).map(getPct).filter(x=>x!=null).sort((a,b)=>b-a);
+          const dem_pct = pcts[0]; const rep_pct = pcts[1]; const oth_pct = pcts[2] ?? Math.max(0,1-(dem_pct??0)-(rep_pct??0));
+          const winner_party = (dem_pct!=null && rep_pct!=null) ? (dem_pct>rep_pct?"DEM":"REP") : "OTH";
+          out.push({year:y, state:null, abbr, state_fips:null, ev, dem_pct, rep_pct, oth_pct, winner_party, winner_name:"", runner_name:"", dem_name:"", rep_name:""});
+        });
+      }catch(e){
+        toast(`Couldn’t fetch Wikipedia for ${y}`);
+      }
+    }
+    return out;
+  }
+
+  async function getDataset(){
+    // 1) MEDSL (authoritative 1976–2020)
+    const medslTxt = await fetch(MEDSL_URL).then(r=>r.text());
+    const medRows = parseCSV(medslTxt)
+      .filter(r => r.office==="President" && +r.year>=1976)
+      .map(r=>{
         const dem = pct(r.democratic_percentage ?? r.dem_pct);
         const rep = pct(r.republican_percentage ?? r.rep_pct);
-        const oth = (dem!=null && rep!=null) ? Math.max(0, 1 - dem - rep) : null;
-        // Normalize winner
+        const oth = (dem!=null && rep!=null) ? Math.max(0, 1-dem-rep) : null;
         const w = (r.winner || r.winner_party || r.party || "").toUpperCase();
         const winner_party = w.includes("DEMOCRAT")||w==="DEM" ? "DEM" : w.includes("REPUBLICAN")||w==="REP" ? "REP" : "OTH";
         return {
-          year:+r.year,
-          state:r.state,
-          abbr:r.state_po,
-          state_fips: pad2(r.state_fips),
+          year:+r.year, state:r.state, abbr:r.state_po, state_fips:pad2(r.state_fips),
           ev:+(r.total_electoral_votes || r.ev || 0),
-          dem_pct:dem, rep_pct:rep, oth_pct:oth,
-          winner_party,
-          winner_name: r.winner_name || "",
-          runner_name: r.runnerup_name || "",
-          dem_name: r.dem_candidate || "",
-          rep_name: r.rep_candidate || ""
+          dem_pct:dem, rep_pct:rep, oth_pct:oth, winner_party,
+          winner_name:r.winner_name||"", runner_name:r.runnerup_name||"",
+          dem_name:r.dem_candidate||"", rep_name:r.rep_candidate||""
         };
       });
+
+    // 2a) Try local 1948–1972 JSON if the user dropped one in /data/
+    try{
+      const local = await fetch(LOCAL_48_72, {cache:"no-store"});
+      if(local.ok){
+        const a = await local.json();
+        toast("Loaded 1948–1972 from local file.");
+        return [...a, ...medRows];
+      }
+    }catch(e){/* ignore */}
+
+    // 2b) Try CSV mirror compiled from Wikipedia (filter 1948–1972)
+    try{
+      const csv = await fetch(WIKI_STATE_CSV, {mode:"cors"});
+      if(csv.ok){
+        const txt = await csv.text();
+        const rows = parseCSV(txt)
+          .filter(r => +r.year>=1948 && +r.year<=1972 && r.state_abbrev)
+          .map(r=>{
+            const dem = pct(r.democrat), rep = pct(r.republican);
+            return {
+              year:+r.year, state:null, abbr:r.state_abbrev, state_fips:null,
+              ev: +(r.ec_total ? (+r.ec_total * ( (dem||0) > (rep||0) ? 0 : 0)) : 0), // EV per state not in this CSV; will fill via MEDSL-era or leave 0 (we’ll annotate)
+              dem_pct:dem, rep_pct:rep, oth_pct: pct(r.other),
+              winner_party: (r.party_win||"").toLowerCase().includes("dem")?"DEM":(r.party_win||"").toLowerCase().includes("rep")?"REP":"OTH",
+              winner_name:r.winner||"", runner_name:"", dem_name:"", rep_name:""
+            };
+          });
+        toast("Loaded 1948–1972 from Wikipedia-derived mirror.");
+        return [...rows, ...medRows];
+      }
+    }catch(e){/* ignore */}
+
+    // 3) Last resort: live Wikipedia fetch per year (slower, but no 404)
+    toast("Building 1948–1972 from Wikipedia live…");
+    const wiki = await fetchWikiPerYear(1948,1972);
+    if (wiki.length){
+      toast("Done. (You can export this as data/elections-1948-1972.json to cache offline.)");
+      return [...wiki, ...medRows];
+    }
+
+    // Fallback to modern years only
+    toast("Older years unavailable right now; showing 1976–2020. Add data/elections-1948-1972.json to enable the full timeline.");
+    return medRows;
+  }
+
 
     // Merge
     const merged = [...oldRows, ...rows].map(d => ({...d, state_fips: pad2(d.state_fips)}));
@@ -131,7 +228,8 @@
     const slider = document.getElementById("year");
     const yearVal = document.getElementById("yearVal");
     slider.min = years[0]; slider.max = years.at(-1); slider.value = years[0]; yearVal.textContent = slider.value;
-
+    document.getElementById('hudToggle').onclick = () => document.getElementById('hud').classList.toggle('collapsed');
+    
     // ---------- Caricatures ----------
     const faceA = document.getElementById("faceA");
     const faceB = document.getElementById("faceB");

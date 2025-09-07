@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>US Presidential Elections (1948–2020) • Albers USA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="preload" href="data/states-albers-10m.json" as="fetch" crossorigin>
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json" as="fetch" crossorigin>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
@@ -68,7 +68,15 @@
         </div>
         <div class="note">Glow indicates national winner.</div>
       </div>
-
+      <div id="hud" class="panel">
+        <button id="hudToggle" class="mini" title="Collapse">–</button>
+        <div class="row">
+            <label for="year">Election year</label>
+            <input type="range" id="year" min="1948" max="2020" step="4" value="1976" />
+            <span id="yearVal">1976</span>
+            <button id="play" class="ghost">▶︎</button>
+        </div>
+      </div>
       <!-- Hover popover with sparkline -->
       <div id="hoverPanel" class="popover" hidden>
         <div class="hdr">
