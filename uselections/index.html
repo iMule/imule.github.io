@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>US Presidential Elections (1948–2020) • Albers USA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="data/states-albers-10m.json" as="fetch" crossorigin>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+</head>
+<body>
+  <header class="bar">
+    <div class="title">
+      <h1>US Presidential Elections (1948–2020)</h1>
+      <p>Albers Equal-Area with AK/HI insets • Created using Web Mapper GPT</p>
+    </div>
+    <div class="controls">
+      <label for="year">Election year:</label>
+      <input type="range" id="year" min="1948" max="2020" step="4" value="1948" />
+      <span id="yearVal">1948</span>
+      <button id="play" class="ghost">▶︎ Play</button>
+      <button id="aboutBtn" class="ghost">Data & credits</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="mapWrap">
+      <svg id="map" role="img" aria-label="US states colored by winner">
+        <defs>
+          <filter id="winnerHalo">
+            <feMorphology operator="dilate" radius="1.2"/>
+            <feGaussianBlur stdDeviation="1"/>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- glow for hover panel pin -->
+          <filter id="softGlow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+      </svg>
+
+      <!-- Candidate panels -->
+      <aside class="faces left" id="candLeft">
+        <div class="faceWrap">
+          <div class="svgFace" id="faceA"></div>
+          <div class="meta">
+            <div class="name" id="nameA">Candidate A</div>
+            <div class="ev" id="evA">EV: 0</div>
+          </div>
+        </div>
+      </aside>
+      <aside class="faces right" id="candRight">
+        <div class="faceWrap">
+          <div class="svgFace" id="faceB"></div>
+          <div class="meta">
+            <div class="name" id="nameB">Candidate B</div>
+            <div class="ev" id="evB">EV: 0</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Legend -->
+      <div id="legend" class="panel">
+        <h3>Legend</h3>
+        <div class="swatches">
+          <span><i class="sw red"></i>Republican</span>
+          <span><i class="sw blue"></i>Democratic</span>
+          <span><i class="sw yellow"></i>Third party</span>
+        </div>
+        <div class="note">Glow indicates national winner.</div>
+      </div>
+
+      <!-- Hover popover with sparkline -->
+      <div id="hoverPanel" class="popover" hidden>
+        <div class="hdr">
+          <strong id="hpName">State</strong>
+          <span id="hpEV"></span>
+        </div>
+        <svg id="spark" width="220" height="56" aria-label="D−R margin sparkline"></svg>
+        <div class="row"><span id="hpWinner"></span><span id="hpPct"></span></div>
+      </div>
+    </div>
+
+    <!-- Bottom EV proportion chart -->
+    <section id="chartWrap">
+      <h3>State Electoral Votes and Swing from 50%</h3>
+      <svg id="evChart" aria-label="Stacked EV by state, colored by margin from 50%"></svg>
+      <div class="chartNote">Each state’s segment is sized by its electoral votes for the selected year; color shows (Dem%−Rep%) divergence from 50% (RdBu diverging). Third-party winners appear yellow.</div>
+    </section>
+  </main>
+
+  <!-- Data sources modal -->
+  <dialog id="about">
+    <article>
+      <header><h3>Data sources & credits</h3></header>
+      <ul>
+        <li>State geometries (TopoJSON, **already projected Albers USA**): <code>states-albers-10m.json</code> from <em>us-atlas</em>. :contentReference[oaicite:1]{index=1}</li>
+        <li>Election results **1976–2020** (state level): MIT Election Data & Science Lab (MEDSL), Harvard Dataverse. :contentReference[oaicite:2]{index=2}</li>
+        <li>Election results **1948–1972**: compiled from Wikipedia “Results by state” tables for each year. (CC BY-SA). Examples: 1948, 1972. :contentReference[oaicite:3]{index=3}</li>
+      </ul>
+      <p>Projection: <strong>Albers USA</strong> (equal-area) with Alaska & Hawaii insets.</p>
+      <button id="aboutClose">Close</button>
+    </article>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
