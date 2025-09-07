@@ -1,27 +1,27 @@
 /* US Elections Map — Albers USA with AK/HI insets (states-albers TopoJSON)
- * Features:
- *  • Full 1948–2020 dataset downloaded on first load (Wikipedia 1948–1972; MEDSL 1976–2020), cached in localStorage
- *  • Year slider, state fills (RED/BLUE/YELLOW), winner glow
- *  • Candidate caricatures (procedural SVG)
- *  • Per-state EV labels (abbr), tooltips
- *  • Hover popover with sparkline of D–R margin across years (color by winner)
- *  • Bottom D3 EV-share strip chart colored by |margin from 50%|
- * Notes: ME/NE treated as winner-take-all here; we can add CD splits later.
+ * Network-sane version:
+ *  • Loads a single local file: /data/elections.json  (full 1948–2020 you’ll generate)
+ *  • If missing, falls back to /data/elections.sample.json and shows a toast
+ *  • No live fetches to Harvard/Wikipedia ⇒ no CORS problems at runtime
+ *  • Year slider HUD on-map; winner glow; candidate caricatures; hover sparkline; EV strip chart
+ *  • ME/NE treated WTA (can add CD splits later)
  */
 (async function () {
   // ---------- Config ----------
-  const topoUrl = "data/states-albers-10m.json"; // Albers USA projection with AK/HI insets (us-atlas)
-  const MEDSL_URL = "https://dataverse.harvard.edu/api/access/datafile/3440651"; // U.S. President 1976–2020 (state-level). :contentReference[oaicite:4]{index=4}
-  // Curated JSON for 1948–1972 (clean parse from Wikipedia "Results by state" tables).
-  const WIKI48_72 = "https://raw.githubusercontent.com/vis-utils/us-presidential-1948-1972/main/wiki_1948_1972.json"; // 1948–1972. :contentReference[oaicite:5]{index=5}
+  // Use the official us-atlas TopoJSON (already projected Albers USA; AK/HI insets)
+  const topoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json";
+  // Primary dataset (place this file locally); fallback to a tiny sample if absent
+  const dataPrimary = "data/elections.json";
+  const dataFallback = "data/elections.sample.json";
 
   const MAP_SEL = d3.select("#map");
   const WIDTH  = MAP_SEL.node().clientWidth;
   const HEIGHT = MAP_SEL.node().clientHeight;
 
+  // Party & swing colors
   const colorParty = d3.scaleOrdinal()
     .domain(["DEM", "REP", "OTH"])
-    .range(["#1f77b4", "#d62728", "#f2c744"]); // blue, red, yellow
+    .range(["#1f77b4", "#d62728", "#f2c744"]);
 
   // ---------- Loading state ----------
   const loading = MAP_SEL.append("text")
@@ -29,173 +29,43 @@
     .attr("fill", "#a8b0ba").attr("text-anchor", "middle")
     .text("Loading map & data…");
 
-  // ---------- Helpers ----------
-  const csvParseSimple = (text) => {
-    // lightweight parser for MEDSL CSV (fields are simple)
-    const lines = text.trim().split(/\r?\n/);
-    const cols = lines[0].split(",");
-    return lines.slice(1).map(line=>{
-      const vals = line.split(",");
-      const o={}; cols.forEach((c,i)=>o[c]=vals[i]); return o;
+  // ---------- tiny toast ----------
+  function toast(msg, ms=3800){
+    const t = document.body.appendChild(Object.assign(document.createElement("div"), {
+      className:"toast",
+      textContent:msg
+    }));
+    Object.assign(t.style,{
+      position:"fixed", left:"1rem", bottom:"1rem", zIndex:9999,
+      background:"#1d2130", color:"#e8eaed", border:"1px solid #2b3140",
+      padding:".5rem .65rem", borderRadius:"10px", boxShadow:"0 8px 24px rgba(0,0,0,.4)",
+      font:"13px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Arial"
     });
-  };
-  const pct = (n) => {
-    const x = +n; if (!isFinite(x)) return null;
-    // MEDSL sometimes stores pct as 0-100; normalize to 0-1
-    return (x>1? x/100 : x);
-  };
-  const pad2 = (s) => (s==null? "": String(s).padStart(2,"0"));
-
-  // --- Data sources ---
-  const MEDSL_URL = "https://dataverse.harvard.edu/api/access/datafile/3440651"; // President 1976–2020, state-level CSV
-  // 1) Local optional file you can provide (fastest & offline)
-  const LOCAL_48_72 = "data/elections-1948-1972.json"; // if present, we use it
-  // 2) CSV mirror compiled from Wikipedia (state-level, 1864–2020) — we'll filter to 1948–1972
-  // If this mirror is down, we fall back to (3). (You can swap this to your own mirror easily.)
-  const WIKI_STATE_CSV = "https://raw.githubusercontent.com/jaytimm/PresElectionResults/master/data-raw/pres_by_state.csv";
-
-  // tiny toast
-  function toast(msg){ 
-    const t = document.body.appendChild(Object.assign(document.createElement('div'), {className:'toast', textContent: msg}));
-    setTimeout(()=>t.remove(), 4000);
+    setTimeout(()=>t.remove(), ms);
   }
 
-  // simple CSV parser (no quotes in source)
-  function parseCSV(text){
-    const [header,...rows]=text.trim().split(/\r?\n/);
-    const cols = header.split(",");
-    return rows.map(r=>{
-      const v = r.split(",");
-      const o={}; cols.forEach((c,i)=>o[c]=v[i]); return o;
-    });
-  }
-  const pct = (x)=> (x==null||x==="")? null : (+x>1? +x/100 : +x);
-  const pad2 = s => String(s??"").padStart(2,"0");
-
-  // live Wikipedia fallback (per year) — robust against single-URL 404s
-  async function fetchWikiPerYear(start=1948,end=1972){
-    const out=[];
-    for(let y=start;y<=end;y+=4){
-      const url = `https://en.wikipedia.org/api/rest_v1/page/html/${y}_United_States_presidential_election`;
-      try{
-        const html = await fetch(url, {headers:{'accept':'text/html'}}).then(r=>r.ok?r.text():Promise.reject());
-        // very lightweight parse: look for the "Results by state" table rows
-        // Each row includes state abbrev in parentheses or a "EV" cell; we grab DEM/REP/OTH %, EV, winner color (approx).
-        // NOTE: Wikipedia tables vary slightly; this grabs the common case and skips rows that don't match.
-        const dom = new DOMParser().parseFromString(html, "text/html");
-        const tables = Array.from(dom.querySelectorAll("table")).filter(t=>/Results by state/i.test(t.textContent));
-        const tb = tables[0] || dom.querySelector("table.wikitable");
-        if(!tb){ toast(`Couldn’t parse ${y} from Wikipedia (no table)`); continue; }
-        const rows = Array.from(tb.querySelectorAll("tr")).slice(1);
-        rows.forEach(tr=>{
-          const cells = tr.querySelectorAll("td,th");
-          if(cells.length < 6) return;
-          const stateCell = cells[0].textContent.trim();
-          const m = stateCell.match(/\b([A-Z]{2})\b/); // pull USPS abbrev if present
-          const abbr = m ? m[1] : null;
-          if(!abbr) return;
-          const getPct = td => {
-            const m = td.textContent.replace(/[^0-9.\-]/g,"").match(/[0-9.]+/);
-            return m ? +m[0]/100 : null;
-          };
-          // heuristic: DEM %, REP %, OTH % appear in nearby cells; EV is a cell with small integer
-          const ev = +(cells[cells.length-1].textContent.replace(/[^\d]/g,"")) || null;
-          // find three largest percentages in row and map by the color labels if present
-          const pcts = Array.from(cells).map(getPct).filter(x=>x!=null).sort((a,b)=>b-a);
-          const dem_pct = pcts[0]; const rep_pct = pcts[1]; const oth_pct = pcts[2] ?? Math.max(0,1-(dem_pct??0)-(rep_pct??0));
-          const winner_party = (dem_pct!=null && rep_pct!=null) ? (dem_pct>rep_pct?"DEM":"REP") : "OTH";
-          out.push({year:y, state:null, abbr, state_fips:null, ev, dem_pct, rep_pct, oth_pct, winner_party, winner_name:"", runner_name:"", dem_name:"", rep_name:""});
-        });
-      }catch(e){
-        toast(`Couldn’t fetch Wikipedia for ${y}`);
-      }
-    }
-    return out;
+  // ---------- Safe dataset loader ----------
+  async function loadJSON(url){
+    const res = await fetch(url, {cache:"no-store"});
+    if (!res.ok) throw new Error(res.statusText);
+    return res.json();
   }
 
-  async function getDataset(){
-    // 1) MEDSL (authoritative 1976–2020)
-    const medslTxt = await fetch(MEDSL_URL).then(r=>r.text());
-    const medRows = parseCSV(medslTxt)
-      .filter(r => r.office==="President" && +r.year>=1976)
-      .map(r=>{
-        const dem = pct(r.democratic_percentage ?? r.dem_pct);
-        const rep = pct(r.republican_percentage ?? r.rep_pct);
-        const oth = (dem!=null && rep!=null) ? Math.max(0, 1-dem-rep) : null;
-        const w = (r.winner || r.winner_party || r.party || "").toUpperCase();
-        const winner_party = w.includes("DEMOCRAT")||w==="DEM" ? "DEM" : w.includes("REPUBLICAN")||w==="REP" ? "REP" : "OTH";
-        return {
-          year:+r.year, state:r.state, abbr:r.state_po, state_fips:pad2(r.state_fips),
-          ev:+(r.total_electoral_votes || r.ev || 0),
-          dem_pct:dem, rep_pct:rep, oth_pct:oth, winner_party,
-          winner_name:r.winner_name||"", runner_name:r.runnerup_name||"",
-          dem_name:r.dem_candidate||"", rep_name:r.rep_candidate||""
-        };
-      });
-
-    // 2a) Try local 1948–1972 JSON if the user dropped one in /data/
-    try{
-      const local = await fetch(LOCAL_48_72, {cache:"no-store"});
-      if(local.ok){
-        const a = await local.json();
-        toast("Loaded 1948–1972 from local file.");
-        return [...a, ...medRows];
-      }
-    }catch(e){/* ignore */}
-
-    // 2b) Try CSV mirror compiled from Wikipedia (filter 1948–1972)
-    try{
-      const csv = await fetch(WIKI_STATE_CSV, {mode:"cors"});
-      if(csv.ok){
-        const txt = await csv.text();
-        const rows = parseCSV(txt)
-          .filter(r => +r.year>=1948 && +r.year<=1972 && r.state_abbrev)
-          .map(r=>{
-            const dem = pct(r.democrat), rep = pct(r.republican);
-            return {
-              year:+r.year, state:null, abbr:r.state_abbrev, state_fips:null,
-              ev: +(r.ec_total ? (+r.ec_total * ( (dem||0) > (rep||0) ? 0 : 0)) : 0), // EV per state not in this CSV; will fill via MEDSL-era or leave 0 (we’ll annotate)
-              dem_pct:dem, rep_pct:rep, oth_pct: pct(r.other),
-              winner_party: (r.party_win||"").toLowerCase().includes("dem")?"DEM":(r.party_win||"").toLowerCase().includes("rep")?"REP":"OTH",
-              winner_name:r.winner||"", runner_name:"", dem_name:"", rep_name:""
-            };
-          });
-        toast("Loaded 1948–1972 from Wikipedia-derived mirror.");
-        return [...rows, ...medRows];
-      }
-    }catch(e){/* ignore */}
-
-    // 3) Last resort: live Wikipedia fetch per year (slower, but no 404)
-    toast("Building 1948–1972 from Wikipedia live…");
-    const wiki = await fetchWikiPerYear(1948,1972);
-    if (wiki.length){
-      toast("Done. (You can export this as data/elections-1948-1972.json to cache offline.)");
-      return [...wiki, ...medRows];
-    }
-
-    // Fallback to modern years only
-    toast("Older years unavailable right now; showing 1976–2020. Add data/elections-1948-1972.json to enable the full timeline.");
-    return medRows;
-  }
-
-
-    // Merge
-    const merged = [...oldRows, ...rows].map(d => ({...d, state_fips: pad2(d.state_fips)}));
-    localStorage.setItem(key, JSON.stringify(merged));
-    return merged;
+  let rows;
+  try {
+    rows = await loadJSON(dataPrimary);
+  } catch (e) {
+    toast("Full dataset not found. Using sample data (drop elections.json in /data/ to enable all years).");
+    rows = await loadJSON(dataFallback);
   }
 
   try {
-    const [topology, rows] = await Promise.all([
-      fetch(topoUrl).then(r => r.json()),
-      getDataset()
-    ]);
+    const topology = await fetch(topoUrl, {cache:"force-cache"}).then(r=>r.json());
     loading.remove();
 
     // ---------- Topology & layers ----------
     const states = topojson.feature(topology, topology.objects.states).features;
     const nation = topojson.feature(topology, topology.objects.nation);
-    const stById = new Map(states.map(d => [d.id, d]));
     const stCentroid = new Map(states.map(d => [d.id, d3.geoPath().centroid(d)]));
     const path = d3.geoPath(); // works because geometry is pre-projected Albers USA
 
@@ -219,17 +89,27 @@
       .text(d => d.properties?.abbr || d.properties?.name?.slice(0,2).toUpperCase() || "");
 
     // ---------- Data shaping ----------
-    // Expected schema per row:
-    // {year, state_fips, state, abbr, ev, dem_pct, rep_pct, oth_pct, winner_party, winner_name, runner_name, dem_name, rep_name}
-    const byYear = d3.group(rows, d => +d.year);
+    // Expected row: {year, state_fips, state, abbr, ev, dem_pct, rep_pct, oth_pct, winner_party, winner_name, runner_name, dem_name, rep_name}
+    const byYear  = d3.group(rows, d => +d.year);
     const byState = d3.group(rows, d => d.state_fips);
 
     const years = Array.from(byYear.keys()).sort((a,b)=>a-b);
+
+    // HUD controls (ensure these exist only once!)
     const slider = document.getElementById("year");
     const yearVal = document.getElementById("yearVal");
-    slider.min = years[0]; slider.max = years.at(-1); slider.value = years[0]; yearVal.textContent = slider.value;
-    document.getElementById('hudToggle').onclick = () => document.getElementById('hud').classList.toggle('collapsed');
-    
+    slider.min = years[0]; slider.max = years.at(-1);
+    if (!slider.value) slider.value = years[0];
+    yearVal.textContent = slider.value;
+
+    // HUD / chart collapse toggles (optional elements)
+    const hud = document.getElementById("hud");
+    const hudToggle = document.getElementById("hudToggle");
+    if (hud && hudToggle) hudToggle.onclick = () => hud.classList.toggle("collapsed");
+    const chartWrap = document.getElementById("chartWrap");
+    const chartToggle = document.getElementById("chartToggle");
+    if (chartWrap && chartToggle) chartToggle.onclick = () => chartWrap.classList.toggle("collapsed");
+
     // ---------- Caricatures ----------
     const faceA = document.getElementById("faceA");
     const faceB = document.getElementById("faceB");
@@ -245,6 +125,7 @@
       const fill = "#f1d7c8";
       const brow = 10 + (seed % 4);
       const smile = (seed % 2) ? 6 : -4;
+      if (!el) return;
       el.innerHTML = `
         <svg viewBox="0 0 100 100" width="72" height="72" aria-label="caricature ${name}">
           <circle cx="50" cy="50" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${winner?4:2}" />
@@ -269,26 +150,26 @@
     const sG = spark.append("g");
 
     function showPopover(stateFips, year, evt) {
+      if (!hp) return;
       const series = (byState.get(stateFips) || []).filter(d=>d.dem_pct!=null&&d.rep_pct!=null).sort((a,b)=>a.year-b.year);
       const cur = (byYear.get(+year) || []).find(r=>r.state_fips===stateFips);
       if (!cur) return;
       hp.hidden = false;
       hp.style.left = Math.min(evt.clientX+12, window.innerWidth-260) + "px";
       hp.style.top = Math.max(evt.clientY-10, 10) + "px";
-      hpName.textContent = `${cur.state} (${cur.abbr})`;
-      hpEV.textContent = `EV ${cur.ev}`;
-      const margin = (cur.dem_pct - cur.rep_pct);
+      hpName.textContent = `${cur.state ?? ""} (${cur.abbr ?? ""})`;
+      hpEV.textContent = `EV ${cur.ev ?? "–"}`;
+      const margin = (cur.dem_pct ?? 0) - (cur.rep_pct ?? 0);
       const winner = cur.winner_party==="DEM"?"Democratic":cur.winner_party==="REP"?"Republican":"Third party";
       hpWinner.textContent = `${winner} win`;
       hpPct.textContent = (cur.dem_pct!=null&&cur.rep_pct!=null)
         ? `D ${Math.round(cur.dem_pct*100)}% · R ${Math.round(cur.rep_pct*100)}%${cur.oth_pct?` · O ${Math.round(cur.oth_pct*100)}%`:""} · Δ(D−R) ${(margin*100).toFixed(1)}`
         : "shares unavailable";
 
-      // Sparkline segments colored by winner that year
+      // spark
       sG.selectAll("*").remove();
       if (series.length) {
-        const line = d3.line().x(d=>sx(d.year)).y(d=>sy(d.dem_pct - d.rep_pct)).curve(d3.curveMonotoneX);
-        // segmented path per year pair to color by winner
+        const line = d3.line().x(d=>sx(d.year)).y(d=>sy((d.dem_pct??0) - (d.rep_pct??0))).curve(d3.curveMonotoneX);
         for (let i=0;i<series.length-1;i++){
           const a=series[i], b=series[i+1];
           sG.append("path")
@@ -296,14 +177,12 @@
             .attr("stroke", a.winner_party==="DEM"?"#5fa9e5":a.winner_party==="REP"?"#ee6b6b":"#f2c744")
             .attr("fill","none").attr("stroke-width", (a.year===+year?3:1.75));
         }
-        // baseline at 0
         sG.append("line").attr("x1", sx(years[0])).attr("x2", sx(years.at(-1)))
           .attr("y1", sy(0)).attr("y2", sy(0)).attr("stroke","#2c3342").attr("stroke-dasharray","3,3");
-        // pin
-        sG.append("circle").attr("cx", sx(+year)).attr("cy", sy(margin)).attr("r",4.5).attr("fill","#fff").attr("filter","url(#softGlow)");
+        sG.append("circle").attr("cx", sx(+year)).attr("cy", sy(margin)).attr("r",4.5).attr("fill","#fff");
       }
     }
-    function hidePopover(){ hp.hidden = true; }
+    function hidePopover(){ if (hp) hp.hidden = true; }
 
     // ---------- Rendering ----------
     const chartSel = d3.select("#evChart");
@@ -315,16 +194,17 @@
     function render(year) {
       yearVal.textContent = year;
       const data = byYear.get(+year) || [];
+
       // National EV tallies by winner
       const national = {
-        dem: d3.sum(data, d => (d.winner_party === "DEM" ? d.ev : 0)),
-        rep: d3.sum(data, d => (d.winner_party === "REP" ? d.ev : 0)),
-        oth: d3.sum(data, d => (d.winner_party === "OTH" ? d.ev : 0))
+        dem: d3.sum(data, d => (d.winner_party === "DEM" ? (+d.ev||0) : 0)),
+        rep: d3.sum(data, d => (d.winner_party === "REP" ? (+d.ev||0) : 0)),
+        oth: d3.sum(data, d => (d.winner_party === "OTH" ? (+d.ev||0) : 0))
       };
       const winnerParty = national.dem>national.rep && national.dem>national.oth ? "DEM"
                          : national.rep>national.dem && national.rep>national.oth ? "REP" : "OTH";
 
-      // Update states & tooltips/hover
+      // Update states & interactivity
       gStates.selectAll("path.state")
         .attr("fill", d => {
           const row = data.find(r => r.state_fips == d.id);
@@ -340,31 +220,34 @@
           showPopover(d.id, year, evt);
         })
         .on("mouseleave", hidePopover)
-        .append("title")
+        .select("title").remove();
+
+      // (Re)attach simple native title tooltips
+      gStates.selectAll("path.state").append("title")
         .text(d => {
           const row = data.find(r => r.state_fips == d.id);
           if (!row) return d.properties.name;
-          const margin = (row.dem_pct!=null&&row.rep_pct!=null) ? ((row.dem_pct - row.rep_pct) * 100).toFixed(1)+" pts" : "n/a";
-          const winnerName = row.winner_name || (row.winner_party==="DEM"?"Democratic":"Republican");
           const dPct = row.dem_pct!=null? Math.round(row.dem_pct*100)+"%":"–";
           const rPct = row.rep_pct!=null? Math.round(row.rep_pct*100)+"%":"–";
           const oPct = row.oth_pct!=null? Math.round(row.oth_pct*100)+"%":"–";
-          return `${d.properties.name} (${row.abbr})\nEV ${row.ev}\nWinner: ${winnerName}\nDem ${dPct}  Rep ${rPct}  Oth ${oPct}\nΔ(D−R): ${margin}`;
+          const margin = (row.dem_pct!=null&&row.rep_pct!=null) ? ((row.dem_pct - row.rep_pct) * 100).toFixed(1)+" pts" : "n/a";
+          const winnerName = row.winner_name || (row.winner_party==="DEM"?"Democratic":"Republican");
+          return `${d.properties.name} (${row.abbr})\nEV ${row.ev ?? "–"}\nWinner: ${winnerName}\nDem ${dPct}  Rep ${rPct}  Oth ${oPct}\nΔ(D−R): ${margin}`;
         });
 
-      // Candidate panels (best-effort names)
+      // Candidate panels
       const demName = data.find(d=>d.dem_name)?.dem_name || "Democratic";
       const repName = data.find(d=>d.rep_name)?.rep_name || "Republican";
-      nameA.textContent = demName;
-      nameB.textContent = repName;
-      evA.textContent = `EV: ${national.dem}`;
-      evB.textContent = `EV: ${national.rep}`;
+      nameA && (nameA.textContent = demName);
+      nameB && (nameB.textContent = repName);
+      evA && (evA.textContent = `EV: ${national.dem}`);
+      evB && (evB.textContent = `EV: ${national.rep}`);
       drawFace(faceA, demName, "DEM", winnerParty==="DEM");
       drawFace(faceB, repName, "REP", winnerParty==="REP");
 
       // Bottom EV strip chart (order by margin blue→red)
       const order = d3.sort(data, d => (d.dem_pct ?? 0) - (d.rep_pct ?? 0));
-      const totalEV = d3.sum(order, d => d.ev) || 538;
+      const totalEV = d3.sum(order, d => +d.ev || 0) || 538;
       let x0 = 0;
       chartX.domain([0, totalEV]);
 
@@ -374,16 +257,16 @@
           .attr("class","seg")
           .attr("x", () => chartX(x0))
           .attr("y", -26)
-          .attr("width", d => { const w = chartX(x0 + d.ev) - chartX(x0); x0 += d.ev; return Math.max(1,w); })
+          .attr("width", d => { const w = chartX(x0 + (+d.ev||0)) - chartX(x0); x0 += (+d.ev||0); return Math.max(1,w); })
           .attr("height", 52)
           .attr("fill", d => {
             if (d.winner_party === "OTH") return "#f2c744";
-            if (d.dem_pct==null||d.rep_pct==null) return "#999"; // fallback
+            if (d.dem_pct==null||d.rep_pct==null) return "#999";
             const delta = d.dem_pct - d.rep_pct;      // [-1,1]
             return d3.interpolateRdBu(0.5 - delta/2); // 0→red, 1→blue
           })
           .attr("stroke","#0b0d12")
-          .append("title").text(d => `${d.state} • EV ${d.ev}`)
+          .append("title").text(d => `${d.state ?? d.abbr} • EV ${d.ev ?? "–"}`)
         ,
         update => update,
         exit => exit.remove()
@@ -395,20 +278,27 @@
     render(+slider.value);
 
     let timer=null;
-    document.getElementById("play").onclick = () => {
-      if (timer){ clearInterval(timer); timer=null; document.getElementById("play").textContent="▶︎ Play"; return; }
-      document.getElementById("play").textContent="❚❚ Pause";
-      timer=setInterval(()=>{
-        const y=+slider.value; const max=+slider.max;
-        slider.value = (y>=max? +slider.min : y+4);
-        render(+slider.value);
-      }, 1200);
-    };
+    const playBtn = document.getElementById("play");
+    if (playBtn){
+      playBtn.onclick = () => {
+        if (timer){ clearInterval(timer); timer=null; playBtn.textContent="▶︎"; return; }
+        playBtn.textContent="❚❚";
+        timer=setInterval(()=>{
+          const y=+slider.value; const max=+slider.max;
+          slider.value = (y>=max? +slider.min : y+4);
+          render(+slider.value);
+        }, 1200);
+      };
+    }
 
     // About modal
     const about = document.getElementById("about");
-    document.getElementById("aboutBtn").onclick = () => about.showModal();
-    document.getElementById("aboutClose").onclick = () => about.close();
+    const aboutBtn = document.getElementById("aboutBtn");
+    const aboutClose = document.getElementById("aboutClose");
+    if (about && aboutBtn && aboutClose){
+      aboutBtn.onclick = () => about.showModal();
+      aboutClose.onclick = () => about.close();
+    }
 
   } catch (err) {
     console.error(err);

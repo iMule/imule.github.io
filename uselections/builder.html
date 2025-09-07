@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Elections JSON Builder (1948–2020)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <style>
+    body{font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#e8eaed;background:#0f1115;margin:0}
+    main{max-width:880px;margin:0 auto;padding:24px}
+    h1{font-size:1.25rem;margin:0 0 .25rem} p{color:#a8b0ba;margin:.25rem 0 1rem}
+    button{background:#1d2130;border:1px solid #2b3140;color:#fff;padding:.6rem .8rem;border-radius:10px;cursor:pointer}
+    button:hover{border-color:#5a6480}
+    pre{white-space:pre-wrap;background:#111520;border:1px solid #232a36;padding:10px;border-radius:8px}
+    .ok{color:#9be39b}.warn{color:#ffd480}.err{color:#ff8080}
+    .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+    code{color:#c7d7ff}
+  </style>
+</head>
+<body>
+<main>
+  <h1>US Presidential Elections <span>(1948–2020)</span> — Builder</h1>
+  <p>This page builds a single <code>elections.json</code> (state level) for your map, entirely client-side.</p>
+  <div class="row">
+    <button id="go">Build &amp; Download</button>
+    <button id="test">Quick test (1976–2020 only)</button>
+  </div>
+  <p>Sources: 1976–2020 from MIT Election Data &amp; Science Lab (MEDSL); 1948–1972 compiled from Wikipedia state tables. Alaska/Hawaii EV and state FIPS are normalized. Maine/Nebraska are treated as winner-take-all here (we can upgrade to CD splits later).</p>
+  <pre id="log">Ready.</pre>
+</main>
+
+<script>
+// ---------- Config (sources) ----------
+// MEDSL state-level returns, U.S. President 1976–2020 (CSV)
+const MEDSL_URL = "https://dataverse.harvard.edu/api/access/datafile/3440651"; // MIT Election Lab Dataverse. See dataset page. 
+// Wikipedia-derived state results (1864–2020) mirror (CSV) — we filter to 1948–1972.
+// If this mirror is unavailable, we'll live-scrape Wikipedia tables as a fallback.
+const WIKI_STATE_CSV = "https://raw.githubusercontent.com/jaytimm/PresElectionResults/master/data/pres_by_state.csv";
+
+// ---------- Minimal helpers ----------
+const log = (m, cls="") => {
+  const el = document.getElementById("log");
+  el.innerHTML += "\\n" + (cls?`<span class="${cls}">${m}</span>`:m);
+  el.scrollTop = el.scrollHeight;
+};
+const pct = x => (x==null||x==="")? null : (+x>1? +x/100 : +x);
+const pad2 = s => String(s??"").padStart(2,"0");
+function parseCSV(text){
+  const lines = text.trim().split(/\\r?\\n/);
+  const cols = lines[0].split(",");
+  return lines.slice(1).map(line=>{
+    // naive split works for these sources (no embedded commas)
+    const vals = line.split(",");
+    const o={}; cols.forEach((c,i)=>o[c]=vals[i]); 
+    return o;
+  });
+}
+function downloadJSON(obj, name="elections.json"){
+  const blob = new Blob([JSON.stringify(obj, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ---------- Live Wikipedia fallback for 1948–1972 (slow but resilient) ----------
+async function fetchWikiPerYear(start=1948,end=1972){
+  const out=[];
+  for(let y=start;y<=end;y+=4){
+    const url = `https://en.wikipedia.org/api/rest_v1/page/html/${y}_United_States_presidential_election`;
+    try{
+      log(`Fetching Wikipedia page for ${y}…`);
+      const html = await fetch(url, {headers:{'accept':'text/html'}}).then(r=>r.ok?r.text():Promise.reject(r.statusText));
+      const dom = new DOMParser().parseFromString(html, "text/html");
+      // heuristic: find "Results by state" table
+      const tables = Array.from(dom.querySelectorAll("table")).filter(t=>/Results by state/i.test(t.textContent));
+      const tb = tables[0] || dom.querySelector("table.wikitable");
+      if(!tb){ log(`No state table for ${y} (skipping)`, "warn"); continue; }
+      const rows = Array.from(tb.querySelectorAll("tr")).slice(1);
+      rows.forEach(tr=>{
+        const cells = tr.querySelectorAll("td,th");
+        if(cells.length<6) return;
+        const stateCell = cells[0].textContent.trim();
+        // USPS abbreviation in parentheses or in a separate small tag
+        const m = stateCell.match(/\\b([A-Z]{2})\\b/);
+        const abbr = m? m[1] : null; if(!abbr) return;
+        const num = t=>+(t.textContent.replace(/[^\\d.\\-]/g,"")||"0");
+        const getPct = td => {
+          const m = td.textContent.replace(/[^0-9.\\-]/g,"").match(/[0-9.]+/);
+          return m ? +m[0]/100 : null;
+        };
+        // try to detect pct cols; fallback to biggest two percentages
+        const pcts = Array.from(cells).map(getPct).filter(x=>x!=null).sort((a,b)=>b-a);
+        if(!pcts.length) return;
+        const dem_pct = pcts[0] ?? null;
+        const rep_pct = pcts[1] ?? null;
+        const oth_pct = (dem_pct!=null && rep_pct!=null) ? Math.max(0, 1-dem_pct-rep_pct) : null;
+        // EV usually at end of row
+        const ev = num(cells[cells.length-1]) || null;
+        const winner_party = (dem_pct!=null && rep_pct!=null) ? (dem_pct>rep_pct?"DEM":"REP") : "OTH";
+        out.push({year:y, state:null, abbr, state_fips:null, ev, dem_pct, rep_pct, oth_pct, winner_party,
+          winner_name:"", runner_name:"", dem_name:"", rep_name:""});
+      });
+    }catch(e){
+      log(`Wikipedia fetch failed for ${y}: ${e}`, "warn");
+    }
+  }
+  return out;
+}
+
+// ---------- Main builder ----------
+async function build({years48_72=true} = {}){
+  document.getElementById("go").disabled = true;
+  document.getElementById("test").disabled = true;
+  log("Starting…");
+
+  // 1) MEDSL 1976–2020
+  log("Fetching MEDSL 1976–2020 (state-level)…");
+  const medTxt = await fetch(MEDSL_URL, {cache:"no-store"}).then(r=>r.ok?r.text():Promise.reject(r.statusText))
+    .catch(e=>{ log("Failed to load MEDSL: "+e, "err"); throw e; });
+  const med = parseCSV(medTxt)
+    .filter(r => r.office==="President" && r.state_po && +r.year>=1976)
+    .map(r=>{
+      const dem = pct(r.democratic_percentage ?? r.dem_pct);
+      const rep = pct(r.republican_percentage ?? r.rep_pct);
+      const oth = (dem!=null && rep!=null) ? Math.max(0, 1-dem-rep) : null;
+      const w = (r.winner || r.winner_party || r.party || "").toUpperCase();
+      const winner_party = w.includes("DEMOCRAT")||w==="DEM" ? "DEM" : w.includes("REPUBLICAN")||w==="REP" ? "REP" : "OTH";
+      return {
+        year:+r.year, state:r.state, abbr:r.state_po, state_fips:pad2(r.state_fips),
+        ev:+(r.total_electoral_votes || r.ev || 0),
+        dem_pct:dem, rep_pct:rep, oth_pct:oth, winner_party,
+        winner_name:r.winner_name||"", runner_name:r.runnerup_name||"",
+        dem_name:r.dem_candidate||"", rep_name:r.rep_candidate||""
+      };
+    });
+  log(`MEDSL rows: ${med.length} ✓`, "ok");
+
+  // 2) 1948–1972 from CSV mirror or Wikipedia fallback
+  let oldRows=[];
+  if(years48_72){
+    log("Fetching 1948–1972 (Wikipedia-derived mirror)…");
+    try{
+      const t = await fetch(WIKI_STATE_CSV, {cache:"no-store", mode:"cors"});
+      if(t.ok){
+        const txt = await t.text();
+        const arr = parseCSV(txt)
+          .filter(r => +r.year>=1948 && +r.year<=1972 && r.state_abbrev)
+          .map(r=>{
+            const dem = pct(r.democrat), rep = pct(r.republican), oth = pct(r.other);
+            // pres_by_state.csv doesn't contain per-state EV; fill as null, app can display anyway.
+            // (Optionally, we could merge EV per state per year from a small lookup; happy to add.)
+            const winner_party = (r.party_win||"").toLowerCase().includes("dem")?"DEM":(r.party_win||"").toLowerCase().includes("rep")?"REP":"OTH";
+            return {year:+r.year, state:null, abbr:r.state_abbrev, state_fips:null, ev:null,
+                    dem_pct:dem, rep_pct:rep, oth_pct:oth, winner_party,
+                    winner_name:r.winner||"", runner_name:"", dem_name:"", rep_name:""};
+          });
+        oldRows = arr;
+        log(`1948–1972 rows from mirror: ${arr.length} ✓`, "ok");
+      } else {
+        throw new Error(t.statusText);
+      }
+    }catch(e){
+      log("Mirror unavailable; scraping Wikipedia live (slower)…", "warn");
+      oldRows = await fetchWikiPerYear(1948,1972);
+      log(`Built ${oldRows.length} rows from Wikipedia ✓`, "ok");
+    }
+  }
+
+  // 3) Merge and light cleanup
+  const merged = [...oldRows, ...med].map(d => ({...d, state_fips: pad2(d.state_fips)}));
+  log(`Total rows: ${merged.length} ✓`, "ok");
+
+  downloadJSON(merged, "elections.json");
+  log("Done. Download should have started. You can close this tab.", "ok");
+  document.getElementById("go").disabled = false;
+  document.getElementById("test").disabled = false;
+}
+
+document.getElementById("go").onclick = ()=> build();
+document.getElementById("test").onclick = ()=> build({years48_72:false});
+</script>
+</body>
+</html>
