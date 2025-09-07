@@ -293,8 +293,6 @@
     }
 
     // Wire slider & autoplay
-    const slider = document.getElementById("year");
-    const yearVal = document.getElementById("yearVal");
     slider.addEventListener("input", e => render(+e.target.value));
     render(+slider.value);
 
