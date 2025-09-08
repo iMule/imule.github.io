@@ -150,10 +150,12 @@
 
   <!-- Libraries (ES Modules to avoid deprecation warnings) -->
   <script type="module">
-    import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
-    import ThreeGlobe from 'https://unpkg.com/three-globe@2.30.0/dist/three-globe.module.js';
-    import * as topojson from 'https://unpkg.com/topojson-client@3/dist/topojson-client.min.js';
+    // Use esm.sh for robust ESM delivery with CORS
+    import * as THREE from 'https://esm.sh/three@0.160.0';
+    import ThreeGlobe from 'https://esm.sh/three-globe@2.30.0';
+    import * as topojson from 'https://esm.sh/topojson-client@3';
 
+    // (rest of script unchanged)
     // =============================
     // Data (seeded; expand as we go)
     // =============================
@@ -193,13 +195,12 @@
     camera.position.z = 400;
 
     const globe = new ThreeGlobe()
-      .hexPolygonsData([]) // placeholder; real fill via polygonsData below
+      .hexPolygonsData([])
       .hexPolygonResolution(3)
       .hexPolygonMargin(0.3)
       .showAtmosphere(true)
       .atmosphereColor('#8293ff')
       .atmosphereAltitude(0.2);
-      // NOTE: .backgroundColor(...) is NOT a ThreeGlobe API; removed to fix error
 
     const amb = new THREE.AmbientLight(0xffffff, 0.9); scene.add(amb);
     const dir = new THREE.DirectionalLight(0xffffff, 0.7); dir.position.set(1,1,1); scene.add(dir);
@@ -239,7 +240,6 @@
 
     updateLegend();
 
-    // Controls
     document.getElementById('layerSel').addEventListener('change', ()=>{ updateLegend(); globe.polygonsData(globe.polygonsData()); });
     document.getElementById('btnFind').addEventListener('click', doSearch);
     document.getElementById('q').addEventListener('keydown', e=>{ if(e.key==='Enter') doSearch(); });
@@ -385,9 +385,7 @@ Website: ${p.url}`:''); panelBody.dataset.enText = body; panelBody.dataset.mode=
       return map.get(name)||'UNK';
     }
 
-    // Seed a few Marrakesh parties (extend with full list later)
     marrakeshParties = new Set(['FRA','USA','GBR','IND','AUS','ARG','ARM','AFG']);
-
   </script>
 </body>
 </html>
