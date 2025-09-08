@@ -381,9 +381,9 @@
 
     // slider & autoplay
     /*const slider = document.getElementById("year");
-    const yearVal = document.getElementById("yearVal");
+    const yearVal = document.getElementById("yearVal");*/
     slider.addEventListener("input", e => render(+e.target.value));
-    render(+slider.value);*/
+    render(+slider.value);
 
     let timer=null;
     const playBtn = document.getElementById("play");
