@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>A World in Dots: The Story of Braille</title>
+  <!-- Readability-first fonts (hosted); falls back to system sans-serif if blocked -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10;            /* near-black for high contrast */
+      --bg-alt:#11131a;        /* slightly lighter section bg */
+      --fg:#f1f5f9;            /* off-white text */
+      --muted:#cbd5e1;         /* secondary text */
+      --accent:#64ffda;        /* teal accent */
+      --accent-2:#ffd166;      /* warm accent */
+      --dot:#2d3648;           /* braille dot motif */
+      --border:#1f2937;
+      --focus:#94a3b8;
+      --maxw: 980px;
+      --radius:1.25rem;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: 'Atkinson Hyperlegible', 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height:1.65;
+    }
+    /* Global braille-dot background (subtle) */
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-1;
+      background-image: radial-gradient(var(--dot) 1px, transparent 1px), radial-gradient(var(--dot) 1px, transparent 1px);
+      background-size: 12px 12px, 12px 12px;
+      background-position: 0 0, 6px 6px; /* offset to evoke braille 2-column cell */
+      opacity:.3;
+      pointer-events:none;
+    }
+
+    /* Accessibility helpers */
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#000;color:#fff;padding:.5rem .75rem;border-radius:.5rem;z-index:10000}
+    :focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+
+    header{
+      position:sticky; top:0; z-index:1000;
+      backdrop-filter:saturate(140%) blur(8px);
+      background:rgba(11,12,16,.6);
+      border-bottom:1px solid var(--border);
+    }
+    .container{max-width:var(--maxw); margin:0 auto; padding:1rem;}
+    .titlebar{display:flex;align-items:center;gap:1rem;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .brand .dot{width:.75rem;height:.75rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(100,255,218,.2)}
+    h1{font-weight:800;letter-spacing:.3px;margin:.25rem 0;font-size:clamp(1.25rem, 2vw + 1rem, 2.2rem)}
+    .subtle{color:var(--muted)}
+
+    .controls{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+    .btn, button{
+      --btn-bg:#0f172a; --btn-fg:#e2e8f0;
+      background:var(--btn-bg); color:var(--btn-fg);
+      border:1px solid var(--border); border-radius:.75rem;
+      padding:.6rem .9rem; cursor:pointer; box-shadow:var(--shadow);
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); border-color:#334155}
+    .btn.secondary{--btn-bg:#111827}
+    .segmented{display:flex;border:1px solid var(--border);border-radius:.75rem;overflow:hidden}
+    .segmented button{border:0;border-right:1px solid var(--border);background:#0f172a}
+    .segmented button[aria-pressed="true"]{background:var(--accent);color:#0a0a0a;font-weight:700}
+    .segmented button:last-child{border-right:0}
+
+    main{isolation:isolate}
+    section{
+      padding: min(8vh, 4rem) 0; position:relative;
+      scroll-margin-top:5rem;
+    }
+    .card{max-width:var(--maxw);margin:0 auto;background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid var(--border); border-radius:var(--radius); padding:clamp(1rem, 2vw + .5rem, 2rem);
+      box-shadow:var(--shadow);
+    }
+    .kicker{color:var(--accent-2);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:.8rem;margin-bottom:.25rem}
+    .h2{font-size:clamp(1.35rem, 1.5vw + 1.1rem, 2rem);margin:.2rem 0 .5rem 0}
+    p{margin:.5rem 0}
+
+    .grid{display:grid;gap:1.25rem}
+    @media (min-width:900px){.grid.two{grid-template-columns: 1.2fr .8fr}}
+
+    .media{border-radius:1rem; overflow:hidden; border:1px solid var(--border); background:var(--bg-alt)}
+    .media img, .media iframe, .media canvas{display:block; width:100%; height:auto}
+
+    .speakbar{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.75rem}
+    .speakbar .speak{display:flex;gap:.5rem}
+    .speakbar .speak .btn{display:inline-flex;align-items:center;gap:.5rem}
+    .pill{display:inline-flex;align-items:center;gap:.4rem;background:#0b1322;border:1px solid var(--border);border-radius:999px;padding:.35rem .6rem;color:var(--muted);font-size:.85rem}
+
+    /* Leaflet map container style */
+    #map1, #map2{width:100%; height:360px}
+
+    /* Section-specific subtle braille ribbons */
+    .braille-ribbon{position:absolute;inset:auto 0 0 0;height:10px;background:
+      repeating-linear-gradient(90deg, transparent 0 8px, rgba(100,255,218,.22) 8px 10px, transparent 10px 20px)}
+
+    /* Scroll nav dots */
+    .navdots{position:fixed;right:1.25rem;top:50%;transform:translateY(-50%); display:flex;flex-direction:column;gap:.6rem; z-index:999}
+    .navdots a{width:10px;height:10px;border-radius:50%;background:#334155;border:1px solid #1f2937;display:block}
+    .navdots a.active{background:var(--accent)}
+
+    footer{border-top:1px solid var(--border); margin-top:4rem}
+    small, figcaption{color:var(--muted)}
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important; transition:none !important}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <div class="container titlebar" role="navigation" aria-label="Top Bar">
+      <div class="brand" aria-label="Brand">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <h1>A World in Dots: The Story of Braille</h1>
+          <div class="subtle">UN Braille Day · January 4</div>
+        </div>
+      </div>
+      <div class="controls" aria-label="Page Controls">
+        <div class="segmented" role="group" aria-label="Text size">
+          <button class="js-font" data-size="100" aria-pressed="true" aria-label="Normal text size">A</button>
+          <button class="js-font" data-size="115" aria-label="Large text size">A+</button>
+          <button class="js-font" data-size="130" aria-label="Extra large text size">A++</button>
+        </div>
+        <button id="toggle-theme" class="btn secondary" aria-label="Toggle contrast theme">High Contrast</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="navdots" aria-label="Section navigation">
+    <a href="#intro" aria-label="Intro" class="active"></a>
+    <a href="#prebraille" aria-label="Before Braille"></a>
+    <a href="#invention" aria-label="Invention"></a>
+    <a href="#adoption" aria-label="Early Adoption"></a>
+    <a href="#famous" aria-label="Famous Users"></a>
+    <a href="#standard" aria-label="Standardization"></a>
+    <a href="#modern" aria-label="Modern Era"></a>
+    <a href="#un" aria-label="UN Braille Day"></a>
+  </nav>
+
+  <main id="main">
+    <!-- INTRO -->
+    <section id="intro" aria-labelledby="intro-title">
+      <div class="container">
+        <div class="card grid two">
+          <div>
+            <div class="kicker">Why Braille Matters</div>
+            <h2 id="intro-title" class="h2">A universal code for literacy, dignity, and inclusion</h2>
+            <p>Each **4 January**, the world observes **UN World Braille Day**—a reminder that Braille is not just a code but a gateway to **literacy, dignity, and inclusion**. This scrolling story pairs maps, timelines, and voices to trace how six tiny dots reshaped global communication.</p>
+
+            <div class="speakbar" data-section>
+              <div class="pill" aria-hidden="true">🔊 Read this section</div>
+              <div class="speak">
+                <button class="btn speak-play" aria-label="Read this section aloud">Play</button>
+                <button class="btn speak-stop" aria-label="Stop reading">Stop</button>
+              </div>
+              <div class="pill" title="Experimental">Web Speech API</div>
+            </div>
+          </div>
+          <figure class="media" aria-describedby="intro-cap">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Blind_man_reading_braille.jpg/640px-Blind_man_reading_braille.jpg" alt="Close-up of fingers reading Braille dots" />
+            <figcaption id="intro-cap"><small>Representative image (CC). Replace with preferred assets later.</small></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+
+    <!-- PRE-BRAILLE -->
+    <section id="prebraille" aria-labelledby="pre-title">
+      <div class="container">
+        <div class="card grid two">
+          <div>
+            <div class="kicker">Before Braille</div>
+            <h2 id="pre-title" class="h2">Embossed letters and early tactile experiments</h2>
+            <p>Before the six-dot cell, blind readers used **embossed Roman letters** and other tactile schemes pioneered by **Valentin Haüy** in Paris. In **1786** Haüy printed one of the first embossed books for blind readers and taught students at his school (founded 1785) to read by touch. These methods proved **slow and bulky**—legible to sighted teachers, but inefficient under the fingertips—setting the stage for a more compact tactile code.</p>
+            <div class="speakbar" data-section>
+              <div class="pill">🔊 Read this section</div>
+              <div class="speak">
+                <button class="btn speak-play">Play</button>
+                <button class="btn speak-stop">Stop</button>
+              </div>
+            </div>
+          </div>
+          <figure class="media">
+            <div id="map1" role="img" aria-label="Map showing Paris, France — site of early blind education"></div>
+            <figcaption><small>Map placeholder: Paris & early schools (Leaflet)</small></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+
+    <!-- INVENTION -->
+    <section id="invention" aria-labelledby="inv-title">
+      <div class="container">
+        <div class="card grid two">
+          <div>
+            <div class="kicker">The Invention</div>
+            <h2 id="inv-title" class="h2">Louis Braille adapts “night writing” into a six-dot code</h2>
+            <p>In **1824**, a fifteen‑year‑old **Louis Braille** adapted Captain **Charles Barbier’s** “night writing” into a **six‑dot cell** that could be read and written quickly by touch. He published the first description in **1829** and expanded the system—including **music and mathematics**—in **1837**. The elegance was its **compactness**: 64 combinations from six raised dots.</p>
+            <div class="speakbar" data-section>
+              <div class="pill">🔊 Read this section</div>
+              <div class="speak">
+                <button class="btn speak-play">Play</button>
+                <button class="btn speak-stop">Stop</button>
+              </div>
+            </div>
+          </div>
+          <figure class="media">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Louis_Braille_by_Verniq.jpg/512px-Louis_Braille_by_Verniq.jpg" alt="Portrait of Louis Braille"/>
+            <figcaption><small>Public-domain portrait of Louis Braille.</small></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+
+    <!-- ADOPTION -->
+    <section id="adoption" aria-labelledby="adopt-title">
+      <div class="container">
+        <div class="card grid two">
+          <div>
+            <div class="kicker">Diffusion</div>
+            <h2 id="adopt-title" class="h2">From Paris to Boston: a global literacy movement</h2>
+            <p>Though revolutionary, Braille met **decades of resistance**. Many schools had invested in **embossed print** (e.g., Boston Line Type). In the U.S., **Perkins School for the Blind** officially used Boston Line Type until **1908**, even as students adopted Braille for personal writing and note‑taking. By the late nineteenth century, Braille spread from **Paris** to **London** and **Boston**, then worldwide.</p>
+            <div class="speakbar" data-section>
+              <div class="pill">🔊 Read this section</div>
+              <div class="speak">
+                <button class="btn speak-play">Play</button>
+                <button class="btn speak-stop">Stop</button>
+              </div>
+            </div>
+          </div>
+          <figure class="media">
+            <div id="map2" role="img" aria-label="Map showing diffusion nodes: Paris, London, Boston"></div>
+            <figcaption><small>Map placeholder: diffusion nodes & timeline (Leaflet)</small></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+
+    <!-- FAMOUS USERS -->
+    <section id="famous" aria-labelledby="fam-title">
+      <div class="container">
+        <div class="card">
+          <div class="kicker">Voices</div>
+          <h2 id="fam-title" class="h2">Famous readers & advocates</h2>
+          <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem">
+            <figure class="media"><img alt="Helen Keller" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Helen_KellerA.jpg/512px-Helen_KellerA.jpg"><figcaption><small>Helen Keller (PD)</small></figcaption></figure>
+            <figure class="media"><img alt="Taha Hussein" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Taha_Hussein.jpg/512px-Taha_Hussein.jpg"><figcaption><small>Taha Hussein (PD)</small></figcaption></figure>
+            <figure class="media"><img alt="Braille book closeup" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Braille_book.jpg/512px-Braille_book.jpg"><figcaption><small>Early Braille book (CC)</small></figcaption></figure>
+          </div>
+          <p style="margin-top:.5rem">**Helen Keller** (U.S.), **Taha Hussein** (Egypt), and many others advocated Braille as a path to **literacy and independence**. Add hover bios and citations here.</p>
+          <div class="speakbar" data-section>
+            <div class="pill">🔊 Read this section</div>
+            <div class="speak">
+              <button class="btn speak-play">Play</button>
+              <button class="btn speak-stop">Stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+
+    <!-- STANDARDIZATION -->
+    <section id="standard" aria-labelledby="std-title">
+      <div class="container">
+        <div class="card grid two">
+          <div>
+            <div class="kicker">Standardization</div>
+            <h2 id="std-title" class="h2">From local codes to Unified English Braille (2004)</h2>
+            <p>Braille was adapted to dozens of languages. To reduce code conflicts, the **International Council on English Braille (ICEB)** declared **Unified English Braille (UEB)** substantially complete in **2004**; adoptions followed: **South Africa (2004)**, **Australia/Nigeria/New Zealand (2005)**, **Canada (2010)**, **UK (2011)**, **United States (2012)** (with Nemeth retained for math in the U.S.).</p>
+            <div class="speakbar" data-section>
+              <div class="pill">🔊 Read this section</div>
+              <div class="speak">
+                <button class="btn speak-play">Play</button>
+                <button class="btn speak-stop">Stop</button>
+              </div>
+            </div>
+          </div>
+          <figure class="media">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/English_Braille_Alphabet.svg/640px-English_Braille_Alphabet.svg.png" alt="English Braille alphabet chart" />
+            <figcaption><small>English Braille alphabet (SVG, CC).</small></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+
+    <!-- MODERN ERA / CHARTS -->
+    <section id="modern" aria-labelledby="mod-title">
+      <div class="container">
+        <div class="card">
+          <div class="kicker">Today</div>
+          <h2 id="mod-title" class="h2">The rise of assistive tech—and the decline of Braille literacy</h2>
+          <p>This chart uses selected years from **APH Federal Quota** reports—specifically, the **share of registered K–12 students whose *primary reading medium* is Braille**. It’s a **proxy**, not a full literacy rate (APH cautions against over‑interpreting these figures), but it illustrates the concern: values have hovered around or below **~9%** in recent decades.</p>
+          <div class="media"><svg id="trendChart" viewBox="0 0 800 360" role="img" aria-label="Placeholder line chart container"></svg></div>
+          <div class="speakbar" data-section>
+            <div class="pill">🔊 Read this section</div>
+            <div class="speak">
+              <button class="btn speak-play">Play</button>
+              <button class="btn speak-stop">Stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+
+    <!-- UN BRAILLE DAY / CTA -->
+    <section id="un" aria-labelledby="un-title">
+      <div class="container">
+        <div class="card grid two">
+          <div>
+            <div class="kicker">UN Braille Day</div>
+            <h2 id="un-title" class="h2">January 4 — inclusion through dots</h2>
+            <p>In **November 2018**, the **United Nations General Assembly** proclaimed **4 January** as **World Braille Day**, recognizing Braille’s role in communication, education, and participation. The observance, first marked in **2019**, honors the birth of Louis Braille and affirms the right to accessible information.</p>
+            <ul>
+              <li><strong>What you can do:</strong> Promote Braille signage, support local schools, and advocate for accessible publishing.</li>
+              <li><strong>Design tip:</strong> Always include alt text and keyboard navigation.</li>
+            </ul>
+            <div class="speakbar" data-section>
+              <div class="pill">🔊 Read this section</div>
+              <div class="speak">
+                <button class="btn speak-play">Play</button>
+                <button class="btn speak-stop">Stop</button>
+              </div>
+            </div>
+          </div>
+          <figure class="media">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/United_Nations_Headquarters%2C_New_York%2C_View_from_the_East_River.jpg/640px-United_Nations_Headquarters%2C_New_York%2C_View_from_the_East_River.jpg" alt="United Nations Headquarters in New York City"/>
+            <figcaption><small>UN HQ, New York (CC). Replace with preferred image.</small></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="braille-ribbon" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><small>Prototype scaffolding for a scrollytelling map about Braille. Fonts: Atkinson Hyperlegible & Source Sans 3 (with system fallbacks). Background motif mimics Braille dot grids. Built with accessibility considerations (keyboard focus, high contrast toggle, text-size control, TTS). Replace images and texts with licensed materials and verified data.</small></p>
+    </div>
+  </footer>
+
+  <!-- Libraries: Leaflet (maps) + D3 (charts) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <script>
+    /* =============================
+       High-contrast & text-size controls
+       ============================= */
+    const root = document.documentElement;
+    const sizeButtons = document.querySelectorAll('.js-font');
+    sizeButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        sizeButtons.forEach(b=>b.setAttribute('aria-pressed','false'));
+        btn.setAttribute('aria-pressed','true');
+        const pct = btn.dataset.size;
+        root.style.fontSize = pct+'%';
+      })
+    });
+    document.getElementById('toggle-theme').addEventListener('click', ()=>{
+      const current = getComputedStyle(root).getPropertyValue('--bg').trim();
+      const dark = '#0b0c10';
+      if(current === dark){
+        // Switch to higher-contrast light-on-dark (already strong); alternatively, provide light theme
+        root.style.setProperty('--bg', '#0a0a0a');
+        root.style.setProperty('--bg-alt', '#121212');
+        root.style.setProperty('--fg', '#ffffff');
+      }else{
+        root.style.setProperty('--bg', '#0b0c10');
+        root.style.setProperty('--bg-alt', '#11131a');
+        root.style.setProperty('--fg', '#f1f5f9');
+      }
+    });
+
+    /* =============================
+       Scroll spy for nav dots
+       ============================= */
+    const sections = Array.from(document.querySelectorAll('main section'));
+    const dots = Array.from(document.querySelectorAll('.navdots a'));
+    const byId = id => document.querySelector('.navdots a[href="#'+id+'"]');
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          dots.forEach(d=>d.classList.remove('active'));
+          const a = byId(e.target.id); if(a) a.classList.add('active');
+        }
+      })
+    },{root:null,rootMargin:'-40% 0px -55% 0px',threshold:[0, .25, .5, .75, 1]});
+    sections.forEach(s=>io.observe(s));
+
+    /* =============================
+       Read-aloud buttons (Web Speech API)
+       ============================= */
+    const synth = window.speechSynthesis;
+    function speak(text){
+      if(!('speechSynthesis' in window)) { alert('Text-to-speech is not supported in this browser.'); return; }
+      stopSpeaking();
+      const utter = new SpeechSynthesisUtterance(text);
+      // Accessibility choices: slower, clear rate; attempt to pick a high-quality voice if available
+      utter.rate = 0.95; utter.pitch = 1; utter.volume = 1;
+      const preferred = (synth.getVoices()||[]).find(v=>/enhanced|premium|Samantha|Daniel|Serena|Google US English/i.test(v.name));
+      if(preferred) utter.voice = preferred;
+      synth.speak(utter);
+    }
+    function stopSpeaking(){ if(synth && synth.speaking){ synth.cancel(); } }
+
+    document.querySelectorAll('[data-section]').forEach(bar=>{
+      const play = bar.querySelector('.speak-play');
+      const stop = bar.querySelector('.speak-stop');
+      const section = bar.closest('section');
+      const text = () => Array.from(section.querySelectorAll('h2, p, li')).map(n=>n.innerText.trim()).join('. ');
+      play.addEventListener('click', ()=> speak(text()));
+      stop.addEventListener('click', stopSpeaking);
+    });
+
+    /* =============================
+       Leaflet maps (lightweight placeholders)
+       ============================= */
+    function makeMap(id, opts){
+      const map = L.map(id, { zoomControl:false, scrollWheelZoom:false, dragging:true, keyboard:true }).setView(opts.center, opts.zoom);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      // Accessibility: larger focus ring on markers
+      const marker = L.circleMarker(opts.center, { radius:8, weight:2, color:'#64ffda', fillColor:'#64ffda', fillOpacity:.25 }).addTo(map);
+      if(opts.label){ marker.bindTooltip(opts.label, {permanent:true, direction:'top', offset:[0,-8]}); }
+      return map;
+    }
+    const map1 = makeMap('map1', { center:[48.8566, 2.3522], zoom: 12, label:'Paris: early blind education' });
+    const map2 = makeMap('map2', { center:[44.0, -20.0], zoom:2 });
+    // Add diffusion node markers (Paris, London, Boston)
+    const nodes = [
+      {pt:[48.8566, 2.3522], name:'Paris'},
+      {pt:[51.5074, -0.1278], name:'London'},
+      {pt:[42.3601, -71.0589], name:'Boston'}
+    ];
+    nodes.forEach(n=> L.circleMarker(n.pt, {radius:6, color:'#ffd166', weight:2, fillColor:'#ffd166', fillOpacity:.25}).addTo(map2).bindTooltip(n.name));
+
+    /* =============================
+       D3 placeholder chart (decorative until real data is added)
+       ============================= */
+    (function(){
+  const svg = d3.select('#trendChart');
+  const W = 800, H = 360, m = {t:30,r:24,b:40,l:56};
+  svg.attr('viewBox',`0 0 ${W} ${H}`);
+  const g = svg.append('g').attr('transform',`translate(${m.l},${m.t})`);
+  const width = W - m.l - m.r, height = H - m.t - m.b;
+
+  // Selected APH Federal Quota PRM (Primary Reading Medium) datapoints (proxy for literacy)
+  const data = [
+    {year:2003, val:9.0},   // APH 2003
+    {year:2004, val:9.0},   // APH 2004
+    {year:2016, val:7.8},   // APH 2016
+    {year:2019, val:8.4}    // APH 2019
+  ];
+
+  const x = d3.scaleLinear().domain(d3.extent(data, d=>d.year)).range([0,width]);
+  const y = d3.scaleLinear().domain([0, 12]).nice().range([height, 0]);
+  g.append('g').attr('transform',`translate(0,${height})`).call(d3.axisBottom(x).tickFormat(d3.format('d')));
+  g.append('g').call(d3.axisLeft(y).tickFormat(d=>d+'%'));
+
+  const line = d3.line().x(d=>x(d.year)).y(d=>y(d.val)).curve(d3.curveMonotoneX);
+  g.append('path').attr('d', line(data)).attr('fill','none').attr('stroke','#64ffda').attr('stroke-width',3);
+
+  const tip = g.append('g').style('pointer-events','none');
+  g.selectAll('circle').data(data).enter().append('circle')
+    .attr('cx',d=>x(d.year)).attr('cy',d=>y(d.val)).attr('r',5).attr('fill','#ffd166')
+    .on('mouseenter', function(e,d){
+      const [cx,cy] = [x(d.year), y(d.val)];
+      tip.selectAll('*').remove();
+      const pad = 8; const txt = `${d.year}: ${d.val}%`;
+      const bbox = {w: 120, h: 26};
+      tip.append('rect').attr('x', cx+8).attr('y', cy- (bbox.h+6))
+        .attr('width', bbox.w).attr('height', bbox.h).attr('rx',6)
+        .attr('fill','#11131a').attr('stroke','#1f2937');
+      tip.append('text').attr('x', cx+8+pad).attr('y', cy- (bbox.h/2))
+        .attr('dominant-baseline','middle').attr('fill','#cbd5e1').text(txt);
+    })
+    .on('mouseleave',()=>tip.selectAll('*').remove());
+
+  g.append('text').attr('x',0).attr('y',-8).attr('fill','#cbd5e1')
+    .text('Share of registered K–12 students with Braille as primary reading medium (APH Federal Quota; proxy)');
+})();
+
+    /* =============================
+       Cleanup: stop TTS when navigating away
+       ============================= */
+    window.addEventListener('beforeunload', stopSpeaking);
+  </script>
+</body>
+</html>
