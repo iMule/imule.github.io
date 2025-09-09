@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>World Braille Day • A Story Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Accessible fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Leaflet + D3 -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44c=" crossorigin="anonymous"></script>
+  <script defer src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root{
+      --bg: #0f0f12;
+      --panel: #17171c;
+      --ink: #f2f4f8;
+      --muted: #b7beca;
+      --accent: #7cc5ff;
+      --accent-2:#b9fbc0;
+      --quote:#ffe08a;
+      --focus:#ff7a59;
+    }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      color:var(--ink);
+      background: var(--bg);
+      font-family: "Atkinson Hyperlegible","Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.6;
+      letter-spacing: .1px;
+    }
+
+    /* Braille dot motif (subtle) */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      opacity:.10;
+      background:
+        radial-gradient(circle 2px at 8px 8px, #fff 98%, transparent 100%) 0 0/24px 24px,
+        radial-gradient(circle 2px at 8px 20px, #fff 98%, transparent 100%) 0 0/24px 24px,
+        radial-gradient(circle 2px at 20px 8px, #fff 98%, transparent 100%) 0 0/24px 24px,
+        radial-gradient(circle 2px at 20px 20px, #fff 98%, transparent 100%) 0 0/24px 24px;
+      mix-blend-mode: soft-light;
+    }
+
+    a{ color: var(--accent); }
+    a:focus, button:focus { outline:3px solid var(--focus); outline-offset:3px; border-radius:6px; }
+
+    header.hero{
+      min-height: 82vh;
+      display:grid;
+      place-items:center;
+      padding: clamp(1rem, 4vw, 4rem);
+      text-align:center;
+      background: linear-gradient(180deg, #11121a 0%, #0f0f12 100%);
+    }
+    .hero h1{
+      font-size: clamp(2rem, 4vw + 1rem, 4.25rem);
+      line-height:1.1;
+      margin:.25rem 0 .5rem;
+      letter-spacing:.5px;
+    }
+    .kicker{
+      display:inline-block;
+      font-weight:700;
+      color:var(--accent-2);
+      background: #133;
+      border: 1px solid #256;
+      padding:.25rem .5rem;
+      border-radius:999px;
+      letter-spacing:.5px;
+    }
+    .sub{
+      max-width: 68ch;
+      margin-inline:auto;
+      color: var(--muted);
+      font-size: clamp(1rem, .5vw + .9rem, 1.15rem);
+    }
+    .scroll-cue{
+      margin-top:2rem;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    main#story{
+      display:grid;
+      gap: clamp(1rem, 2vw, 1.5rem);
+      padding-bottom:6rem;
+    }
+    section.block{
+      margin-inline:auto;
+      width:min(1050px, 92vw);
+      background: var(--panel);
+      border:1px solid #2a2d39;
+      border-radius:20px;
+      padding: clamp(1rem, 1.75vw, 2rem);
+      box-shadow: 0 10px 30px rgb(0 0 0 / .35);
+    }
+    section.block h2{
+      margin: .2rem 0 0.2rem;
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+      letter-spacing:.3px;
+    }
+    .eyebrow{
+      color: var(--accent);
+      font-size:.9rem;
+      text-transform: uppercase;
+      letter-spacing: .12rem;
+      font-weight:700;
+    }
+    .lede{
+      color:#e8ecf3;
+      font-size: clamp(1.05rem, 1.1vw, 1.2rem);
+      margin-top:.25rem;
+    }
+
+    .flex{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 900px){
+      .flex{ grid-template-columns: 1.1fr .9fr; }
+    }
+    figure{
+      margin:0;
+      border:1px solid #2c2f3b; border-radius:16px; overflow:hidden;
+      background:#0e0f12;
+    }
+    figure img{ width:100%; height:auto; display:block; }
+    figcaption{
+      padding:.6rem .8rem;
+      color:var(--muted);
+      font-size:.9rem;
+      border-top:1px solid #242633;
+    }
+
+    .callout{
+      background: linear-gradient(180deg, #26283a 0, #202231 100%);
+      border:1px solid #3a3f57;
+      color: #f9fbff;
+      border-radius:16px;
+      padding:1rem 1rem 1rem 1rem;
+      position:relative;
+    }
+    .callout blockquote{
+      margin:0;
+      font-size: clamp(1.05rem, 1.2vw, 1.4rem);
+      line-height:1.5;
+    }
+    .callout .by{ margin-top:.5rem; color: var(--quote); font-weight:700; }
+
+    /* read aloud buttons */
+    .actions{ display:flex; gap:.5rem; flex-wrap:wrap; }
+    .read-btn, .jump-btn{
+      appearance:none; border:1px solid #344; background:#0f1822; color:#dfe7f5;
+      padding:.5rem .75rem; border-radius:999px; cursor:pointer; font-weight:700;
+    }
+    .read-btn:hover, .jump-btn:hover{ background:#142334; }
+
+    /* Map + Chart blocks */
+    #map{ width:100%; height: min(60vh, 560px); border-radius:14px; }
+    #chart{ width:100%; height:min(62vh, 520px); }
+
+    /* Footer */
+    footer{
+      margin: 2rem auto 4rem;
+      width:min(1050px, 92vw);
+      color: var(--muted);
+      font-size:.95rem;
+    }
+    .sources{ column-width: 32ch; column-gap: 2rem; }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{ opacity:0; transform: translateY(12px); transition: .6s ease; }
+      .fade-in.reveal{ opacity:1; transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" role="banner">
+    <div>
+      <div class="kicker" aria-label="United Nations World Braille Day">UN World Braille Day — 4 January</div>
+      <h1>From Raised Letters to Six Dots: <br/>A Short History & Spread of Braille</h1>
+      <p class="sub">A vertically scrolling, accessible “story map” interleaving history, places, and data—designed with legible type, high contrast, braille motifs, and optional read-aloud per section.</p>
+      <p class="scroll-cue" aria-hidden="true">↓ Scroll to begin</p>
+    </div>
+  </header>
+
+  <main id="story">
+    <!-- 1. Pre-Braille -->
+    <section class="block fade-in" id="prebraille" tabindex="-1">
+      <div class="actions" style="justify-content:space-between; align-items:center;">
+        <div class="eyebrow">Before Braille</div>
+        <button class="read-btn" data-target="prebraille">🔊 Read aloud</button>
+      </div>
+      <h2>The first tactile books (Paris, 1780s)</h2>
+      <p class="lede">
+        Long before six-dot cells, <strong>Valentin Haüy</strong> taught blind students to read embossed <em>Roman</em> letters at the world’s first school for the blind (Paris, 1785). In 1786 he printed the first book for blind readers—using raised print type students could feel. It worked, but was bulky and slow to read by touch.
+      </p>
+      <div class="flex">
+        <div>
+          <p>Haüy’s method—embossing simplified print letters—proved a crucial proof of concept: tactile reading was <em>possible</em>. It also set the stage (and the school) where a young student named Louis Braille would later invent a far more compact, faster tactile code.</p>
+        </div>
+        <figure>
+          <img alt="Oval portrait of Valentin Haüy, public domain engraving." src="https://commons.wikimedia.org/wiki/Special:FilePath/Valentin%20Ha%C3%BCy%20oval%20portrait.jpg">
+          <figcaption>Valentin Haüy (1745–1822), founder of the Paris school and printer of the first embossed book for the blind (1786). Source: Wikimedia Commons (PD).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 2. Invention -->
+    <section class="block fade-in" id="invention" tabindex="-1">
+      <div class="actions" style="justify-content:space-between; align-items:center;">
+        <div class="eyebrow">Invention</div>
+        <button class="read-btn" data-target="invention">🔊 Read aloud</button>
+      </div>
+      <h2>Louis Braille’s breakthrough (1824 → 1837)</h2>
+      <p class="lede">
+        Inspired by raised-dot “night writing,” Louis Braille devised a six-dot cell by age 15 (1824), then published a full system (1829) with extensions for music and math (1837). After his death, France officially adopted braille (1854). The rest of the world—eventually—followed.
+      </p>
+      <div class="flex">
+        <figure>
+          <img alt="Portrait of Louis Braille" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Louis_Braille.jpg">
+          <figcaption>Louis Braille (1809–1852). Source: Wikimedia Commons (PD).</figcaption>
+        </figure>
+        <div class="callout" role="note" aria-label="Quote">
+          <blockquote>
+            “Through the magic of six dots the gates of knowledge have been flung wide… Never at any time are we so free as when… the Braille dots flash into our fingers the greatness, the wonder, the boundlessness of life.”
+          </blockquote>
+          <div class="by">—Helen Keller, 1930 (AFB Archives)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Diffusion map -->
+    <section class="block fade-in" id="diffusion" tabindex="-1">
+      <div class="actions" style="justify-content:space-between; align-items:center;">
+        <div class="eyebrow">Diffusion</div>
+        <button class="read-btn" data-target="diffusion">🔊 Read aloud</button>
+      </div>
+      <h2>Where braille spread first</h2>
+      <p class="lede">Early milestones: Paris (1785, first school); Boston (1829, Perkins founded; Boston Line Type era); St. Louis (1860, first formal U.S. adoption at Missouri School for the Blind); London/Hereford (1872, Royal National College). A Paris congress in 1878 recommended braille internationally; later UNESCO and national bodies standardized codes.</p>
+      <div id="map" role="region" aria-label="Map showing early braille milestones"></div>
+      <p style="margin-top:.75rem; color:var(--muted); font-size:.95rem;">
+        Basemap © OpenStreetMap & CARTO. Marker text summarizes dates; see Sources below for references.
+      </p>
+    </section>
+
+    <!-- 4. Standards -->
+    <section class="block fade-in" id="standards" tabindex="-1">
+      <div class="actions" style="justify-content:space-between; align-items:center;">
+        <div class="eyebrow">Standards</div>
+        <button class="read-btn" data-target="standards">🔊 Read aloud</button>
+      </div>
+      <h2>From national codes to international standards</h2>
+      <p class="lede">
+        Nineteenth-century English-language braille splintered (American Braille, New York Point, British variants). A <strong>Paris congress in 1878</strong> aligned core letters; UNESCO work in 1951 pushed further. In English, the <strong>Unified English Braille (UEB)</strong> project began in the 1990s; ICEB endorsed it (2004). The U.S. adopted UEB in 2012 and implemented it in 2016 (retaining Nemeth for math).
+      </p>
+      <div class="callout" role="note">
+        <blockquote>
+          “The purpose of the Day is to raise awareness of the importance of braille as a means of communication in the full realization of the human rights of persons who are blind or partially sighted.”
+        </blockquote>
+        <div class="by">—United Nations on World Braille Day</div>
+      </div>
+    </section>
+
+    <!-- 5. Literacy data + chart -->
+    <section class="block fade-in" id="literacy" tabindex="-1">
+      <div class="actions" style="justify-content:space-between; align-items:center;">
+        <div class="eyebrow">Literacy</div>
+        <button class="read-btn" data-target="literacy">🔊 Read aloud</button>
+      </div>
+      <h2>Braille as a Primary Reading Medium (U.S. students, 2014–2022)</h2>
+      <p class="lede">A proxy for braille literacy is the share of students whose <em>primary reading medium</em> is braille, as reported annually via APH quota census. Below is the percentage among all registered students (ages 4–21) for 2014–2022.</p>
+      <div id="chart" role="img" aria-label="Line chart of braille as a primary reading medium, 2014–2022"></div>
+      <p style="margin-top:.5rem; color:var(--muted); font-size:.95rem;">
+        Notes: PRM is an imperfect proxy (e.g., multi-modal readers, local reporting differences), but it’s the most consistent long-run series available.
+      </p>
+    </section>
+
+    <!-- 6. People & images -->
+    <section class="block fade-in" id="people" tabindex="-1">
+      <div class="actions" style="justify-content:space-between; align-items:center;">
+        <div class="eyebrow">People</div>
+        <button class="read-btn" data-target="people">🔊 Read aloud</button>
+      </div>
+      <h2>Readers, writers, advocates</h2>
+      <div class="flex">
+        <figure>
+          <img alt="Helen Keller standing at a fireplace, full-length portrait" src="https://commons.wikimedia.org/wiki/Special:FilePath/Helen%20Keller,%20no.%208%20LCCN2009633161.jpg">
+          <figcaption>Helen Keller (PD, Library of Congress via Wikimedia).</figcaption>
+        </figure>
+        <figure>
+          <img alt="Interior of the Paris Institute for blind youth, 1805 aquatint" src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Institut%20National%20des%20Aveugles-n%C3%A9s,%20Paris;%20interior%20duri%20Wellcome%20L0012528.jpg">
+          <figcaption>Institut National des Aveugles-nés (1805; Wellcome Collection, CC BY 4.0).</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fade-in" id="sources">
+    <h3>Selected sources & image credits</h3>
+    <div class="sources">
+      <p>UN World Braille Day (GA Res. A/RES/73/161); UN observance page.</p>
+      <p>Haüy: first school (1785) and first embossed book (1786), Perkins archives & APH museum entries.</p>
+      <p>Louis Braille’s system (1824/1829/1837); France’s 1854 adoption (RNIB, AFB chronologies).</p>
+      <p>Early U.S.: Boston Line Type (Howe, Perkins); Missouri School adopts braille in 1860.</p>
+      <p>1878 Paris congress recommendation; UNESCO 1951; UEB: ICEB/BANA adoption (US 2012; implementation 2016; Nemeth retained).</p>
+      <p>Literacy dataset (APH/AFB): PRM % among registered students, 2014–2022.</p>
+      <p>Images: Valentin Haüy (PD, Commons); Louis Braille (PD, Commons); Helen Keller (PD, Commons); Paris Institute interior (Wellcome, CC BY 4.0).</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple intersection reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('reveal'); });
+    }, { threshold: .15 });
+    document.querySelectorAll('.fade-in').forEach(el=> io.observe(el));
+
+    // Read-aloud via Web Speech API
+    function readSection(id){
+      try{
+        const node = document.getElementById(id);
+        if(!node) return;
+        const text = [...node.querySelectorAll('h2, p, li, figcaption, blockquote')].map(n=>n.textContent.trim()).join('. ');
+        if(!text) return;
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'en-US';
+        utter.rate = 1.0; // feel free to tweak
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utter);
+      }catch(e){ console.warn(e); }
+    }
+    document.querySelectorAll('.read-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> readSection(btn.dataset.target));
+    });
+
+    // Leaflet map (initialized when scrolled into view)
+    let mapInited=false;
+    function initMap(){
+      if(mapInited) return; mapInited=true;
+      const map = L.map('map', { scrollWheelZoom:false });
+      const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap, &copy; CARTO',
+        maxZoom: 19
+      });
+      tiles.addTo(map);
+      const sites = [
+        { name:"Paris — Institut des Jeunes Aveugles (1785)", year:1785, coords:[48.846, 2.336], note:"First school for the blind; Haüy’s embossed-letter books (1786)." },
+        { name:"Boston — Perkins (1829)", year:1829, coords:[42.367, -71.158], note:"Boston Line Type era; later transitions to braille." },
+        { name:"St. Louis — Missouri School (1860)", year:1860, coords:[38.628, -90.236], note:"First formal U.S. adoption of braille (school-wide)." },
+        { name:"London/Hereford — RNC (1872)", year:1872, coords:[51.507, -0.128], note:"Royal National College founded (moved to Hereford later)." }
+      ];
+      const group = L.featureGroup(
+        sites.map(s => L.marker(s.coords).bindPopup(`<strong>${s.name}</strong><br/><small>${s.note}</small>`))
+      ).addTo(map);
+      map.fitBounds(group.getBounds().pad(0.3));
+      // Simple polyline (suggestive diffusion)
+      L.polyline(sites.sort((a,b)=>a.year-b.year).map(s=>s.coords), { color:'#4cc9f0', weight:3, opacity:.8 }).addTo(map);
+    }
+    new IntersectionObserver((entries)=>{
+      entries.forEach(e => { if(e.isIntersecting) initMap(); });
+    }, { threshold:.25 }).observe(document.getElementById('diffusion'));
+
+    // D3 chart (APH/AFB PRM % series)
+    let chartInited=false;
+    function initChart(){
+      if(chartInited) return; chartInited=true;
+      const data = [
+        {year:2014, pct:9},
+        {year:2015, pct:8},
+        {year:2016, pct:8},
+        {year:2017, pct:8},
+        {year:2018, pct:8},
+        {year:2019, pct:8},
+        {year:2020, pct:8},
+        {year:2021, pct:9},
+        {year:2022, pct:8}
+      ];
+      const el = document.getElementById('chart');
+      const width = el.clientWidth, height = el.clientHeight;
+      const margin = {top: 20, right: 24, bottom: 40, left: 48};
+
+      const svg = d3.select(el).append('svg')
+        .attr('viewBox', [0,0,width, height])
+        .attr('role','img');
+
+      const x = d3.scaleLinear()
+        .domain(d3.extent(data, d=>d.year))
+        .range([margin.left, width - margin.right]);
+
+      const y = d3.scaleLinear()
+        .domain([d3.min(data, d=>d.pct)-1, d3.max(data, d=>d.pct)+1]).nice()
+        .range([height - margin.bottom, margin.top]);
+
+      const line = d3.line()
+        .x(d=>x(d.year))
+        .y(d=>y(d.pct))
+        .curve(d3.curveMonotoneX);
+
+      svg.append('g')
+        .attr('transform', `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x).tickFormat(d3.format('d')));
+
+      svg.append('g')
+        .attr('transform', `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y).ticks(6).tickFormat(d=>d + '%'));
+
+      svg.append('path')
+        .datum(data)
+        .attr('fill','none')
+        .attr('stroke','#8bd3dd')
+        .attr('stroke-width',3)
+        .attr('d', line);
+
+      svg.selectAll('circle.pt')
+        .data(data).enter().append('circle')
+        .attr('class','pt')
+        .attr('cx', d=>x(d.year))
+        .attr('cy', d=>y(d.pct))
+        .attr('r',4)
+        .attr('fill','#b9fbc0');
+
+      svg.append('text')
+        .attr('x', margin.left)
+        .attr('y', margin.top+4)
+        .attr('fill', '#cdd6e5')
+        .attr('font-size','12')
+        .text('Share of registered students (ages 4–21) with Braille as Primary Reading Medium (APH quota census).');
+    }
+    new IntersectionObserver((entries)=>{
+      entries.forEach(e => { if(e.isIntersecting) initChart(); });
+    }, { threshold:.35 }).observe(document.getElementById('literacy'));
+
+    // Keyboard shortcut: press "r" to read current visible section
+    document.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase() === 'r'){
+        const blocks = [...document.querySelectorAll('section.block')];
+        const mid = window.scrollY + window.innerHeight/2;
+        const vis = blocks.find(b=>{
+          const r=b.getBoundingClientRect();
+          const top = r.top + window.scrollY, bottom = top + r.height;
+          return mid >= top && mid <= bottom;
+        });
+        if(vis) readSection(vis.id);
+      }
+    });
+  </script>
+</body>
+</html>
