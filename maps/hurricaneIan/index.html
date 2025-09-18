@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DEAD GRID — EV Chargers within 30mi of Hurricane Ian (2022)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+  :root{
+    --bg:#000;
+    --ink:#e6e6e6;
+    --muted:#a8a8a8;
+    --panel:#0d0e10;
+    --border:#181a1d;
+    --accent:#ffe600;     /* neon yellow */
+    --track:#7a7a7a;
+  }
+  html,body,#map{height:100%;margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;}
+  .leaflet-container{background:#000;}
+  .leaflet-control-zoom{display:none !important;} /* per your defaults */
+
+  /* Title */
+  .titlebar{
+    position:absolute; left:12px; top:12px; z-index:900;
+    padding:10px 14px; border-radius:14px; border:1px solid var(--border);
+    background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+    box-shadow:0 10px 30px rgba(0,0,0,.6);
+    max-width: min(95vw, 560px);
+  }
+  .titlebar h1{margin:0 0 4px;font-size:18px;letter-spacing:.06em}
+  .titlebar small{color:var(--muted);}
+
+  /* Controls panel */
+  .panel{
+    position:absolute; right:12px; top:12px; z-index:900; width:min(320px,92vw);
+    background:var(--panel); border:1px solid var(--border); border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.65);
+    overflow:hidden;
+  }
+  .panel header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));}
+  .panel header h2{margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#d0d0d0}
+  .panel .body{padding:10px 12px;max-height:60vh;overflow:auto}
+  .group{margin-bottom:12px}
+  .group h3{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#bdbdbd}
+  input[type="range"]{width:100%;accent-color:var(--accent)}
+  .btn{background:#0f1012;border:1px solid var(--border);color:var(--ink);padding:6px 10px;border-radius:999px;cursor:pointer}
+  .btn:hover{border-color:#2a2a2a}
+
+  /* Multi-select dropdown (sleek) */
+  .multiselect{ position:relative; }
+  .ms-btn{
+    width:100%; text-align:left; background:#0f1012; border:1px solid var(--border);
+    color:var(--ink); padding:8px 10px; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+  }
+  .ms-caret{ opacity:.7 }
+  .ms-menu{
+    position:absolute; top:46px; left:0; right:0; background:#0b0c0e; border:1px solid var(--border);
+    border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.6); display:none; z-index:950; max-height:48vh; overflow:auto;
+  }
+  .ms-menu.open{ display:block; }
+  .ms-actions{ display:flex; gap:8px; padding:8px; border-bottom:1px solid #121316; }
+  .btn-sm{ background:#0f1012; border:1px solid var(--border); color:#ddd; padding:5px 8px; border-radius:999px; cursor:pointer; font-size:12px; }
+  .btn-sm:hover{ border-color:#2a2a2a }
+  .ms-list{ padding:6px 8px; }
+  .ms-option{ display:flex; align-items:center; gap:8px; padding:6px 4px; border-radius:8px; }
+  .ms-option:hover{ background:#101115; }
+  .ms-option input{ accent-color: var(--accent); }
+  .ms-label{ font-size:12px; color:#d8d8d8; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  /* Legend */
+  .legend{
+    position:absolute; left:12px; bottom:12px; z-index:900;
+    background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:8px 10px; max-width:420px;
+  }
+  .legend summary{cursor:pointer;color:#c8c8c8}
+  .legend .row{display:flex;align-items:center;gap:8px;margin:6px 0;color:#dcdcdc}
+  .dot-demo{position:relative;width:30px;height:30px}
+
+  /* Sources popover */
+  .sources-btn{ position:absolute; right:12px; bottom:12px; z-index:900 }
+  .popover{ position:absolute; right:12px; bottom:52px; z-index:950; display:none; width:min(92vw,520px);
+    background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:12px; }
+
+  /* Prompt modal */
+  .modal{
+    position:fixed; inset:0; display:none; place-items:center; z-index:1001; background:rgba(0,0,0,.65);
+  }
+  .modal.show{ display:grid; }
+  .p-card{
+    width:min(92vw, 720px); background:#0d0e10; border:1px solid #222; border-radius:16px;
+    box-shadow:0 18px 80px rgba(0,0,0,.7); padding:16px 18px; color:#e9e9e9;
+  }
+  .p-card h3{ margin:0 0 10px; font-size:18px; letter-spacing:.08em; text-transform:uppercase; color:#f0f0f0; }
+  .p-card pre{
+    white-space:pre-wrap; background:#0a0b0d; border:1px solid #1b1c1f; border-radius:12px; padding:12px; color:#d9d9d9;
+    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+  .p-card a{ color:var(--accent); }
+
+  /* Loading veil */
+  .veil{
+    position:absolute; inset:0; display:grid; place-items:center; z-index:1000;
+    background:radial-gradient(ellipse at 50% 50%, rgba(0,0,0,.86), rgba(0,0,0,.96)); color:#dcdcdc;
+    text-transform:uppercase; letter-spacing:.08em; font-size:14px;
+  }
+  .spinner{width:28px;height:28px;border:2px solid #1f1f1f;border-top-color:var(--accent);border-radius:999px;margin:12px auto 0;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Track + buffer */
+  .track-style{ color:var(--track); weight:2; opacity:.95 }
+  .buffer-style{ color:#393939; weight:1.2; fill:#252525; fill-opacity:.35; }
+
+  /* EV markers (DivIcon) */
+  .ev{
+    position:relative; border-radius:999px;
+    background:radial-gradient(circle, rgba(255,230,0,.25), rgba(255,230,0,.05) 60%, transparent 70%);
+    border:2px solid var(--accent);
+    filter:drop-shadow(0 0 4px rgba(255,230,0,.35));
+    animation: pulse var(--dur,2200ms) ease-in-out infinite, flicker 6s steps(50) infinite;
+  }
+  .ev.fast{ box-shadow: inset 0 0 0 3px rgba(255,230,0,.75); }
+  .ev::after{
+    content:""; position:absolute; inset:25%; border-radius:999px;
+    background:radial-gradient(circle, rgba(255,230,0,.85), rgba(255,230,0,0) 70%);
+  }
+  @keyframes pulse { 0%{transform:scale(.82)} 50%{transform:scale(1.13)} 100%{transform:scale(.82)} }
+  @keyframes flicker { 0%,17%,19%,22%,24%,53%,56%,100%{opacity:.95} 18%,23%,55%{opacity:.3} }
+
+  /* Popups */
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip{ background:#0f1012; border:1px solid #222; color:#eaeaea }
+
+  /* Scanner overlay */
+  .scanner{ position:absolute; inset:0; pointer-events:none; z-index:650; overflow:hidden; }
+  .scanner .beam{
+    position:absolute; left:-10%; width:120%; height:28%; top:-40%;
+    background:linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.05), rgba(255,255,255,0));
+    filter:blur(8px); opacity:0;
+    transform:rotate(8deg) translateY(-120%);
+  }
+  .scanner.run .beam{
+    opacity:1; animation:scan 2.8s linear forwards;
+  }
+  @keyframes scan{
+    0%{ transform:rotate(8deg) translateY(-120%); }
+    100%{ transform:rotate(8deg) translateY(220%); }
+  }
+</style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- subtle scanner effect -->
+  <div class="scanner" id="scanner"><div class="beam"></div></div>
+
+  <div class="titlebar">
+    <h1>SHOCK HAZARD: EV Stations in Hurricane Ian's Path</h1>
+    <div style="margin-top:8px;">
+      <button class="btn" id="promptBtn" title="View original prompt">Web Mapper GPT Prompt</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <header>
+      <h2>Filters & Legend</h2>
+      <button class="btn" id="resetBtn">Reset</button>
+    </header>
+    <div class="body">
+      <div class="group">
+        <h3>Minimum total ports</h3>
+        <input id="minPorts" type="range" min="0" max="30" step="1" value="0" />
+        <div class="row" style="justify-content:space-between;font-size:12px;color:#bdbdbd"><span>0</span><span>15</span><span>30+</span></div>
+      </div>
+
+      <div class="group">
+        <h3>Networks</h3>
+        <div class="multiselect" id="networkSelect">
+          <button class="ms-btn" id="msBtn">
+            <span id="msLabel">Networks: All</span>
+            <span class="ms-caret">▼</span>
+          </button>
+          <div class="ms-menu" id="msMenu">
+            <div class="ms-actions">
+              <button type="button" class="btn-sm" id="msAll">All</button>
+              <button type="button" class="btn-sm" id="msNone">None</button>
+            </div>
+            <div class="ms-list" id="msList"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Charger type filters</h3>
+        <label class="ms-option"><input id="fastOnly" type="checkbox"> <span class="ms-label">DC Fast present</span></label>
+        <label class="ms-option"><input id="l2Only"   type="checkbox"> <span class="ms-label">Level 2 present</span></label>
+      </div>
+    </div>
+  </div>
+
+  <details class="legend">
+    <summary>Legend</summary>
+    <div class="row"><div class="dot-demo" id="demoSmall"></div> Fewer total ports</div>
+    <div class="row"><div class="dot-demo" id="demoLarge"></div> More total ports</div>
+    <div class="row"><div class="dot-demo" id="demoRing"></div> Thick inner ring = more DC fast ports</div>
+    <div class="row"><span style="display:inline-block;width:30px;height:6px;background:var(--track);box-shadow:0 0 8px #888;"></span> Hurricane track</div>
+    <div class="row"><span style="display:inline-block;width:30px;height:14px;background:#252525;border:1px solid #393939;"></span> Destruction zone</div>
+  </details>
+
+  <button class="btn sources-btn" id="srcBtn" style="right:12px;bottom:12px;position:absolute;">Sources</button>
+  <div class="popover" id="srcPop">
+    <b>Sources & Credits</b>
+    <ul>
+      <li>Hurricane Ian (2022) best track — NOAA / National Hurricane Center (converted to GeoJSON), buffered 30 miles.</li>
+      <li>EV charging stations — U.S. DOE / NREL AFDC (public, available), clipped to the corridor.</li>
+    </ul>
+    <small>Cartography & code: Created using Web Mapper GPT. Neon-noir theme. © OpenStreetMap contributors (basemap).</small>
+  </div>
+
+  <!-- Prompt modal -->
+  <div class="modal" id="promptModal">
+    <div class="p-card" id="promptCard">
+      <h3>Web Mapper GPT Prompt</h3>
+      <pre>
+Create a map showing EV charging stations impacted by Hurricane Ian circa 2022. Make it dystopian with a black background and dark colors. The hurricane track should have a 30 mile buffer around it. EV charging stations should be represented by flickering or pulsing in and out yellow symbols. Be creative, please! (Also, please add filters so users can hide and show EV stations by network type. Perhaps symbolize the stations somehow by the number of chargers or fast chargers they have as well. Thanks!
+
+<strong>Map Author</strong> <a href="https://www.linkedin.com/in/ianmule/">Ian Muehlenhaus</a>
+<strong>Full Conversation</strong> <a href="https://chatgpt.com/share/68bc3c8b-123c-800f-b610-e5e0e2fe9d82">https://chatgpt.com/share/68bc3c8b-123c-800f-b610-e5e0e2fe9d82</a>
+      </pre>
+    </div>
+  </div>
+
+  <div class="veil" id="veil">Harvesting shadows… <div class="spinner"></div></div>
+
+<script>
+(async function(){
+  const $ = s => document.querySelector(s);
+
+  // Popovers & modals
+  const srcBtn = $("#srcBtn"), srcPop = $("#srcPop");
+  srcBtn.onclick = () => srcPop.style.display = (srcPop.style.display==="block"?"none":"block");
+  document.addEventListener("click",(e)=>{ if(!srcPop.contains(e.target) && e.target!==srcBtn) srcPop.style.display="none"; });
+
+  const promptBtn = $("#promptBtn"), promptModal = $("#promptModal"), promptCard = $("#promptCard");
+  promptBtn.onclick = () => promptModal.classList.add("show");
+  promptModal.addEventListener("click", (e)=>{ if(!promptCard.contains(e.target)) promptModal.classList.remove("show"); });
+
+  // Map init (kept as before)
+  const map = L.map('map', { zoomControl:false, maxZoom:16, minZoom:4, preferCanvas:true });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution:'&copy; OSM, &copy; CARTO • Created using Web Mapper GPT'
+  }).addTo(map);
+
+  // Subtle scanner effect (random intervals)
+  const scanner = $("#scanner");
+  function triggerScan(){
+    scanner.classList.add("run");
+    setTimeout(()=>scanner.classList.remove("run"), 3000);
+    const next = 4000 + Math.random()*8000; // 4–12s
+    setTimeout(triggerScan, next);
+  }
+  setTimeout(triggerScan, 1500 + Math.random()*3000);
+
+  // Load local data
+  const [track, buffer, stations] = await Promise.all([
+    fetch('ian_track.geojson').then(r=>{ if(!r.ok) throw new Error('track'); return r.json(); }),
+    fetch('ian_buffer_30mi.geojson').then(r=>{ if(!r.ok) throw new Error('buffer'); return r.json(); }),
+    fetch('ev_stations_ian.geojson').then(r=>{ if(!r.ok) throw new Error('stations'); return r.json(); })
+  ]);
+
+  // Draw buffer + track
+  const bufferLayer = L.geoJSON(buffer, { style:{ color:'#393939', weight:1.2, fillColor:'#252525', fillOpacity:.35 } }).addTo(map);
+  const trackLayer  = L.geoJSON(track,  { style:{ color: '#888',   weight:2,   opacity:.95 } }).addTo(map);
+
+  // Fit & constrain (±10° around data extent)
+  const b = bufferLayer.getBounds();
+  map.fitBounds(b.pad(0.15), { animate:false });
+  const padDeg = 10;
+  const maxBounds = L.latLngBounds(
+    [Math.max(-89.9, b.getSouth() - padDeg), b.getWest() - padDeg],
+    [Math.min(89.9, b.getNorth() + padDeg), b.getEast() + padDeg]
+  );
+  map.setMaxBounds(maxBounds);
+
+  // Build station layer (unchanged logic)
+  const feats = stations.features || [];
+  const networks = Array.from(new Set(feats.map(f => (f.properties?.ev_network || 'Non-Networked').trim()))).sort((a,b)=>a.localeCompare(b));
+  const state = {
+    networksOn: new Set(networks),
+    minPorts: 0,
+    fastOnly: false,
+    l2Only: false
+  };
+
+  // Multi-select dropdown build
+  const msBtn = $("#msBtn"), msMenu = $("#msMenu"), msList = $("#msList"), msLabel = $("#msLabel");
+  const msAll = $("#msAll"), msNone = $("#msNone");
+  function updateMsLabel(){
+    const selected = state.networksOn.size;
+    msLabel.textContent = (selected===networks.length) ? "Networks: All" : `Networks: ${selected} selected`;
+  }
+  networks.forEach(n=>{
+    const id = "net_"+n.replace(/\W+/g,'_');
+    const row = document.createElement("label");
+    row.className = "ms-option";
+    row.innerHTML = `<input id="${id}" type="checkbox" checked> <span class="ms-label" title="${n}">${n}</span>`;
+    msList.appendChild(row);
+    row.querySelector('input').addEventListener('change',(e)=>{
+      if(e.target.checked) state.networksOn.add(n); else state.networksOn.delete(n);
+      updateMsLabel(); redraw();
+    });
+  });
+  updateMsLabel();
+
+  // Dropdown open/close
+  msBtn.addEventListener('click', (e)=>{ e.stopPropagation(); msMenu.classList.toggle('open'); });
+  document.addEventListener('click', ()=> msMenu.classList.remove('open'));
+
+  // All / None actions
+  msAll.addEventListener('click', ()=>{ state.networksOn = new Set(networks); msList.querySelectorAll('input').forEach(cb=>cb.checked=true); updateMsLabel(); redraw(); });
+  msNone.addEventListener('click', ()=>{ state.networksOn.clear(); msList.querySelectorAll('input').forEach(cb=>cb.checked=false); updateMsLabel(); redraw(); });
+
+  // Slider & toggles (unchanged)
+  $("#minPorts").addEventListener('input', e => { state.minPorts = +e.target.value || 0; redraw(); });
+  $("#fastOnly").addEventListener('change', e => { state.fastOnly = e.target.checked; redraw(); });
+  $("#l2Only").addEventListener('change', e => { state.l2Only  = e.target.checked;  redraw(); });
+
+  $("#resetBtn").addEventListener('click', ()=>{
+    state.networksOn = new Set(networks);
+    msList.querySelectorAll('input').forEach(cb=>cb.checked=true);
+    updateMsLabel();
+    state.minPorts = 0; $("#minPorts").value = 0;
+    state.fastOnly = false; $("#fastOnly").checked = false;
+    state.l2Only   = false; $("#l2Only").checked = false;
+    map.fitBounds(b.pad(0.15));
+    redraw();
+  });
+
+  const layerGroup = L.layerGroup().addTo(map);
+
+  function iconForStation(p){
+    const l1   = +p.ev_level1_evse_num || 0;
+    const l2   = +p.ev_level2_evse_num || 0;
+    const fast = +p.ev_dc_fast_num    || 0;
+    const total = Math.max(1, l1 + l2 + fast);
+
+    // size scale 8..28 px (cap at 50 ports)
+    const cap = 50;
+    const t = Math.min(total, cap) / cap;
+    const size = Math.round(8 + t*20);
+    const ring = Math.min(6, 2 + Math.sqrt(fast || 0));
+
+    const node = document.createElement('div');
+    node.className = 'ev' + (fast ? ' fast' : '');
+    node.style.width = size+'px';
+    node.style.height = size+'px';
+    node.style.borderWidth = ring+'px';
+
+    // de-sync the animation so dots don't flicker uniformly
+    const baseDelay = (Math.random()*5).toFixed(2)+'s';
+    node.style.animationDelay = `${baseDelay}, ${baseDelay}`;
+    node.style.setProperty('--dur', (fast ? 1900 : 2300)+'ms');
+
+    return L.divIcon({ className:'', html: node, iconSize:[size,size], iconAnchor:[size/2,size/2] });
+  }
+
+  function passesFilters(p){
+    const net = (p.ev_network || 'Non-Networked').trim();
+    if(!state.networksOn.has(net)) return false;
+
+    const l1   = +p.ev_level1_evse_num || 0;
+    const l2   = +p.ev_level2_evse_num || 0;
+    const fast = +p.ev_dc_fast_num    || 0;
+    const total = l1 + l2 + fast;
+
+    if(total < state.minPorts) return false;
+    if(state.fastOnly && fast <= 0) return false;
+    if(state.l2Only   && l2   <= 0) return false;
+
+    return true;
+  }
+
+  function popupHTML(p){
+    const a = x => (x ?? 'n/a');
+    const l1   = +p.ev_level1_evse_num || 0;
+    const l2   = +p.ev_level2_evse_num || 0;
+    const fast = +p.ev_dc_fast_num    || 0;
+    const total = l1 + l2 + fast;
+    const connectors = Array.isArray(p.ev_connector_types) ? p.ev_connector_types.join(', ') :
+                       (p.ev_connector_types || 'n/a');
+    return `
+      <div>
+        <div style="font-weight:700;color:${getComputedStyle(document.documentElement).getPropertyValue('--accent')}">${a(p.station_name)}</div>
+        <div style="color:#c8c8c8">${[a(p.street_address), a(p.city), a(p.state), a(p.zip)].filter(Boolean).join(', ')}</div>
+        <hr style="border:none;border-top:1px solid #222;margin:8px 0" />
+        <div><b>Network:</b> ${a(p.ev_network) || 'Non-Networked'}</div>
+        <div><b>Ports:</b> Total ${total} • DC Fast ${fast} • Level 2 ${l2} • Level 1 ${l1}</div>
+        <div><b>Connectors:</b> ${connectors}</div>
+        <div><b>Access:</b> ${a(p.access_code)} (${a(p.access_days_time)})</div>
+        <div style="color:#8a8a8a;margin-top:4px;font-size:12px;">AFDC ID: ${a(p.id)} • Last Confirmed: ${a(p.date_last_confirmed)}</div>
+      </div>
+    `;
+  }
+
+  function redraw(){
+    layerGroup.clearLayers();
+    for(const f of feats){
+      const p = f.properties || {};
+      if(!passesFilters(p)) continue;
+      if(!f.geometry || f.geometry.type!=='Point') continue;
+      const [lon, lat] = f.geometry.coordinates;
+      L.marker([lat,lon], { icon: iconForStation(p), keyboard:false })
+        .bindPopup(popupHTML(p), { autoPanPaddingTopLeft:[30,30] })
+        .addTo(layerGroup);
+    }
+  }
+
+  // Legend icons (static)
+  const mk = (el, sz, fast=false) => {
+    const d = document.createElement('div');
+    d.className = 'ev' + (fast?' fast':'');
+    d.style.width = sz+'px'; d.style.height = sz+'px';
+    d.style.borderWidth = fast ? '5px' : '2px';
+    d.style.animation = 'none';
+    el.appendChild(d);
+  };
+  mk(document.getElementById('demoSmall'), 10, false);
+  mk(document.getElementById('demoLarge'), 26, false);
+  mk(document.getElementById('demoRing'), 18, true);
+
+  redraw();
+  document.getElementById('veil').style.display='none';
+})();
+</script>
+</body>
+</html>

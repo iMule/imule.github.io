@@ -1,0 +1,1953 @@
+﻿Country Name,Country Code,Indicator Name,Indicator Code,2014
+Albania,ALB,Annual wage for skilled female workers (US$ Dollars),w_F_skl,251377.2061
+Albania,ALB,Annual wage for skilled male workers (US$ Dollars),w_M_skl,336793.6947
+Albania,ALB,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,167814.8045
+Albania,ALB,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,234393.011
+Albania,ALB,Labor volume for skilled females (millions),v_F_skl,171223.4846
+Albania,ALB,Labor volume for skilled males (millions),v_M_skl,277060.6956
+Albania,ALB,Labor volume for unskilled females (millions),v_F_nsk,121920.941
+Albania,ALB,Labor volume for unskilled male (millions),v_M_nsk,705636.8789
+Albania,ALB,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.343442954
+Albania,ALB,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.027854486
+Albania,ALB,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.35237611
+Albania,ALB,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27632645
+Albania,ALB,Value-added from Capital in GTAP10P3COD,gtap10VACapital,5525.286044
+Albania,ALB,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4471.605149
+Albania,ALB,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Albania,ALB,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Argentina,ARG,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1808923.638
+Argentina,ARG,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1705182.797
+Argentina,ARG,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1064311.369
+Argentina,ARG,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1424281.57
+Argentina,ARG,Labor volume for skilled females (millions),v_F_skl,4439663.316
+Argentina,ARG,Labor volume for skilled males (millions),v_M_skl,4653315.225
+Argentina,ARG,Labor volume for unskilled females (millions),v_F_nsk,3727136.308
+Argentina,ARG,Labor volume for unskilled male (millions),v_M_nsk,6387249.152
+Argentina,ARG,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,7.128602237
+Argentina,ARG,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,7.855443259
+Argentina,ARG,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,12.45843321
+Argentina,ARG,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,37.5575213
+Argentina,ARG,Value-added from Capital in GTAP10P3COD,gtap10VACapital,174639.7283
+Argentina,ARG,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,232977.0249
+Argentina,ARG,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,110.2387161
+Argentina,ARG,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.25015663
+Armenia,ARM,Annual wage for skilled female workers (US$ Dollars),w_F_skl,254677.2748
+Armenia,ARM,Annual wage for skilled male workers (US$ Dollars),w_M_skl,340590.2156
+Armenia,ARM,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,170503.0105
+Armenia,ARM,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,237632.8945
+Armenia,ARM,Labor volume for skilled females (millions),v_F_skl,160713.7125
+Armenia,ARM,Labor volume for skilled males (millions),v_M_skl,274234.5837
+Armenia,ARM,Labor volume for unskilled females (millions),v_F_nsk,125675.9653
+Armenia,ARM,Labor volume for unskilled male (millions),v_M_nsk,851003.7386
+Armenia,ARM,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.320521508
+Armenia,ARM,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.031224944
+Armenia,ARM,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.3762258
+Armenia,ARM,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27202775
+Armenia,ARM,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4480.163073
+Armenia,ARM,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4110.504528
+Armenia,ARM,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Armenia,ARM,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Australia,AUS,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3868416.942
+Australia,AUS,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3684240.072
+Australia,AUS,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2390785.807
+Australia,AUS,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3068871.708
+Australia,AUS,Labor volume for skilled females (millions),v_F_skl,859109.3369
+Australia,AUS,Labor volume for skilled males (millions),v_M_skl,651245.2584
+Australia,AUS,Labor volume for unskilled females (millions),v_F_nsk,4873168.952
+Australia,AUS,Labor volume for unskilled male (millions),v_M_nsk,5955708.453
+Australia,AUS,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,1.977036069
+Australia,AUS,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,16.81506129
+Australia,AUS,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,3.137546539
+Australia,AUS,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,43.0703561
+Australia,AUS,Value-added from Capital in GTAP10P3COD,gtap10VACapital,489611.4071
+Australia,AUS,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,736962.4128
+Australia,AUS,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,104.7199847
+Australia,AUS,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.13175198
+Austria,AUT,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3713081.324
+Austria,AUT,Annual wage for skilled male workers (US$ Dollars),w_M_skl,4951719.144
+Austria,AUT,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2476043.681
+Austria,AUT,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3400862.244
+Austria,AUT,Labor volume for skilled females (millions),v_F_skl,741016.0815
+Austria,AUT,Labor volume for skilled males (millions),v_M_skl,1065744.466
+Austria,AUT,Labor volume for unskilled females (millions),v_F_nsk,417322.0263
+Austria,AUT,Labor volume for unskilled male (millions),v_M_nsk,2187995.427
+Austria,AUT,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.290395303
+Austria,AUT,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.008207354
+Austria,AUT,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.45271122
+Austria,AUT,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.24868612
+Austria,AUT,Value-added from Capital in GTAP10P3COD,gtap10VACapital,184016.6651
+Austria,AUT,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,106804.0418
+Austria,AUT,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Austria,AUT,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Azerbaijan,AZE,Annual wage for skilled female workers (US$ Dollars),w_F_skl,521405.1413
+Azerbaijan,AZE,Annual wage for skilled male workers (US$ Dollars),w_M_skl,717944.4755
+Azerbaijan,AZE,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,346827.3172
+Azerbaijan,AZE,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,499148.3596
+Azerbaijan,AZE,Labor volume for skilled females (millions),v_F_skl,502474.7492
+Azerbaijan,AZE,Labor volume for skilled males (millions),v_M_skl,785686.5082
+Azerbaijan,AZE,Labor volume for unskilled females (millions),v_F_nsk,465317.7112
+Azerbaijan,AZE,Labor volume for unskilled male (millions),v_M_nsk,3034743.031
+Azerbaijan,AZE,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.247702855
+Azerbaijan,AZE,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.006279788
+Azerbaijan,AZE,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.50982259
+Azerbaijan,AZE,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.23619476
+Azerbaijan,AZE,Value-added from Capital in GTAP10P3COD,gtap10VACapital,42783.52615
+Azerbaijan,AZE,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,16213.21969
+Azerbaijan,AZE,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Azerbaijan,AZE,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Bahrain,BHR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,261248.6175
+Bahrain,BHR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,312561.3995
+Bahrain,BHR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,163561.6543
+Bahrain,BHR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,246889.4502
+Bahrain,BHR,Labor volume for skilled females (millions),v_F_skl,141506.8192
+Bahrain,BHR,Labor volume for skilled males (millions),v_M_skl,192405.6653
+Bahrain,BHR,Labor volume for unskilled females (millions),v_F_nsk,65388.89772
+Bahrain,BHR,Labor volume for unskilled male (millions),v_M_nsk,359521.6178
+Bahrain,BHR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.260067644
+Bahrain,BHR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.011109989
+Bahrain,BHR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.48210645
+Bahrain,BHR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.24671592
+Bahrain,BHR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,21907.87347
+Bahrain,BHR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,8721.148814
+Bahrain,BHR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Bahrain,BHR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Bangladesh,BGD,Annual wage for skilled female workers (US$ Dollars),w_F_skl,143073.9003
+Bangladesh,BGD,Annual wage for skilled male workers (US$ Dollars),w_M_skl,164940.2366
+Bangladesh,BGD,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,76913.41019
+Bangladesh,BGD,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,105624.3233
+Bangladesh,BGD,Labor volume for skilled females (millions),v_F_skl,2431326.692
+Bangladesh,BGD,Labor volume for skilled males (millions),v_M_skl,11479926.93
+Bangladesh,BGD,Labor volume for unskilled females (millions),v_F_nsk,8803231.909
+Bangladesh,BGD,Labor volume for unskilled male (millions),v_M_nsk,40382022.46
+Bangladesh,BGD,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,2.667914634
+Bangladesh,BGD,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,11.31536576
+Bangladesh,BGD,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,14.71228504
+Bangladesh,BGD,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,36.30443457
+Bangladesh,BGD,Value-added from Capital in GTAP10P3COD,gtap10VACapital,70473.61826
+Bangladesh,BGD,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,79905.86174
+Bangladesh,BGD,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,122.4689877
+Bangladesh,BGD,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,101.6941662
+Belarus,BLR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,169312.0959
+Belarus,BLR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,226462.6183
+Belarus,BLR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,113323.8715
+Belarus,BLR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,157911.6077
+Belarus,BLR,Labor volume for skilled females (millions),v_F_skl,811573.5684
+Belarus,BLR,Labor volume for skilled males (millions),v_M_skl,1202432.73
+Belarus,BLR,Labor volume for unskilled females (millions),v_F_nsk,396815.3277
+Belarus,BLR,Labor volume for unskilled male (millions),v_M_nsk,2703692.374
+Belarus,BLR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.332386056
+Belarus,BLR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.032419429
+Belarus,BLR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.35285265
+Belarus,BLR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28234186
+Belarus,BLR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,23655.0351
+Belarus,BLR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,32907.59187
+Belarus,BLR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Belarus,BLR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Belgium,BEL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3029378.658
+Belgium,BEL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,4054731.099
+Belgium,BEL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2031977.374
+Belgium,BEL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2841395.756
+Belgium,BEL,Labor volume for skilled females (millions),v_F_skl,956392.7778
+Belgium,BEL,Labor volume for skilled males (millions),v_M_skl,1365894.474
+Belgium,BEL,Labor volume for unskilled females (millions),v_F_nsk,408544.1022
+Belgium,BEL,Labor volume for unskilled male (millions),v_M_nsk,2253636.646
+Belgium,BEL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.22459454
+Belgium,BEL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,5.987942954
+Belgium,BEL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.57989296
+Belgium,BEL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.20756955
+Belgium,BEL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,272183.3751
+Belgium,BEL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,70289.70553
+Belgium,BEL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Belgium,BEL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Benin,BEN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,351151.6724
+Benin,BEN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,338131.8264
+Benin,BEN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,195976.6165
+Benin,BEN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,215127.6705
+Benin,BEN,Labor volume for skilled females (millions),v_F_skl,745966.0703
+Benin,BEN,Labor volume for skilled males (millions),v_M_skl,901064.725
+Benin,BEN,Labor volume for unskilled females (millions),v_F_nsk,372303.9772
+Benin,BEN,Labor volume for unskilled male (millions),v_M_nsk,2123421.227
+Benin,BEN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.462661586
+Benin,BEN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.060459146
+Benin,BEN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.22973928
+Benin,BEN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.24713999
+Benin,BEN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,1953.230897
+Benin,BEN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4190.392275
+Benin,BEN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,116.9544971
+Benin,BEN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.2939873
+Bolivia,BOL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,317750.324
+Bolivia,BOL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,390776.2273
+Bolivia,BOL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,198743.194
+Bolivia,BOL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,275447.2835
+Bolivia,BOL,Labor volume for skilled females (millions),v_F_skl,1412712.764
+Bolivia,BOL,Labor volume for skilled males (millions),v_M_skl,1956191.956
+Bolivia,BOL,Labor volume for unskilled females (millions),v_F_nsk,591704.6761
+Bolivia,BOL,Labor volume for unskilled male (millions),v_M_nsk,1092289.604
+Bolivia,BOL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,11.26753118
+Bolivia,BOL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,7.820229362
+Bolivia,BOL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,29.09525291
+Bolivia,BOL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,16.81698655
+Bolivia,BOL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,11487.3718
+Bolivia,BOL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,12988.22768
+Bolivia,BOL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,104.6944554
+Bolivia,BOL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.22395076
+Botswana,BWA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,954773.0244
+Botswana,BWA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1138353.378
+Botswana,BWA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,423437.8637
+Botswana,BWA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,662479.0526
+Botswana,BWA,Labor volume for skilled females (millions),v_F_skl,80679.99197
+Botswana,BWA,Labor volume for skilled males (millions),v_M_skl,195124.4862
+Botswana,BWA,Labor volume for unskilled females (millions),v_F_nsk,399614.9284
+Botswana,BWA,Labor volume for unskilled male (millions),v_M_nsk,378148.5934
+Botswana,BWA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,4.497889946
+Botswana,BWA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,23.73197743
+Botswana,BWA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,7.932188995
+Botswana,BWA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,28.83794363
+Botswana,BWA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,9031.971409
+Botswana,BWA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,5549.625586
+Botswana,BWA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,144.4438512
+Botswana,BWA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,107.3977099
+Brazil,BRA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,815927.1216
+Brazil,BRA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1024158.361
+Brazil,BRA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,377893.8765
+Brazil,BRA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,502522.195
+Brazil,BRA,Labor volume for skilled females (millions),v_F_skl,12581749.41
+Brazil,BRA,Labor volume for skilled males (millions),v_M_skl,9602628.419
+Brazil,BRA,Labor volume for unskilled females (millions),v_F_nsk,29183712.74
+Brazil,BRA,Labor volume for unskilled male (millions),v_M_nsk,49235463.43
+Brazil,BRA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,4.391653277
+Brazil,BRA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,16.22839389
+Brazil,BRA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,5.80043325
+Brazil,BRA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,38.57951958
+Brazil,BRA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,878850.967
+Brazil,BRA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,930370.8163
+Brazil,BRA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,143.1904519
+Brazil,BRA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,133.4798055
+Brunei Darussalam,BRN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,8216303.603
+Brunei Darussalam,BRN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,7337039.627
+Brunei Darussalam,BRN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,4871027.545
+Brunei Darussalam,BRN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,5155954.874
+Brunei Darussalam,BRN,Labor volume for skilled females (millions),v_F_skl,40150.86158
+Brunei Darussalam,BRN,Labor volume for skilled males (millions),v_M_skl,62089.81597
+Brunei Darussalam,BRN,Labor volume for unskilled females (millions),v_F_nsk,13864.29765
+Brunei Darussalam,BRN,Labor volume for unskilled male (millions),v_M_nsk,90010.02479
+Brunei Darussalam,BRN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.2857754
+Brunei Darussalam,BRN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.013566704
+Brunei Darussalam,BRN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.26230793
+Brunei Darussalam,BRN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.43834997
+Brunei Darussalam,BRN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,10262.93496
+Brunei Darussalam,BRN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,2836.869322
+Brunei Darussalam,BRN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+Brunei Darussalam,BRN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Bulgaria,BGR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,532304.8477
+Bulgaria,BGR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,509557.8031
+Bulgaria,BGR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,335014.8306
+Bulgaria,BGR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,438049.3713
+Bulgaria,BGR,Labor volume for skilled females (millions),v_F_skl,1161268.186
+Bulgaria,BGR,Labor volume for skilled males (millions),v_M_skl,1143946.58
+Bulgaria,BGR,Labor volume for unskilled females (millions),v_F_nsk,357896.738
+Bulgaria,BGR,Labor volume for unskilled male (millions),v_M_nsk,707840.4962
+Bulgaria,BGR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,19.59128671
+Bulgaria,BGR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,7.601733815
+Bulgaria,BGR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,22.90472114
+Bulgaria,BGR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,14.90225833
+Bulgaria,BGR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,31218.08978
+Bulgaria,BGR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,11331.52693
+Bulgaria,BGR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.0705791
+Bulgaria,BGR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,75.15990252
+Burkina Faso,BFA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,151920.2548
+Burkina Faso,BFA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,360505.5182
+Burkina Faso,BFA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,92741.68882
+Burkina Faso,BFA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,205128.9241
+Burkina Faso,BFA,Labor volume for skilled females (millions),v_F_skl,611505.849
+Burkina Faso,BFA,Labor volume for skilled males (millions),v_M_skl,1357560.7
+Burkina Faso,BFA,Labor volume for unskilled females (millions),v_F_nsk,1272170.066
+Burkina Faso,BFA,Labor volume for unskilled male (millions),v_M_nsk,3118757.384
+Burkina Faso,BFA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,3.370357189
+Burkina Faso,BFA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,14.73775512
+Burkina Faso,BFA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.20135425
+Burkina Faso,BFA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,33.69053345
+Burkina Faso,BFA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,6142.550602
+Burkina Faso,BFA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4088.041415
+Burkina Faso,BFA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,100.3052206
+Burkina Faso,BFA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,114.6642769
+Cambodia,KHM,Annual wage for skilled female workers (US$ Dollars),w_F_skl,170079.1034
+Cambodia,KHM,Annual wage for skilled male workers (US$ Dollars),w_M_skl,171693.6107
+Cambodia,KHM,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,103260.0964
+Cambodia,KHM,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,121152.5718
+Cambodia,KHM,Labor volume for skilled females (millions),v_F_skl,864493.2172
+Cambodia,KHM,Labor volume for skilled males (millions),v_M_skl,1051705.513
+Cambodia,KHM,Labor volume for unskilled females (millions),v_F_nsk,3880753.5
+Cambodia,KHM,Labor volume for unskilled male (millions),v_M_nsk,2736716.77
+Cambodia,KHM,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.407559461
+Cambodia,KHM,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,21.95706535
+Cambodia,KHM,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,12.15699766
+Cambodia,KHM,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,25.47837752
+Cambodia,KHM,Value-added from Capital in GTAP10P3COD,gtap10VACapital,7159.505498
+Cambodia,KHM,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,5946.69936
+Cambodia,KHM,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,108.2595779
+Cambodia,KHM,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,91.75956349
+Cameroon,CMR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,175610.9177
+Cameroon,CMR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,247655.7746
+Cameroon,CMR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,110862.5124
+Cameroon,CMR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,162798.8056
+Cameroon,CMR,Labor volume for skilled females (millions),v_F_skl,1000089.796
+Cameroon,CMR,Labor volume for skilled males (millions),v_M_skl,3239607.359
+Cameroon,CMR,Labor volume for unskilled females (millions),v_F_nsk,1226959.975
+Cameroon,CMR,Labor volume for unskilled male (millions),v_M_nsk,4171964.871
+Cameroon,CMR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.702955184
+Cameroon,CMR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,9.426681878
+Cameroon,CMR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,21.62947573
+Cameroon,CMR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,28.24088721
+Cameroon,CMR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,9971.857484
+Cameroon,CMR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,15769.04406
+Cameroon,CMR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,104.6582675
+Cameroon,CMR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.8434135
+Canada,CAN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3384403.296
+Canada,CAN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,4534779.476
+Canada,CAN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2099838.995
+Canada,CAN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2747425.059
+Canada,CAN,Labor volume for skilled females (millions),v_F_skl,3658315.044
+Canada,CAN,Labor volume for skilled males (millions),v_M_skl,5265995.685
+Canada,CAN,Labor volume for unskilled females (millions),v_F_nsk,1724484.525
+Canada,CAN,Labor volume for unskilled male (millions),v_M_nsk,8952634.746
+Canada,CAN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.347803197
+Canada,CAN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.033123879
+Canada,CAN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.32469803
+Canada,CAN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.2943749
+Canada,CAN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,581310.2863
+Canada,CAN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,812555.3257
+Canada,CAN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,104.092734
+Canada,CAN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,108.5763287
+Chile,CHL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,733049.3781
+Chile,CHL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,936609.9687
+Chile,CHL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,423959.9439
+Chile,CHL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,532841.2304
+Chile,CHL,Labor volume for skilled females (millions),v_F_skl,1454141.542
+Chile,CHL,Labor volume for skilled males (millions),v_M_skl,1504263.872
+Chile,CHL,Labor volume for unskilled females (millions),v_F_nsk,2278314.688
+Chile,CHL,Labor volume for unskilled male (millions),v_M_nsk,3404012.898
+Chile,CHL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.762311754
+Chile,CHL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,12.29499953
+Chile,CHL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,12.52675521
+Chile,CHL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,33.4159335
+Chile,CHL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,117846.8472
+Chile,CHL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,103363.0709
+Chile,CHL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,112.6980972
+Chile,CHL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,113.0393817
+China,CHN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,349564.2187
+China,CHN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,527969.6969
+China,CHN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,190843.7211
+China,CHN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,250864.7899
+China,CHN,Labor volume for skilled females (millions),v_F_skl,72764565.48
+China,CHN,Labor volume for skilled males (millions),v_M_skl,118818392.9
+China,CHN,Labor volume for unskilled females (millions),v_F_nsk,219934844.6
+China,CHN,Labor volume for unskilled male (millions),v_M_nsk,376661461
+China,CHN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.3011893
+China,CHN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,17.33169051
+China,CHN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,10.16215934
+China,CHN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,32.20496085
+China,CHN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,3738780.165
+China,CHN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4510272.944
+China,CHN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,120.0681645
+China,CHN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,136.6356299
+Colombia,COL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,621068.8695
+Colombia,COL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,703643.2369
+Colombia,COL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,313554.7418
+Colombia,COL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,429204.4069
+Colombia,COL,Labor volume for skilled females (millions),v_F_skl,3537089.128
+Colombia,COL,Labor volume for skilled males (millions),v_M_skl,3275191.38
+Colombia,COL,Labor volume for unskilled females (millions),v_F_nsk,7022301.649
+Colombia,COL,Labor volume for unskilled male (millions),v_M_nsk,11539483.84
+Colombia,COL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.890520445
+Colombia,COL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,13.91646869
+Colombia,COL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,9.655974029
+Colombia,COL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,34.53703684
+Colombia,COL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,182101.1556
+Colombia,COL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,104474.7571
+Colombia,COL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,130.4218737
+Colombia,COL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,104.5669633
+"Congo, Dem. Rep.",COD,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3783.192943
+"Congo, Dem. Rep.",COD,Annual wage for skilled male workers (US$ Dollars),w_M_skl,6617.818311
+"Congo, Dem. Rep.",COD,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1983.236214
+"Congo, Dem. Rep.",COD,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3954.197564
+"Congo, Dem. Rep.",COD,Labor volume for skilled females (millions),v_F_skl,3.64317E+12
+"Congo, Dem. Rep.",COD,Labor volume for skilled males (millions),v_M_skl,5.99432E+12
+"Congo, Dem. Rep.",COD,Labor volume for unskilled females (millions),v_F_nsk,8.12641E+12
+"Congo, Dem. Rep.",COD,Labor volume for unskilled male (millions),v_M_nsk,7.5149E+12
+"Congo, Dem. Rep.",COD,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,9.010708426
+"Congo, Dem. Rep.",COD,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,13.94620804
+"Congo, Dem. Rep.",COD,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,21.87788123
+"Congo, Dem. Rep.",COD,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,20.1652023
+"Congo, Dem. Rep.",COD,Value-added from Capital in GTAP10P3COD,gtap10VACapital,15203.24606
+"Congo, Dem. Rep.",COD,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,12812.9091
+"Congo, Dem. Rep.",COD,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,115.2402026
+"Congo, Dem. Rep.",COD,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,107.8479922
+Costa Rica,CRI,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1001571.694
+Costa Rica,CRI,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1215613.317
+Costa Rica,CRI,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,477441.988
+Costa Rica,CRI,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,630066.2859
+Costa Rica,CRI,Labor volume for skilled females (millions),v_F_skl,331578.6995
+Costa Rica,CRI,Labor volume for skilled males (millions),v_M_skl,307553.3166
+Costa Rica,CRI,Labor volume for unskilled females (millions),v_F_nsk,521880.9763
+Costa Rica,CRI,Labor volume for unskilled male (millions),v_M_nsk,1151667.008
+Costa Rica,CRI,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.160804054
+Costa Rica,CRI,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,12.80712899
+Costa Rica,CRI,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,7.397807773
+Costa Rica,CRI,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.63425919
+Costa Rica,CRI,Value-added from Capital in GTAP10P3COD,gtap10VACapital,20130.01602
+Costa Rica,CRI,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,18313.8214
+Costa Rica,CRI,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,143.4819222
+Costa Rica,CRI,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,126.4773593
+Cote D'Ivoire,CIV,Annual wage for skilled female workers (US$ Dollars),w_F_skl,268245.2509
+Cote D'Ivoire,CIV,Annual wage for skilled male workers (US$ Dollars),w_M_skl,240893.1612
+Cote D'Ivoire,CIV,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,119823.693
+Cote D'Ivoire,CIV,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,157556.3691
+Cote D'Ivoire,CIV,Labor volume for skilled females (millions),v_F_skl,226476.6194
+Cote D'Ivoire,CIV,Labor volume for skilled males (millions),v_M_skl,1484682.419
+Cote D'Ivoire,CIV,Labor volume for unskilled females (millions),v_F_nsk,1108167.895
+Cote D'Ivoire,CIV,Labor volume for unskilled male (millions),v_M_nsk,4691316.066
+Cote D'Ivoire,CIV,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,2.254119733
+Cote D'Ivoire,CIV,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,9.4456852
+Cote D'Ivoire,CIV,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.00519982
+Cote D'Ivoire,CIV,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,40.29499524
+Cote D'Ivoire,CIV,Value-added from Capital in GTAP10P3COD,gtap10VACapital,7939.727296
+Cote D'Ivoire,CIV,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,19960.7724
+Cote D'Ivoire,CIV,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,143.8333663
+Cote D'Ivoire,CIV,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,98.88955942
+Croatia,HRV,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1161983.983
+Croatia,HRV,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1557971.248
+Croatia,HRV,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,777144.1169
+Croatia,HRV,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1087496.374
+Croatia,HRV,Labor volume for skilled females (millions),v_F_skl,300747.3333
+Croatia,HRV,Labor volume for skilled males (millions),v_M_skl,462090.2854
+Croatia,HRV,Labor volume for unskilled females (millions),v_F_nsk,173832.1642
+Croatia,HRV,Labor volume for unskilled male (millions),v_M_nsk,953776.217
+Croatia,HRV,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.318421517
+Croatia,HRV,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.030837105
+Croatia,HRV,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.3790746
+Croatia,HRV,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27166678
+Croatia,HRV,Value-added from Capital in GTAP10P3COD,gtap10VACapital,19131.94109
+Croatia,HRV,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,20283.14242
+Croatia,HRV,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Croatia,HRV,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Cyprus,CYP,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1721701.568
+Cyprus,CYP,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2303091.199
+Cyprus,CYP,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1146603.825
+Cyprus,CYP,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1598650.417
+Cyprus,CYP,Labor volume for skilled females (millions),v_F_skl,100039.2483
+Cyprus,CYP,Labor volume for skilled males (millions),v_M_skl,152708.0056
+Cyprus,CYP,Labor volume for unskilled females (millions),v_F_nsk,58183.93054
+Cyprus,CYP,Labor volume for unskilled male (millions),v_M_nsk,293675.8156
+Cyprus,CYP,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.297125752
+Cyprus,CYP,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.019963554
+Cyprus,CYP,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.41190026
+Cyprus,CYP,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27101043
+Cyprus,CYP,Value-added from Capital in GTAP10P3COD,gtap10VACapital,15887.10615
+Cyprus,CYP,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,8569.770319
+Cyprus,CYP,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Cyprus,CYP,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Czech Republic,CZE,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1510276.095
+Czech Republic,CZE,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1997265.705
+Czech Republic,CZE,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1015288.824
+Czech Republic,CZE,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1382679.088
+Czech Republic,CZE,Labor volume for skilled females (millions),v_F_skl,768870.7577
+Czech Republic,CZE,Labor volume for skilled males (millions),v_M_skl,1292666.763
+Czech Republic,CZE,Labor volume for unskilled females (millions),v_F_nsk,468396.8454
+Czech Republic,CZE,Labor volume for unskilled male (millions),v_M_nsk,2792773.634
+Czech Republic,CZE,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.256242517
+Czech Republic,CZE,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.005013465
+Czech Republic,CZE,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.50360883
+Czech Republic,CZE,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.23513518
+Czech Republic,CZE,Value-added from Capital in GTAP10P3COD,gtap10VACapital,126116.1367
+Czech Republic,CZE,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,37752.90667
+Czech Republic,CZE,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Czech Republic,CZE,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Denmark,DNK,Annual wage for skilled female workers (US$ Dollars),w_F_skl,4617713.504
+Denmark,DNK,Annual wage for skilled male workers (US$ Dollars),w_M_skl,6015615.053
+Denmark,DNK,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,3099724.623
+Denmark,DNK,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,4211321.308
+Denmark,DNK,Labor volume for skilled females (millions),v_F_skl,583266.411
+Denmark,DNK,Labor volume for skilled males (millions),v_M_skl,771668.224
+Denmark,DNK,Labor volume for unskilled females (millions),v_F_nsk,258087.3478
+Denmark,DNK,Labor volume for unskilled male (millions),v_M_nsk,1293982.017
+Denmark,DNK,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.358573049
+Denmark,DNK,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.036645283
+Denmark,DNK,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.30320793
+Denmark,DNK,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.30157373
+Denmark,DNK,Value-added from Capital in GTAP10P3COD,gtap10VACapital,103672.5011
+Denmark,DNK,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,156636.6914
+Denmark,DNK,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Denmark,DNK,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Dominican Republic,DOM,Annual wage for skilled female workers (US$ Dollars),w_F_skl,324861.3678
+Dominican Republic,DOM,Annual wage for skilled male workers (US$ Dollars),w_M_skl,405298.3315
+Dominican Republic,DOM,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,185538.6337
+Dominican Republic,DOM,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,260282.2317
+Dominican Republic,DOM,Labor volume for skilled females (millions),v_F_skl,613850.6625
+Dominican Republic,DOM,Labor volume for skilled males (millions),v_M_skl,443347.6116
+Dominican Republic,DOM,Labor volume for unskilled females (millions),v_F_nsk,887588.2392
+Dominican Republic,DOM,Labor volume for unskilled male (millions),v_M_nsk,2450210.487
+Dominican Republic,DOM,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.967003332
+Dominican Republic,DOM,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,13.13107321
+Dominican Republic,DOM,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,7.8000611
+Dominican Republic,DOM,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,37.10186236
+Dominican Republic,DOM,Value-added from Capital in GTAP10P3COD,gtap10VACapital,37325.42441
+Dominican Republic,DOM,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,18646.65221
+Dominican Republic,DOM,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,117.8560296
+Dominican Republic,DOM,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,101.1580787
+Ecuador,ECU,Annual wage for skilled female workers (US$ Dollars),w_F_skl,493385.417
+Ecuador,ECU,Annual wage for skilled male workers (US$ Dollars),w_M_skl,553563.1289
+Ecuador,ECU,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,300855.8849
+Ecuador,ECU,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,350268.4394
+Ecuador,ECU,Labor volume for skilled females (millions),v_F_skl,879772.6813
+Ecuador,ECU,Labor volume for skilled males (millions),v_M_skl,907526.9779
+Ecuador,ECU,Labor volume for unskilled females (millions),v_F_nsk,1539807.571
+Ecuador,ECU,Labor volume for unskilled male (millions),v_M_nsk,3880234.77
+Ecuador,ECU,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.22417205
+Ecuador,ECU,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,11.99698237
+Ecuador,ECU,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,10.33262311
+Ecuador,ECU,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,36.44622247
+Ecuador,ECU,Value-added from Capital in GTAP10P3COD,gtap10VACapital,47932.08509
+Ecuador,ECU,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,38816.79565
+Ecuador,ECU,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,107.7003212
+Ecuador,ECU,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,104.8308684
+"Egypt, Arab Rep.",EGY,Annual wage for skilled female workers (US$ Dollars),w_F_skl,195538.9283
+"Egypt, Arab Rep.",EGY,Annual wage for skilled male workers (US$ Dollars),w_M_skl,235914.1722
+"Egypt, Arab Rep.",EGY,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,122507.4041
+"Egypt, Arab Rep.",EGY,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,186008.0541
+"Egypt, Arab Rep.",EGY,Labor volume for skilled females (millions),v_F_skl,4206798.707
+"Egypt, Arab Rep.",EGY,Labor volume for skilled males (millions),v_M_skl,6553630.937
+"Egypt, Arab Rep.",EGY,Labor volume for unskilled females (millions),v_F_nsk,3146924.343
+"Egypt, Arab Rep.",EGY,Labor volume for unskilled male (millions),v_M_nsk,16861873.01
+"Egypt, Arab Rep.",EGY,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.331935237
+"Egypt, Arab Rep.",EGY,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.024447172
+"Egypt, Arab Rep.",EGY,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.3799215
+"Egypt, Arab Rep.",EGY,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26369609
+"Egypt, Arab Rep.",EGY,Value-added from Capital in GTAP10P3COD,gtap10VACapital,145099.4387
+"Egypt, Arab Rep.",EGY,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,134928.7329
+"Egypt, Arab Rep.",EGY,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+"Egypt, Arab Rep.",EGY,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+El Salvador,SLV,Annual wage for skilled female workers (US$ Dollars),w_F_skl,241552.7423
+El Salvador,SLV,Annual wage for skilled male workers (US$ Dollars),w_M_skl,276027.2073
+El Salvador,SLV,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,161828.5257
+El Salvador,SLV,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,213633.5734
+El Salvador,SLV,Labor volume for skilled females (millions),v_F_skl,624361.732
+El Salvador,SLV,Labor volume for skilled males (millions),v_M_skl,874450.8032
+El Salvador,SLV,Labor volume for unskilled females (millions),v_F_nsk,420190.7661
+El Salvador,SLV,Labor volume for unskilled male (millions),v_M_nsk,741405.6987
+El Salvador,SLV,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,12.00941597
+El Salvador,SLV,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,8.950146545
+El Salvador,SLV,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,22.22353159
+El Salvador,SLV,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,21.81690589
+El Salvador,SLV,Value-added from Capital in GTAP10P3COD,gtap10VACapital,13822.80538
+El Salvador,SLV,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,8004.24725
+El Salvador,SLV,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.48674055
+El Salvador,SLV,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,83.89158021
+Estonia,EST,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1554698.355
+Estonia,EST,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2037445.222
+Estonia,EST,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1044056.787
+Estonia,EST,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1406606.906
+Estonia,EST,Labor volume for skilled females (millions),v_F_skl,105885.1202
+Estonia,EST,Labor volume for skilled males (millions),v_M_skl,152053.6255
+Estonia,EST,Labor volume for unskilled females (millions),v_F_nsk,66020.61811
+Estonia,EST,Labor volume for unskilled male (millions),v_M_nsk,352099.6362
+Estonia,EST,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.32708647
+Estonia,EST,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.033701299
+Estonia,EST,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.35726871
+Estonia,EST,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28194353
+Estonia,EST,Value-added from Capital in GTAP10P3COD,gtap10VACapital,9430.540368
+Estonia,EST,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,8803.613281
+Estonia,EST,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Estonia,EST,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Ethiopia,ETH,Annual wage for skilled female workers (US$ Dollars),w_F_skl,57061.08427
+Ethiopia,ETH,Annual wage for skilled male workers (US$ Dollars),w_M_skl,73165.94701
+Ethiopia,ETH,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,25477.15695
+Ethiopia,ETH,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,41778.24016
+Ethiopia,ETH,Labor volume for skilled females (millions),v_F_skl,4920004.181
+Ethiopia,ETH,Labor volume for skilled males (millions),v_M_skl,10873274.66
+Ethiopia,ETH,Labor volume for unskilled females (millions),v_F_nsk,10800188.91
+Ethiopia,ETH,Labor volume for unskilled male (millions),v_M_nsk,18769962.25
+Ethiopia,ETH,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,10.28113736
+Ethiopia,ETH,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,11.11231119
+Ethiopia,ETH,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,22.92533156
+Ethiopia,ETH,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,20.68121989
+Ethiopia,ETH,Value-added from Capital in GTAP10P3COD,gtap10VACapital,23779.05056
+Ethiopia,ETH,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,24547.41641
+Ethiopia,ETH,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,147.4649908
+Ethiopia,ETH,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,121.7452918
+Finland,FIN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,5381863.124
+Finland,FIN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,7192062.486
+Finland,FIN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,3610883.748
+Finland,FIN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,5041942.326
+Finland,FIN,Labor volume for skilled females (millions),v_F_skl,510220.1932
+Finland,FIN,Labor volume for skilled males (millions),v_M_skl,706033.6189
+Finland,FIN,Labor volume for unskilled females (millions),v_F_nsk,236660.4842
+Finland,FIN,Labor volume for unskilled male (millions),v_M_nsk,1235721.704
+Finland,FIN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.321315872
+Finland,FIN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.023872679
+Finland,FIN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.37909223
+Finland,FIN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27571922
+Finland,FIN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,103363.5365
+Finland,FIN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,95597.28608
+Finland,FIN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Finland,FIN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+France,FRA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,2791016.195
+France,FRA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3698241.426
+France,FRA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1871536.119
+France,FRA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2586385.938
+France,FRA,Labor volume for skilled females (millions),v_F_skl,5643497.694
+France,FRA,Labor volume for skilled males (millions),v_M_skl,8064117.257
+France,FRA,Labor volume for unskilled females (millions),v_F_nsk,2602816.527
+France,FRA,Labor volume for unskilled male (millions),v_M_nsk,13859969.52
+France,FRA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.315156641
+France,FRA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.025106079
+France,FRA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.38454694
+France,FRA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27519033
+France,FRA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,936482.6498
+France,FRA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,793181.1103
+France,FRA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+France,FRA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Georgia,GEO,Annual wage for skilled female workers (US$ Dollars),w_F_skl,244510.0947
+Georgia,GEO,Annual wage for skilled male workers (US$ Dollars),w_M_skl,467147.201
+Georgia,GEO,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,183693.9896
+Georgia,GEO,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,197404.0957
+Georgia,GEO,Labor volume for skilled females (millions),v_F_skl,992548.3452
+Georgia,GEO,Labor volume for skilled males (millions),v_M_skl,1007129.864
+Georgia,GEO,Labor volume for unskilled females (millions),v_F_nsk,17551.21453
+Georgia,GEO,Labor volume for unskilled male (millions),v_M_nsk,17531.57617
+Georgia,GEO,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,22.04238734
+Georgia,GEO,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,0.43811307
+Georgia,GEO,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,42.04021424
+Georgia,GEO,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,0.47928535
+Georgia,GEO,Value-added from Capital in GTAP10P3COD,gtap10VACapital,5823.151615
+Georgia,GEO,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,7194.437758
+Georgia,GEO,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,86.17942386
+Georgia,GEO,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,152.3438899
+Germany,DEU,Annual wage for skilled female workers (US$ Dollars),w_F_skl,4596895.423
+Germany,DEU,Annual wage for skilled male workers (US$ Dollars),w_M_skl,6094615.331
+Germany,DEU,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,3090437.982
+Germany,DEU,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,4235522.596
+Germany,DEU,Labor volume for skilled females (millions),v_F_skl,7299999.577
+Germany,DEU,Labor volume for skilled males (millions),v_M_skl,10417048.47
+Germany,DEU,Labor volume for unskilled females (millions),v_F_nsk,3974913.49
+Germany,DEU,Labor volume for unskilled male (millions),v_M_nsk,20764789.46
+Germany,DEU,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.311588809
+Germany,DEU,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.026560419
+Germany,DEU,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.38775774
+Germany,DEU,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27409304
+Germany,DEU,Value-added from Capital in GTAP10P3COD,gtap10VACapital,1520330.525
+Germany,DEU,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,1210182.773
+Germany,DEU,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Germany,DEU,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Ghana,GHA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,150991.5765
+Ghana,GHA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,276378.6059
+Ghana,GHA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,120228.9642
+Ghana,GHA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,194469.4381
+Ghana,GHA,Labor volume for skilled females (millions),v_F_skl,1913963.176
+Ghana,GHA,Labor volume for skilled males (millions),v_M_skl,5078065.743
+Ghana,GHA,Labor volume for unskilled females (millions),v_F_nsk,1256595.181
+Ghana,GHA,Labor volume for unskilled male (millions),v_M_nsk,2908870.9
+Ghana,GHA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,11.02982073
+Ghana,GHA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,11.38752319
+Ghana,GHA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,27.11021392
+Ghana,GHA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,15.47244216
+Ghana,GHA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,9531.64583
+Ghana,GHA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,22090.11039
+Ghana,GHA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,81.68575992
+Ghana,GHA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.48000537
+Greece,GRC,Annual wage for skilled female workers (US$ Dollars),w_F_skl,2053029.974
+Greece,GRC,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2769745.521
+Greece,GRC,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1389808.041
+Greece,GRC,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1904125.453
+Greece,GRC,Labor volume for skilled females (millions),v_F_skl,943800.6851
+Greece,GRC,Labor volume for skilled males (millions),v_M_skl,1212618.826
+Greece,GRC,Labor volume for unskilled females (millions),v_F_nsk,507024.0951
+Greece,GRC,Labor volume for unskilled male (millions),v_M_nsk,2263121.394
+Greece,GRC,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.282119795
+Greece,GRC,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.01725001
+Greece,GRC,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.43859441
+Greece,GRC,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26203579
+Greece,GRC,Value-added from Capital in GTAP10P3COD,gtap10VACapital,105312.4869
+Greece,GRC,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,47829.22506
+Greece,GRC,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Greece,GRC,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Guatemala,GTM,Annual wage for skilled female workers (US$ Dollars),w_F_skl,446693.9218
+Guatemala,GTM,Annual wage for skilled male workers (US$ Dollars),w_M_skl,461720.9322
+Guatemala,GTM,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,243671.4302
+Guatemala,GTM,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,291029.4016
+Guatemala,GTM,Labor volume for skilled females (millions),v_F_skl,764697.049
+Guatemala,GTM,Labor volume for skilled males (millions),v_M_skl,1212899.72
+Guatemala,GTM,Labor volume for unskilled females (millions),v_F_nsk,662004.1211
+Guatemala,GTM,Labor volume for unskilled male (millions),v_M_nsk,3571287.11
+Guatemala,GTM,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.344060744
+Guatemala,GTM,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.033964711
+Guatemala,GTM,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.3334882
+Guatemala,GTM,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28848635
+Guatemala,GTM,Value-added from Capital in GTAP10P3COD,gtap10VACapital,25820.14003
+Guatemala,GTM,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,25601.64794
+Guatemala,GTM,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,120.2765389
+Guatemala,GTM,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,103.2034361
+Guinea,GIN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,68703.45064
+Guinea,GIN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,67276.80831
+Guinea,GIN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,38236.61268
+Guinea,GIN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,42511.66249
+Guinea,GIN,Labor volume for skilled females (millions),v_F_skl,299292.8665
+Guinea,GIN,Labor volume for skilled males (millions),v_M_skl,650841.5264
+Guinea,GIN,Labor volume for unskilled females (millions),v_F_nsk,438378.2878
+Guinea,GIN,Labor volume for unskilled male (millions),v_M_nsk,2982999.319
+Guinea,GIN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.300028186
+Guinea,GIN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.020304381
+Guinea,GIN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.41894947
+Guinea,GIN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26071797
+Guinea,GIN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,3120.69143
+Guinea,GIN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,1624.339718
+Guinea,GIN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,116.9544971
+Guinea,GIN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.2939873
+Honduras,HND,Annual wage for skilled female workers (US$ Dollars),w_F_skl,368129.2955
+Honduras,HND,Annual wage for skilled male workers (US$ Dollars),w_M_skl,372510.3894
+Honduras,HND,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,197269.0035
+Honduras,HND,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,248717.1635
+Honduras,HND,Labor volume for skilled females (millions),v_F_skl,700936.2863
+Honduras,HND,Labor volume for skilled males (millions),v_M_skl,778561.0066
+Honduras,HND,Labor volume for unskilled females (millions),v_F_nsk,629476.1053
+Honduras,HND,Labor volume for unskilled male (millions),v_M_nsk,1724301.602
+Honduras,HND,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,8.087720988
+Honduras,HND,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,11.09077841
+Honduras,HND,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,15.13655194
+Honduras,HND,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,30.68494866
+Honduras,HND,Value-added from Capital in GTAP10P3COD,gtap10VACapital,7317.76206
+Honduras,HND,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,8472.953061
+Honduras,HND,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,118.2124599
+Honduras,HND,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,98.68386756
+"Hong Kong, SAR China",HKG,Annual wage for skilled female workers (US$ Dollars),w_F_skl,2058288.206
+"Hong Kong, SAR China",HKG,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2018819.744
+"Hong Kong, SAR China",HKG,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1169357.912
+"Hong Kong, SAR China",HKG,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1266252.987
+"Hong Kong, SAR China",HKG,Labor volume for skilled females (millions),v_F_skl,536737.3536
+"Hong Kong, SAR China",HKG,Labor volume for skilled males (millions),v_M_skl,944009.395
+"Hong Kong, SAR China",HKG,Labor volume for unskilled females (millions),v_F_nsk,384698.9199
+"Hong Kong, SAR China",HKG,Labor volume for unskilled male (millions),v_M_nsk,2033886.331
+"Hong Kong, SAR China",HKG,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.347003549
+"Hong Kong, SAR China",HKG,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.038869853
+"Hong Kong, SAR China",HKG,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.33114204
+"Hong Kong, SAR China",HKG,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28298456
+"Hong Kong, SAR China",HKG,Value-added from Capital in GTAP10P3COD,gtap10VACapital,153440.9867
+"Hong Kong, SAR China",HKG,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,127533.5177
+"Hong Kong, SAR China",HKG,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+"Hong Kong, SAR China",HKG,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Hungary,HUN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1021297.9
+Hungary,HUN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1053221.627
+Hungary,HUN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,626961.4176
+Hungary,HUN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,881249.6292
+Hungary,HUN,Labor volume for skilled females (millions),v_F_skl,688185.9647
+Hungary,HUN,Labor volume for skilled males (millions),v_M_skl,584467.6568
+Hungary,HUN,Labor volume for unskilled females (millions),v_F_nsk,1235093.411
+Hungary,HUN,Labor volume for unskilled male (millions),v_M_nsk,2017875.968
+Hungary,HUN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.138326864
+Hungary,HUN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,17.23520465
+Hungary,HUN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,6.569630222
+Hungary,HUN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,36.05683827
+Hungary,HUN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,59054.73405
+Hungary,HUN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,36371.50375
+Hungary,HUN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,106.0737143
+Hungary,HUN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.02517204
+India,IND,Annual wage for skilled female workers (US$ Dollars),w_F_skl,41754.84472
+India,IND,Annual wage for skilled male workers (US$ Dollars),w_M_skl,38793.75745
+India,IND,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,25590.62481
+India,IND,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,28379.97762
+India,IND,Labor volume for skilled females (millions),v_F_skl,60324018.78
+India,IND,Labor volume for skilled males (millions),v_M_skl,107160894.5
+India,IND,Labor volume for unskilled females (millions),v_F_nsk,41144162.17
+India,IND,Labor volume for unskilled male (millions),v_M_nsk,270567481.5
+India,IND,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.340016919
+India,IND,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.033766098
+India,IND,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.33356761
+India,IND,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.29264937
+India,IND,Value-added from Capital in GTAP10P3COD,gtap10VACapital,798145.6454
+India,IND,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,967707.4934
+India,IND,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,106.603942
+India,IND,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,89.09230014
+Indonesia,IDN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,173639.1322
+Indonesia,IDN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,171254.4273
+Indonesia,IDN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,98384.28596
+Indonesia,IDN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,107029.2053
+Indonesia,IDN,Labor volume for skilled females (millions),v_F_skl,13249811.15
+Indonesia,IDN,Labor volume for skilled males (millions),v_M_skl,24710985.16
+Indonesia,IDN,Labor volume for unskilled females (millions),v_F_nsk,11968520.02
+Indonesia,IDN,Labor volume for unskilled male (millions),v_M_nsk,72758516.68
+Indonesia,IDN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.3279616
+Indonesia,IDN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.033427987
+Indonesia,IDN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.36216594
+Indonesia,IDN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27644447
+Indonesia,IDN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,426889.3185
+Indonesia,IDN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,347861.8997
+Indonesia,IDN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+Indonesia,IDN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+"Iran, Islamic Rep.",IRN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,263003.1749
+"Iran, Islamic Rep.",IRN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,316404.2943
+"Iran, Islamic Rep.",IRN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,164698.0376
+"Iran, Islamic Rep.",IRN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,249948.9662
+"Iran, Islamic Rep.",IRN,Labor volume for skilled females (millions),v_F_skl,3609007.113
+"Iran, Islamic Rep.",IRN,Labor volume for skilled males (millions),v_M_skl,5440642.5
+"Iran, Islamic Rep.",IRN,Labor volume for unskilled females (millions),v_F_nsk,2119522.334
+"Iran, Islamic Rep.",IRN,Labor volume for unskilled male (millions),v_M_nsk,13791398.05
+"Iran, Islamic Rep.",IRN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.172683408
+"Iran, Islamic Rep.",IRN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,5.963098333
+"Iran, Islamic Rep.",IRN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.71153833
+"Iran, Islamic Rep.",IRN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.15267993
+"Iran, Islamic Rep.",IRN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,289355.3036
+"Iran, Islamic Rep.",IRN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,42049.12564
+"Iran, Islamic Rep.",IRN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+"Iran, Islamic Rep.",IRN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Ireland,IRL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3893323.859
+Ireland,IRL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,5126436.516
+Ireland,IRL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2606231.667
+Ireland,IRL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3584869.652
+Ireland,IRL,Labor volume for skilled females (millions),v_F_skl,430820.6204
+Ireland,IRL,Labor volume for skilled males (millions),v_M_skl,622687.5259
+Ireland,IRL,Labor volume for unskilled females (millions),v_F_nsk,199163.4284
+Ireland,IRL,Labor volume for unskilled male (millions),v_M_nsk,1012248.425
+Ireland,IRL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.331370354
+Ireland,IRL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.032341143
+Ireland,IRL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.33967625
+Ireland,IRL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.29661225
+Ireland,IRL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,127248.277
+Ireland,IRL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,78459.49693
+Ireland,IRL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Ireland,IRL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Israel,ISR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,2556812.512
+Israel,ISR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3013652.074
+Israel,ISR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1602528.664
+Israel,ISR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2396740.055
+Israel,ISR,Labor volume for skilled females (millions),v_F_skl,707530.5595
+Israel,ISR,Labor volume for skilled males (millions),v_M_skl,1018875.292
+Israel,ISR,Labor volume for unskilled females (millions),v_F_nsk,329268.6893
+Israel,ISR,Labor volume for unskilled male (millions),v_M_nsk,1749807.459
+Israel,ISR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.424876906
+Israel,ISR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.07164754
+Israel,ISR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.13152432
+Israel,ISR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.37195124
+Israel,ISR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,74321.3022
+Israel,ISR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,154982.2266
+Israel,ISR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Israel,ISR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Italy,ITA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,2535475.916
+Italy,ITA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3393189.293
+Italy,ITA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1696815.407
+Italy,ITA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2366122.335
+Italy,ITA,Labor volume for skilled females (millions),v_F_skl,4436757.639
+Italy,ITA,Labor volume for skilled males (millions),v_M_skl,6516649.166
+Italy,ITA,Labor volume for unskilled females (millions),v_F_nsk,2267750.029
+Italy,ITA,Labor volume for unskilled male (millions),v_M_nsk,12195156.17
+Italy,ITA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.2962617
+Italy,ITA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.017276873
+Italy,ITA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.42525376
+Italy,ITA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26120767
+Italy,ITA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,989878.8593
+Italy,ITA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,545548.6927
+Italy,ITA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Italy,ITA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Jamaica,JAM,Annual wage for skilled female workers (US$ Dollars),w_F_skl,478094.701
+Jamaica,JAM,Annual wage for skilled male workers (US$ Dollars),w_M_skl,498805.9462
+Jamaica,JAM,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,259410.2694
+Jamaica,JAM,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,311627.3585
+Jamaica,JAM,Labor volume for skilled females (millions),v_F_skl,239231.7765
+Jamaica,JAM,Labor volume for skilled males (millions),v_M_skl,337896.5692
+Jamaica,JAM,Labor volume for unskilled females (millions),v_F_nsk,142762.6699
+Jamaica,JAM,Labor volume for unskilled male (millions),v_M_nsk,700421.9844
+Jamaica,JAM,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.413341354
+Jamaica,JAM,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.069041015
+Jamaica,JAM,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.30829796
+Jamaica,JAM,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.20931967
+Jamaica,JAM,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4795.725133
+Jamaica,JAM,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,5966.051244
+Jamaica,JAM,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,120.2765389
+Jamaica,JAM,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,103.2034361
+Japan,JPN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3034028.969
+Japan,JPN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2977025.996
+Japan,JPN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1730865.437
+Japan,JPN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1871925.281
+Japan,JPN,Labor volume for skilled females (millions),v_F_skl,11175520.68
+Japan,JPN,Labor volume for skilled males (millions),v_M_skl,17166700.75
+Japan,JPN,Labor volume for unskilled females (millions),v_F_nsk,5732906.696
+Japan,JPN,Labor volume for unskilled male (millions),v_M_nsk,32114197.87
+Japan,JPN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.327300216
+Japan,JPN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.028275844
+Japan,JPN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.35482051
+Japan,JPN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28960343
+Japan,JPN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,1734306.29
+Japan,JPN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,1679982.969
+Japan,JPN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+Japan,JPN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Jordan,JOR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,537417.8299
+Jordan,JOR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,563886.3911
+Jordan,JOR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,415500.2536
+Jordan,JOR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,505330.1195
+Jordan,JOR,Labor volume for skilled females (millions),v_F_skl,259400.1769
+Jordan,JOR,Labor volume for skilled males (millions),v_M_skl,462928.0866
+Jordan,JOR,Labor volume for unskilled females (millions),v_F_nsk,114037.9866
+Jordan,JOR,Labor volume for unskilled male (millions),v_M_nsk,1366662.75
+Jordan,JOR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,3.91988275
+Jordan,JOR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,3.518489685
+Jordan,JOR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.88805446
+Jordan,JOR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,43.6735731
+Jordan,JOR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,19531.80014
+Jordan,JOR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,9693.105212
+Jordan,JOR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,84.18746537
+Jordan,JOR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,72.56385452
+Kazakhstan,KAZ,Annual wage for skilled female workers (US$ Dollars),w_F_skl,464557.2403
+Kazakhstan,KAZ,Annual wage for skilled male workers (US$ Dollars),w_M_skl,619313.8528
+Kazakhstan,KAZ,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,310060.1039
+Kazakhstan,KAZ,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,431694.505
+Kazakhstan,KAZ,Labor volume for skilled females (millions),v_F_skl,1452107.771
+Kazakhstan,KAZ,Labor volume for skilled males (millions),v_M_skl,2246861.167
+Kazakhstan,KAZ,Labor volume for unskilled females (millions),v_F_nsk,681572.7721
+Kazakhstan,KAZ,Labor volume for unskilled male (millions),v_M_nsk,4669647.291
+Kazakhstan,KAZ,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.341146343
+Kazakhstan,KAZ,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.037298615
+Kazakhstan,KAZ,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.31306161
+Kazakhstan,KAZ,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.30849343
+Kazakhstan,KAZ,Value-added from Capital in GTAP10P3COD,gtap10VACapital,99636.29436
+Kazakhstan,KAZ,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,100693.2195
+Kazakhstan,KAZ,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Kazakhstan,KAZ,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Kenya,KEN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,236130.4775
+Kenya,KEN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,328684.4842
+Kenya,KEN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,153556.1133
+Kenya,KEN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,185200.3035
+Kenya,KEN,Labor volume for skilled females (millions),v_F_skl,2012750.937
+Kenya,KEN,Labor volume for skilled males (millions),v_M_skl,2877401.737
+Kenya,KEN,Labor volume for unskilled females (millions),v_F_nsk,6417249.985
+Kenya,KEN,Labor volume for unskilled male (millions),v_M_nsk,6466851.341
+Kenya,KEN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,7.872682919
+Kenya,KEN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,13.05111124
+Kenya,KEN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,21.8465824
+Kenya,KEN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,22.22962344
+Kenya,KEN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,30237.68667
+Kenya,KEN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,27309.55118
+Kenya,KEN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,95.78660549
+Kenya,KEN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,116.1189002
+"Korea, Rep.",KOR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3830081.972
+"Korea, Rep.",KOR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3718504.354
+"Korea, Rep.",KOR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2196750.499
+"Korea, Rep.",KOR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2365075.585
+"Korea, Rep.",KOR,Labor volume for skilled females (millions),v_F_skl,4690306.014
+"Korea, Rep.",KOR,Labor volume for skilled males (millions),v_M_skl,7147761.158
+"Korea, Rep.",KOR,Labor volume for unskilled females (millions),v_F_nsk,2232615.05
+"Korea, Rep.",KOR,Labor volume for unskilled male (millions),v_M_nsk,13042858.78
+"Korea, Rep.",KOR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.31045666
+"Korea, Rep.",KOR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.026349314
+"Korea, Rep.",KOR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.38931357
+"Korea, Rep.",KOR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27388045
+"Korea, Rep.",KOR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,608671.7432
+"Korea, Rep.",KOR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,554201.4518
+"Korea, Rep.",KOR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+"Korea, Rep.",KOR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Kuwait,KWT,Annual wage for skilled female workers (US$ Dollars),w_F_skl,261348.6553
+Kuwait,KWT,Annual wage for skilled male workers (US$ Dollars),w_M_skl,313228.7793
+Kuwait,KWT,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,163622.1356
+Kuwait,KWT,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,247399.0432
+Kuwait,KWT,Labor volume for skilled females (millions),v_F_skl,434825.2575
+Kuwait,KWT,Labor volume for skilled males (millions),v_M_skl,588963.0677
+Kuwait,KWT,Labor volume for unskilled females (millions),v_F_nsk,174279.498
+Kuwait,KWT,Labor volume for unskilled male (millions),v_M_nsk,1019687.177
+Kuwait,KWT,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.244161816
+Kuwait,KWT,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.006021052
+Kuwait,KWT,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.51654164
+Kuwait,KWT,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.23327549
+Kuwait,KWT,Value-added from Capital in GTAP10P3COD,gtap10VACapital,108256.7635
+Kuwait,KWT,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,17645.46073
+Kuwait,KWT,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Kuwait,KWT,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Kyrgyz Republic,KGZ,Annual wage for skilled female workers (US$ Dollars),w_F_skl,182391.3387
+Kyrgyz Republic,KGZ,Annual wage for skilled male workers (US$ Dollars),w_M_skl,241929.1289
+Kyrgyz Republic,KGZ,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,122293.2744
+Kyrgyz Republic,KGZ,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,168620.8656
+Kyrgyz Republic,KGZ,Labor volume for skilled females (millions),v_F_skl,261249.0841
+Kyrgyz Republic,KGZ,Labor volume for skilled males (millions),v_M_skl,394072.7949
+Kyrgyz Republic,KGZ,Labor volume for unskilled females (millions),v_F_nsk,249902.7694
+Kyrgyz Republic,KGZ,Labor volume for unskilled male (millions),v_M_nsk,1615637.352
+Kyrgyz Republic,KGZ,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.329688392
+Kyrgyz Republic,KGZ,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.03498756
+Kyrgyz Republic,KGZ,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.35268147
+Kyrgyz Republic,KGZ,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28264258
+Kyrgyz Republic,KGZ,Value-added from Capital in GTAP10P3COD,gtap10VACapital,2778.250558
+Kyrgyz Republic,KGZ,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,2701.465584
+Kyrgyz Republic,KGZ,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Kyrgyz Republic,KGZ,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Lao PDR,LAO,Annual wage for skilled female workers (US$ Dollars),w_F_skl,356818.836
+Lao PDR,LAO,Annual wage for skilled male workers (US$ Dollars),w_M_skl,346460.5198
+Lao PDR,LAO,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,205236.8579
+Lao PDR,LAO,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,221287.7929
+Lao PDR,LAO,Labor volume for skilled females (millions),v_F_skl,321772.2515
+Lao PDR,LAO,Labor volume for skilled males (millions),v_M_skl,518820.7436
+Lao PDR,LAO,Labor volume for unskilled females (millions),v_F_nsk,336159.3294
+Lao PDR,LAO,Labor volume for unskilled male (millions),v_M_nsk,2207979.676
+Lao PDR,LAO,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.367596272
+Lao PDR,LAO,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.028320229
+Lao PDR,LAO,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.33627783
+Lao PDR,LAO,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26780567
+Lao PDR,LAO,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4185.211762
+Lao PDR,LAO,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4149.385902
+Lao PDR,LAO,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+Lao PDR,LAO,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Latvia,LVA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,817358.1448
+Latvia,LVA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1091847.86
+Latvia,LVA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,547355.9563
+Latvia,LVA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,759889.7901
+Latvia,LVA,Labor volume for skilled females (millions),v_F_skl,166947.8476
+Latvia,LVA,Labor volume for skilled males (millions),v_M_skl,246583.2043
+Latvia,LVA,Labor volume for unskilled females (millions),v_F_nsk,89558.5445
+Latvia,LVA,Labor volume for unskilled male (millions),v_M_nsk,504236.4036
+Latvia,LVA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.241672846
+Latvia,LVA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,5.996993561
+Latvia,LVA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.54136046
+Latvia,LVA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.21997313
+Latvia,LVA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,17602.21541
+Latvia,LVA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,5524.636803
+Latvia,LVA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Latvia,LVA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Lithuania,LTU,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1018875.052
+Lithuania,LTU,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1324958.222
+Lithuania,LTU,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,680707.9046
+Lithuania,LTU,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,928103.8731
+Lithuania,LTU,Labor volume for skilled females (millions),v_F_skl,226269.6949
+Lithuania,LTU,Labor volume for skilled males (millions),v_M_skl,345007.4782
+Lithuania,LTU,Labor volume for unskilled females (millions),v_F_nsk,153466.3247
+Lithuania,LTU,Labor volume for unskilled male (millions),v_M_nsk,756636.5022
+Lithuania,LTU,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.235447903
+Lithuania,LTU,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,5.996040035
+Lithuania,LTU,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.55262096
+Lithuania,LTU,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.2158911
+Lithuania,LTU,Value-added from Capital in GTAP10P3COD,gtap10VACapital,28421.15596
+Lithuania,LTU,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,8841.314384
+Lithuania,LTU,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Lithuania,LTU,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Luxembourg,LUX,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3653522.181
+Luxembourg,LUX,Annual wage for skilled male workers (US$ Dollars),w_M_skl,4798656.463
+Luxembourg,LUX,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2444113.512
+Luxembourg,LUX,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3355895.081
+Luxembourg,LUX,Labor volume for skilled females (millions),v_F_skl,49605.55634
+Luxembourg,LUX,Labor volume for skilled males (millions),v_M_skl,72679.08141
+Luxembourg,LUX,Labor volume for unskilled females (millions),v_F_nsk,22428.41983
+Luxembourg,LUX,Labor volume for unskilled male (millions),v_M_nsk,129087.9424
+Luxembourg,LUX,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.276842697
+Luxembourg,LUX,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.014122513
+Luxembourg,LUX,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.44411648
+Luxembourg,LUX,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26491831
+Luxembourg,LUX,Value-added from Capital in GTAP10P3COD,gtap10VACapital,32064.52323
+Luxembourg,LUX,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,18441.45323
+Luxembourg,LUX,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Luxembourg,LUX,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Madagascar,MDG,Annual wage for skilled female workers (US$ Dollars),w_F_skl,59975.15928
+Madagascar,MDG,Annual wage for skilled male workers (US$ Dollars),w_M_skl,74051.73975
+Madagascar,MDG,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,32836.53922
+Madagascar,MDG,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,49585.68258
+Madagascar,MDG,Labor volume for skilled females (millions),v_F_skl,832427.9371
+Madagascar,MDG,Labor volume for skilled males (millions),v_M_skl,1765450.371
+Madagascar,MDG,Labor volume for unskilled females (millions),v_F_nsk,2910769.067
+Madagascar,MDG,Labor volume for unskilled male (millions),v_M_nsk,6422632.626
+Madagascar,MDG,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.888286202
+Madagascar,MDG,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,14.54902901
+Madagascar,MDG,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,14.46407461
+Madagascar,MDG,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,30.09861017
+Madagascar,MDG,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4015.679687
+Madagascar,MDG,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,5576.633914
+Madagascar,MDG,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,117.6519488
+Madagascar,MDG,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,94.71420238
+Malawi,MWI,Annual wage for skilled female workers (US$ Dollars),w_F_skl,70652.26347
+Malawi,MWI,Annual wage for skilled male workers (US$ Dollars),w_M_skl,67889.58464
+Malawi,MWI,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,39408.35279
+Malawi,MWI,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,43324.79206
+Malawi,MWI,Labor volume for skilled females (millions),v_F_skl,995712.0443
+Malawi,MWI,Labor volume for skilled males (millions),v_M_skl,1593237.4
+Malawi,MWI,Labor volume for unskilled females (millions),v_F_nsk,657591.1841
+Malawi,MWI,Labor volume for unskilled male (millions),v_M_nsk,4021664.371
+Malawi,MWI,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.3891603
+Malawi,MWI,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.070358789
+Malawi,MWI,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.41684677
+Malawi,MWI,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.12363414
+Malawi,MWI,Value-added from Capital in GTAP10P3COD,gtap10VACapital,2044.161704
+Malawi,MWI,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,2969.525439
+Malawi,MWI,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,116.9544971
+Malawi,MWI,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.2939873
+Malaysia,MYS,Annual wage for skilled female workers (US$ Dollars),w_F_skl,770690.4004
+Malaysia,MYS,Annual wage for skilled male workers (US$ Dollars),w_M_skl,763306.7523
+Malaysia,MYS,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,434341.8552
+Malaysia,MYS,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,475214.7462
+Malaysia,MYS,Labor volume for skilled females (millions),v_F_skl,1677043.384
+Malaysia,MYS,Labor volume for skilled males (millions),v_M_skl,3218732.498
+Malaysia,MYS,Labor volume for unskilled females (millions),v_F_nsk,1341710.055
+Malaysia,MYS,Labor volume for unskilled male (millions),v_M_nsk,8202374.062
+Malaysia,MYS,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.30633643
+Malaysia,MYS,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.025048746
+Malaysia,MYS,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.40560498
+Malaysia,MYS,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26300984
+Malaysia,MYS,Value-added from Capital in GTAP10P3COD,gtap10VACapital,159671.7795
+Malaysia,MYS,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,131414.1328
+Malaysia,MYS,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+Malaysia,MYS,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Malta,MLT,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1744254.681
+Malta,MLT,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2068355.975
+Malta,MLT,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1093370.492
+Malta,MLT,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1636024.2
+Malta,MLT,Labor volume for skilled females (millions),v_F_skl,43801.30888
+Malta,MLT,Labor volume for skilled males (millions),v_M_skl,54643.44749
+Malta,MLT,Labor volume for unskilled females (millions),v_F_nsk,18115.81897
+Malta,MLT,Labor volume for unskilled male (millions),v_M_nsk,82932.42467
+Malta,MLT,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.286603078
+Malta,MLT,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.013205184
+Malta,MLT,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.44527063
+Malta,MLT,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.25492111
+Malta,MLT,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4900.466527
+Malta,MLT,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,2907.640819
+Malta,MLT,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Malta,MLT,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Mauritius,MUS,Annual wage for skilled female workers (US$ Dollars),w_F_skl,375335.3335
+Mauritius,MUS,Annual wage for skilled male workers (US$ Dollars),w_M_skl,423122.8223
+Mauritius,MUS,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,191334.8814
+Mauritius,MUS,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,273993.1149
+Mauritius,MUS,Labor volume for skilled females (millions),v_F_skl,148737.4801
+Mauritius,MUS,Labor volume for skilled males (millions),v_M_skl,214152.4593
+Mauritius,MUS,Labor volume for unskilled females (millions),v_F_nsk,78700.11892
+Mauritius,MUS,Labor volume for unskilled male (millions),v_M_nsk,154340.9416
+Mauritius,MUS,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,10.97614411
+Mauritius,MUS,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,10.72492311
+Mauritius,MUS,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,19.76546483
+Mauritius,MUS,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,23.53346795
+Mauritius,MUS,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4886.646102
+Mauritius,MUS,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,5805.470238
+Mauritius,MUS,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,131.2021036
+Mauritius,MUS,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,101.3913897
+Mexico,MEX,Annual wage for skilled female workers (US$ Dollars),w_F_skl,422783.0756
+Mexico,MEX,Annual wage for skilled male workers (US$ Dollars),w_M_skl,564371.1655
+Mexico,MEX,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,223544.0198
+Mexico,MEX,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,330202.5508
+Mexico,MEX,Labor volume for skilled females (millions),v_F_skl,5447392.589
+Mexico,MEX,Labor volume for skilled males (millions),v_M_skl,6647423.58
+Mexico,MEX,Labor volume for unskilled females (millions),v_F_nsk,11397094.28
+Mexico,MEX,Labor volume for unskilled male (millions),v_M_nsk,31331550.55
+Mexico,MEX,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,3.880298638
+Mexico,MEX,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,12.99150109
+Mexico,MEX,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,6.825043653
+Mexico,MEX,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,41.30315662
+Mexico,MEX,Value-added from Capital in GTAP10P3COD,gtap10VACapital,720050.2437
+Mexico,MEX,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,372987.7396
+Mexico,MEX,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,131.8404302
+Mexico,MEX,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,110.441223
+Mongolia,MNG,Annual wage for skilled female workers (US$ Dollars),w_F_skl,160664.1839
+Mongolia,MNG,Annual wage for skilled male workers (US$ Dollars),w_M_skl,138435.0906
+Mongolia,MNG,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,85886.62396
+Mongolia,MNG,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,91894.65598
+Mongolia,MNG,Labor volume for skilled females (millions),v_F_skl,457826.3975
+Mongolia,MNG,Labor volume for skilled males (millions),v_M_skl,718306.1801
+Mongolia,MNG,Labor volume for unskilled females (millions),v_F_nsk,23700.81695
+Mongolia,MNG,Labor volume for unskilled male (millions),v_M_nsk,62492.60549
+Mongolia,MNG,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,25.35283232
+Mongolia,MNG,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,0.705971301
+Mongolia,MNG,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,36.5377232
+Mongolia,MNG,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,2.403473174
+Mongolia,MNG,Value-added from Capital in GTAP10P3COD,gtap10VACapital,5870.421696
+Mongolia,MNG,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,2649.009994
+Mongolia,MNG,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,121.3577857
+Mongolia,MNG,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,98.25094419
+Morocco,MAR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,196242.307
+Morocco,MAR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,236012.8198
+Morocco,MAR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,122942.1089
+Morocco,MAR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,186080.5934
+Morocco,MAR,Labor volume for skilled females (millions),v_F_skl,1610351.735
+Morocco,MAR,Labor volume for skilled males (millions),v_M_skl,2538015.583
+Morocco,MAR,Labor volume for unskilled females (millions),v_F_nsk,1085459.668
+Morocco,MAR,Labor volume for unskilled male (millions),v_M_nsk,6654741.014
+Morocco,MAR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.360921282
+Morocco,MAR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.040501944
+Morocco,MAR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.29366482
+Morocco,MAR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.30491195
+Morocco,MAR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,37871.77018
+Morocco,MAR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,60165.11975
+Morocco,MAR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Morocco,MAR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Mozambique,MOZ,Annual wage for skilled female workers (US$ Dollars),w_F_skl,79947.06112
+Mozambique,MOZ,Annual wage for skilled male workers (US$ Dollars),w_M_skl,78560.44519
+Mozambique,MOZ,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,44345.33393
+Mozambique,MOZ,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,49635.50399
+Mozambique,MOZ,Labor volume for skilled females (millions),v_F_skl,1359665.88
+Mozambique,MOZ,Labor volume for skilled males (millions),v_M_skl,2269753.429
+Mozambique,MOZ,Labor volume for unskilled females (millions),v_F_nsk,1116056.974
+Mozambique,MOZ,Labor volume for unskilled male (millions),v_M_nsk,7096978.717
+Mozambique,MOZ,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.34653546
+Mozambique,MOZ,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.035057623
+Mozambique,MOZ,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.34078081
+Mozambique,MOZ,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27762611
+Mozambique,MOZ,Value-added from Capital in GTAP10P3COD,gtap10VACapital,5580.429833
+Mozambique,MOZ,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,9021.142936
+Mozambique,MOZ,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,116.9544971
+Mozambique,MOZ,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.2939873
+Namibia,NAM,Annual wage for skilled female workers (US$ Dollars),w_F_skl,646718.5107
+Namibia,NAM,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1276542.21
+Namibia,NAM,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,491393.0234
+Namibia,NAM,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,624423.0161
+Namibia,NAM,Labor volume for skilled females (millions),v_F_skl,119289.4573
+Namibia,NAM,Labor volume for skilled males (millions),v_M_skl,116895.0372
+Namibia,NAM,Labor volume for unskilled females (millions),v_F_nsk,299476.8003
+Namibia,NAM,Labor volume for unskilled male (millions),v_M_nsk,371063.7052
+Namibia,NAM,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,7.126936073
+Namibia,NAM,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,16.67448273
+Namibia,NAM,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,11.25774097
+Namibia,NAM,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,29.94084022
+Namibia,NAM,Value-added from Capital in GTAP10P3COD,gtap10VACapital,5999.365886
+Namibia,NAM,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4538.846917
+Namibia,NAM,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,84.11438454
+Namibia,NAM,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,131.6168919
+Nepal,NPL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,167223.1038
+Nepal,NPL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,129104.6495
+Nepal,NPL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,94298.67261
+Nepal,NPL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,109651.8054
+Nepal,NPL,Labor volume for skilled females (millions),v_F_skl,1223239.435
+Nepal,NPL,Labor volume for skilled males (millions),v_M_skl,3345542.642
+Nepal,NPL,Labor volume for unskilled females (millions),v_F_nsk,4938359.165
+Nepal,NPL,Labor volume for unskilled male (millions),v_M_nsk,6179270.758
+Nepal,NPL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,4.848827093
+Nepal,NPL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,16.23540664
+Nepal,NPL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,14.58660217
+Nepal,NPL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,29.3291641
+Nepal,NPL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,6943.449682
+Nepal,NPL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,7036.017825
+Nepal,NPL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,115.4080054
+Nepal,NPL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,76.1655958
+Netherlands,NLD,Annual wage for skilled female workers (US$ Dollars),w_F_skl,253556.5232
+Netherlands,NLD,Annual wage for skilled male workers (US$ Dollars),w_M_skl,339553.2427
+Netherlands,NLD,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,169705.8524
+Netherlands,NLD,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,237139.5729
+Netherlands,NLD,Labor volume for skilled females (millions),v_F_skl,1559313.953
+Netherlands,NLD,Labor volume for skilled males (millions),v_M_skl,2369795.816
+Netherlands,NLD,Labor volume for unskilled females (millions),v_F_nsk,773042.0777
+Netherlands,NLD,Labor volume for unskilled male (millions),v_M_nsk,4266661.153
+Netherlands,NLD,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.230597492
+Netherlands,NLD,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,5.993142515
+Netherlands,NLD,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.56180566
+Netherlands,NLD,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.21445433
+Netherlands,NLD,Value-added from Capital in GTAP10P3COD,gtap10VACapital,466510.5498
+Netherlands,NLD,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,151243.0573
+Netherlands,NLD,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Netherlands,NLD,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+New Zealand,NZL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,4830405.446
+New Zealand,NZL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,4741792.358
+New Zealand,NZL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2740915.801
+New Zealand,NZL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2978889.988
+New Zealand,NZL,Labor volume for skilled females (millions),v_F_skl,400759.2014
+New Zealand,NZL,Labor volume for skilled males (millions),v_M_skl,600869.7002
+New Zealand,NZL,Labor volume for unskilled females (millions),v_F_nsk,232129.5756
+New Zealand,NZL,Labor volume for unskilled male (millions),v_M_nsk,1231114.523
+New Zealand,NZL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.336406126
+New Zealand,NZL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.034349949
+New Zealand,NZL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.34208287
+New Zealand,NZL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28716105
+New Zealand,NZL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,81324.92602
+New Zealand,NZL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,87973.80443
+New Zealand,NZL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+New Zealand,NZL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Nicaragua,NIC,Annual wage for skilled female workers (US$ Dollars),w_F_skl,439137.6634
+Nicaragua,NIC,Annual wage for skilled male workers (US$ Dollars),w_M_skl,541425.0686
+Nicaragua,NIC,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,271966.6369
+Nicaragua,NIC,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,388518.6869
+Nicaragua,NIC,Labor volume for skilled females (millions),v_F_skl,511971.0198
+Nicaragua,NIC,Labor volume for skilled males (millions),v_M_skl,545534.0579
+Nicaragua,NIC,Labor volume for unskilled females (millions),v_F_nsk,364392.417
+Nicaragua,NIC,Labor volume for unskilled male (millions),v_M_nsk,1334972.505
+Nicaragua,NIC,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,10.43537366
+Nicaragua,NIC,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,8.164652671
+Nicaragua,NIC,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,18.64863049
+Nicaragua,NIC,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,27.75134319
+Nicaragua,NIC,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4062.019304
+Nicaragua,NIC,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,5413.997142
+Nicaragua,NIC,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,106.8035503
+Nicaragua,NIC,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,87.18451793
+Nigeria,NGA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,333999.8015
+Nigeria,NGA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,273077.8698
+Nigeria,NGA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,197090.9007
+Nigeria,NGA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,229644.0488
+Nigeria,NGA,Labor volume for skilled females (millions),v_F_skl,4428613.31
+Nigeria,NGA,Labor volume for skilled males (millions),v_M_skl,13013343.86
+Nigeria,NGA,Labor volume for unskilled females (millions),v_F_nsk,9615377.519
+Nigeria,NGA,Labor volume for unskilled male (millions),v_M_nsk,27207302.31
+Nigeria,NGA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.331093788
+Nigeria,NGA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,7.853202446
+Nigeria,NGA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,20.54302523
+Nigeria,NGA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,30.27267854
+Nigeria,NGA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,175060.8324
+Nigeria,NGA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,306824.4125
+Nigeria,NGA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,109.9419555
+Nigeria,NGA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.23422881
+Norway,NOR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,8289158.695
+Norway,NOR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,7166831.132
+Norway,NOR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,4096757.39
+Norway,NOR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,5236358.614
+Norway,NOR,Labor volume for skilled females (millions),v_F_skl,531455.7743
+Norway,NOR,Labor volume for skilled males (millions),v_M_skl,725721.4436
+Norway,NOR,Labor volume for unskilled females (millions),v_F_nsk,224283.8769
+Norway,NOR,Labor volume for unskilled male (millions),v_M_nsk,1242354.905
+Norway,NOR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.3476843
+Norway,NOR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.029129208
+Norway,NOR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.32393636
+Norway,NOR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.29925013
+Norway,NOR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,196398.8526
+Norway,NOR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,180161.2624
+Norway,NOR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,131.7833555
+Norway,NOR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,88.79479841
+Oman,OMN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,261441.1464
+Oman,OMN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,313141.9399
+Oman,OMN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,163682.5937
+Oman,OMN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,247329.3578
+Oman,OMN,Labor volume for skilled females (millions),v_F_skl,478700.2303
+Oman,OMN,Labor volume for skilled males (millions),v_M_skl,578915.7064
+Oman,OMN,Labor volume for unskilled females (millions),v_F_nsk,157989.3059
+Oman,OMN,Labor volume for unskilled male (millions),v_M_nsk,885652.7574
+Oman,OMN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.249758282
+Oman,OMN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.006058331
+Oman,OMN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.51107483
+Oman,OMN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.23310856
+Oman,OMN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,48773.55657
+Oman,OMN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,15197.53353
+Oman,OMN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Oman,OMN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Pakistan,PAK,Annual wage for skilled female workers (US$ Dollars),w_F_skl,93767.90139
+Pakistan,PAK,Annual wage for skilled male workers (US$ Dollars),w_M_skl,137842.7127
+Pakistan,PAK,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,59173.77411
+Pakistan,PAK,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,100339.0416
+Pakistan,PAK,Labor volume for skilled females (millions),v_F_skl,2478989.986
+Pakistan,PAK,Labor volume for skilled males (millions),v_M_skl,25654947.92
+Pakistan,PAK,Labor volume for unskilled females (millions),v_F_nsk,9160985.334
+Pakistan,PAK,Labor volume for unskilled male (millions),v_M_nsk,25423084.76
+Pakistan,PAK,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,1.954269225
+Pakistan,PAK,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,7.658998994
+Pakistan,PAK,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,31.09981226
+Pakistan,PAK,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,24.28691952
+Pakistan,PAK,Value-added from Capital in GTAP10P3COD,gtap10VACapital,166086.1923
+Pakistan,PAK,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,57196.83675
+Pakistan,PAK,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,99.56469987
+Pakistan,PAK,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,88.53480547
+Panama,PAN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,539836.3828
+Panama,PAN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,847523.7322
+Panama,PAN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,271270.847
+Panama,PAN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,448413.4606
+Panama,PAN,Labor volume for skilled females (millions),v_F_skl,301624.926
+Panama,PAN,Labor volume for skilled males (millions),v_M_skl,200009.4479
+Panama,PAN,Labor volume for unskilled females (millions),v_F_nsk,321395.8208
+Panama,PAN,Labor volume for unskilled male (millions),v_M_nsk,991226.8053
+Panama,PAN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.656628711
+Panama,PAN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,10.41183668
+Panama,PAN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,7.834214551
+Panama,PAN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,40.09732005
+Panama,PAN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,17955.97595
+Panama,PAN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,19176.46468
+Panama,PAN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,128.7662675
+Panama,PAN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,121.9473367
+Paraguay,PRY,Annual wage for skilled female workers (US$ Dollars),w_F_skl,245394.4145
+Paraguay,PRY,Annual wage for skilled male workers (US$ Dollars),w_M_skl,258442.8144
+Paraguay,PRY,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,133928.8623
+Paraguay,PRY,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,161455.8845
+Paraguay,PRY,Labor volume for skilled females (millions),v_F_skl,293299.59
+Paraguay,PRY,Labor volume for skilled males (millions),v_M_skl,461659.6623
+Paraguay,PRY,Labor volume for unskilled females (millions),v_F_nsk,398576.8589
+Paraguay,PRY,Labor volume for unskilled male (millions),v_M_nsk,2009758.889
+Paraguay,PRY,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.39825823
+Paraguay,PRY,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.036123222
+Paraguay,PRY,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.29220625
+Paraguay,PRY,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.2734123
+Paraguay,PRY,Value-added from Capital in GTAP10P3COD,gtap10VACapital,10275.72609
+Paraguay,PRY,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,13978.54823
+Paraguay,PRY,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,120.2765389
+Paraguay,PRY,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,103.2034361
+Peru,PER,Annual wage for skilled female workers (US$ Dollars),w_F_skl,655276.5699
+Peru,PER,Annual wage for skilled male workers (US$ Dollars),w_M_skl,697143.9703
+Peru,PER,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,329978.6236
+Peru,PER,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,457971.62
+Peru,PER,Labor volume for skilled females (millions),v_F_skl,2147837.76
+Peru,PER,Labor volume for skilled males (millions),v_M_skl,3463358.836
+Peru,PER,Labor volume for unskilled females (millions),v_F_nsk,3449350.113
+Peru,PER,Labor volume for unskilled male (millions),v_M_nsk,8108999.291
+Peru,PER,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.299910903
+Peru,PER,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,13.62385292
+Peru,PER,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,11.85061844
+Peru,PER,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,33.22561773
+Peru,PER,Value-added from Capital in GTAP10P3COD,gtap10VACapital,65592.35955
+Peru,PER,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,109312.7766
+Peru,PER,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,132.3609637
+Peru,PER,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,97.99813497
+Philippines,PHL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,224611.8041
+Philippines,PHL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,253748.9194
+Philippines,PHL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,141703.6143
+Philippines,PHL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,181390.7357
+Philippines,PHL,Labor volume for skilled females (millions),v_F_skl,14127818.65
+Philippines,PHL,Labor volume for skilled males (millions),v_M_skl,13782912.5
+Philippines,PHL,Labor volume for unskilled females (millions),v_F_nsk,5066705.298
+Philippines,PHL,Labor volume for unskilled male (millions),v_M_nsk,9467021.558
+Philippines,PHL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,14.12027761
+Philippines,PHL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,7.447814854
+Philippines,PHL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,23.35188703
+Philippines,PHL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,20.08002051
+Philippines,PHL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,147707.6639
+Philippines,PHL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,95953.62183
+Philippines,PHL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,107.134532
+Philippines,PHL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,93.52349117
+Poland,POL,Annual wage for skilled female workers (US$ Dollars),w_F_skl,988081.9721
+Poland,POL,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1327668.669
+Poland,POL,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,659421.2917
+Poland,POL,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,924571.8875
+Poland,POL,Labor volume for skilled females (millions),v_F_skl,3001001.472
+Poland,POL,Labor volume for skilled males (millions),v_M_skl,4537083.862
+Poland,POL,Labor volume for unskilled females (millions),v_F_nsk,1572428.503
+Poland,POL,Labor volume for unskilled male (millions),v_M_nsk,9278877.163
+Poland,POL,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.293339278
+Poland,POL,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.014929378
+Poland,POL,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.43405216
+Poland,POL,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.25767919
+Poland,POL,Value-added from Capital in GTAP10P3COD,gtap10VACapital,259773.383
+Poland,POL,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,137870.0036
+Poland,POL,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Poland,POL,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Portugal,PRT,Annual wage for skilled female workers (US$ Dollars),w_F_skl,682045.9496
+Portugal,PRT,Annual wage for skilled male workers (US$ Dollars),w_M_skl,914599.0997
+Portugal,PRT,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,455913.3851
+Portugal,PRT,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,638351.3272
+Portugal,PRT,Labor volume for skilled females (millions),v_F_skl,888305.7132
+Portugal,PRT,Labor volume for skilled males (millions),v_M_skl,1330394.7
+Portugal,PRT,Labor volume for unskilled females (millions),v_F_nsk,483884.7745
+Portugal,PRT,Labor volume for unskilled male (millions),v_M_nsk,2539208.813
+Portugal,PRT,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.287682437
+Portugal,PRT,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.015138021
+Portugal,PRT,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.44049448
+Portugal,PRT,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.25668506
+Portugal,PRT,Value-added from Capital in GTAP10P3COD,gtap10VACapital,102588.4608
+Portugal,PRT,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,64453.08409
+Portugal,PRT,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Portugal,PRT,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Puerto Rico,PRI,Annual wage for skilled female workers (US$ Dollars),w_F_skl,349571.2581
+Puerto Rico,PRI,Annual wage for skilled male workers (US$ Dollars),w_M_skl,359470.9136
+Puerto Rico,PRI,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,189905.9649
+Puerto Rico,PRI,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,225459.499
+Puerto Rico,PRI,Labor volume for skilled females (millions),v_F_skl,259510.2937
+Puerto Rico,PRI,Labor volume for skilled males (millions),v_M_skl,330286.0711
+Puerto Rico,PRI,Labor volume for unskilled females (millions),v_F_nsk,107048.8018
+Puerto Rico,PRI,Labor volume for unskilled male (millions),v_M_nsk,514086.8335
+Puerto Rico,PRI,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.341488303
+Puerto Rico,PRI,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.027499789
+Puerto Rico,PRI,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.34695541
+Puerto Rico,PRI,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.2840565
+Puerto Rico,PRI,Value-added from Capital in GTAP10P3COD,gtap10VACapital,51027.81699
+Puerto Rico,PRI,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,37120.24462
+Puerto Rico,PRI,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,120.2765389
+Puerto Rico,PRI,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,103.2034361
+Qatar,QAT,Annual wage for skilled female workers (US$ Dollars),w_F_skl,2154894.249
+Qatar,QAT,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2616028.458
+Qatar,QAT,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1339991.348
+Qatar,QAT,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2051632.316
+Qatar,QAT,Labor volume for skilled females (millions),v_F_skl,167126.5546
+Qatar,QAT,Labor volume for skilled males (millions),v_M_skl,402144.73
+Qatar,QAT,Labor volume for unskilled females (millions),v_F_nsk,116070.1217
+Qatar,QAT,Labor volume for unskilled male (millions),v_M_nsk,1093140.594
+Qatar,QAT,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.232779561
+Qatar,QAT,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.000704423
+Qatar,QAT,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.53972291
+Qatar,QAT,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.22679311
+Qatar,QAT,Value-added from Capital in GTAP10P3COD,gtap10VACapital,135529.0362
+Qatar,QAT,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,37588.89885
+Qatar,QAT,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Qatar,QAT,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Romania,ROU,Annual wage for skilled female workers (US$ Dollars),w_F_skl,530186.6419
+Romania,ROU,Annual wage for skilled male workers (US$ Dollars),w_M_skl,716841.7663
+Romania,ROU,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,353468.7349
+Romania,ROU,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,498336.4416
+Romania,ROU,Labor volume for skilled females (millions),v_F_skl,1247361.631
+Romania,ROU,Labor volume for skilled males (millions),v_M_skl,2024587.196
+Romania,ROU,Labor volume for unskilled females (millions),v_F_nsk,855462.6611
+Romania,ROU,Labor volume for unskilled male (millions),v_M_nsk,5074427.513
+Romania,ROU,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.279228698
+Romania,ROU,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.009548569
+Romania,ROU,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.46496104
+Romania,ROU,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.24626169
+Romania,ROU,Value-added from Capital in GTAP10P3COD,gtap10VACapital,105511.0384
+Romania,ROU,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,48707.99771
+Romania,ROU,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Romania,ROU,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Russian Federation,RUS,Annual wage for skilled female workers (US$ Dollars),w_F_skl,619466.0411
+Russian Federation,RUS,Annual wage for skilled male workers (US$ Dollars),w_M_skl,807014.1051
+Russian Federation,RUS,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,464227.6999
+Russian Federation,RUS,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,656418.2773
+Russian Federation,RUS,Labor volume for skilled females (millions),v_F_skl,25055741.2
+Russian Federation,RUS,Labor volume for skilled males (millions),v_M_skl,16968351.72
+Russian Federation,RUS,Labor volume for unskilled females (millions),v_F_nsk,13854155.55
+Russian Federation,RUS,Labor volume for unskilled male (millions),v_M_nsk,19449113.54
+Russian Federation,RUS,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,13.66258908
+Russian Federation,RUS,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,11.89419934
+Russian Federation,RUS,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,16.03674163
+Russian Federation,RUS,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,23.40646994
+Russian Federation,RUS,Value-added from Capital in GTAP10P3COD,gtap10VACapital,928980.233
+Russian Federation,RUS,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,574170.4541
+Russian Federation,RUS,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,88.87757249
+Russian Federation,RUS,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,80.54483821
+Rwanda,RWA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,130177.74
+Rwanda,RWA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,163889.4547
+Rwanda,RWA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,56934.16538
+Rwanda,RWA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,83531.32589
+Rwanda,RWA,Labor volume for skilled females (millions),v_F_skl,285627.487
+Rwanda,RWA,Labor volume for skilled males (millions),v_M_skl,437024.3136
+Rwanda,RWA,Labor volume for unskilled females (millions),v_F_nsk,2527005.903
+Rwanda,RWA,Labor volume for unskilled male (millions),v_M_nsk,2381112.296
+Rwanda,RWA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,3.954032854
+Rwanda,RWA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,17.14994224
+Rwanda,RWA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,9.893452456
+Rwanda,RWA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,34.00257245
+Rwanda,RWA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,2411.299572
+Rwanda,RWA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4084.347313
+Rwanda,RWA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,146.2204731
+Rwanda,RWA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,124.3832387
+Saudi Arabia,SAU,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1016148.317
+Saudi Arabia,SAU,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1224024.505
+Saudi Arabia,SAU,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,633971.2202
+Saudi Arabia,SAU,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,962560.7209
+Saudi Arabia,SAU,Labor volume for skilled females (millions),v_F_skl,1565056.308
+Saudi Arabia,SAU,Labor volume for skilled males (millions),v_M_skl,2832527.556
+Saudi Arabia,SAU,Labor volume for unskilled females (millions),v_F_nsk,944625.8585
+Saudi Arabia,SAU,Labor volume for unskilled male (millions),v_M_nsk,7049186.278
+Saudi Arabia,SAU,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.250404955
+Saudi Arabia,SAU,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.005002655
+Saudi Arabia,SAU,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.50942137
+Saudi Arabia,SAU,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.23517102
+Saudi Arabia,SAU,Value-added from Capital in GTAP10P3COD,gtap10VACapital,406070.0396
+Saudi Arabia,SAU,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,179539.691
+Saudi Arabia,SAU,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+Saudi Arabia,SAU,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+Senegal,SEN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,238483.181
+Senegal,SEN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,334117.537
+Senegal,SEN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,106046.9713
+Senegal,SEN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,213606.7764
+Senegal,SEN,Labor volume for skilled females (millions),v_F_skl,538307.6182
+Senegal,SEN,Labor volume for skilled males (millions),v_M_skl,1031884.51
+Senegal,SEN,Labor volume for unskilled females (millions),v_F_nsk,451308.109
+Senegal,SEN,Labor volume for unskilled male (millions),v_M_nsk,1846653.763
+Senegal,SEN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,4.627206387
+Senegal,SEN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.502125136
+Senegal,SEN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,15.80069896
+Senegal,SEN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,38.06996952
+Senegal,SEN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,7378.479055
+Senegal,SEN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,4487.603869
+Senegal,SEN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,146.3750957
+Senegal,SEN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,101.4158399
+Singapore,SGP,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3481101.077
+Singapore,SGP,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3406855.145
+Singapore,SGP,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1984560.487
+Singapore,SGP,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2139516.68
+Singapore,SGP,Labor volume for skilled females (millions),v_F_skl,521525.2697
+Singapore,SGP,Labor volume for skilled males (millions),v_M_skl,833462.5543
+Singapore,SGP,Labor volume for unskilled females (millions),v_F_nsk,251718.3236
+Singapore,SGP,Labor volume for unskilled male (millions),v_M_nsk,1533244.852
+Singapore,SGP,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.292563064
+Singapore,SGP,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.021652622
+Singapore,SGP,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.43933986
+Singapore,SGP,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.24644445
+Singapore,SGP,Value-added from Capital in GTAP10P3COD,gtap10VACapital,149246.9846
+Singapore,SGP,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,127417.4556
+Singapore,SGP,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+Singapore,SGP,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Slovak Republic,SVK,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1147190.928
+Slovak Republic,SVK,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1534595.081
+Slovak Republic,SVK,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,770213.3304
+Slovak Republic,SVK,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1076699.501
+Slovak Republic,SVK,Labor volume for skilled females (millions),v_F_skl,468002.3325
+Slovak Republic,SVK,Labor volume for skilled males (millions),v_M_skl,720609.8179
+Slovak Republic,SVK,Labor volume for unskilled females (millions),v_F_nsk,229771.4181
+Slovak Republic,SVK,Labor volume for unskilled male (millions),v_M_nsk,1304767.431
+Slovak Republic,SVK,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.252917813
+Slovak Republic,SVK,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.001953496
+Slovak Republic,SVK,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.51604027
+Slovak Republic,SVK,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.22908842
+Slovak Republic,SVK,Value-added from Capital in GTAP10P3COD,gtap10VACapital,59276.48967
+Slovak Republic,SVK,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,18661.71843
+Slovak Republic,SVK,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Slovak Republic,SVK,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Slovenia,SVN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1545271.381
+Slovenia,SVN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,2058194.743
+Slovenia,SVN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1033100.622
+Slovenia,SVN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1435768.395
+Slovenia,SVN,Labor volume for skilled females (millions),v_F_skl,162502.3465
+Slovenia,SVN,Labor volume for skilled males (millions),v_M_skl,258193.6842
+Slovenia,SVN,Labor volume for unskilled females (millions),v_F_nsk,89934.29077
+Slovenia,SVN,Labor volume for unskilled male (millions),v_M_nsk,505648.6784
+Slovenia,SVN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.324495366
+Slovenia,SVN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.033830074
+Slovenia,SVN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.36102222
+Slovenia,SVN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28065234
+Slovenia,SVN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,19105.82899
+Slovenia,SVN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,15509.61683
+Slovenia,SVN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Slovenia,SVN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+South Africa,ZAF,Annual wage for skilled female workers (US$ Dollars),w_F_skl,302330.4856
+South Africa,ZAF,Annual wage for skilled male workers (US$ Dollars),w_M_skl,306603.8083
+South Africa,ZAF,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,185454.2065
+South Africa,ZAF,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,255345.7441
+South Africa,ZAF,Labor volume for skilled females (millions),v_F_skl,2554714.577
+South Africa,ZAF,Labor volume for skilled males (millions),v_M_skl,2446324.821
+South Africa,ZAF,Labor volume for unskilled females (millions),v_F_nsk,7043388.206
+South Africa,ZAF,Labor volume for unskilled male (millions),v_M_nsk,8482344.396
+South Africa,ZAF,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.035924486
+South Africa,ZAF,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,18.17054785
+South Africa,ZAF,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,7.434927719
+South Africa,ZAF,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,34.35859994
+South Africa,ZAF,Value-added from Capital in GTAP10P3COD,gtap10VACapital,151990.5358
+South Africa,ZAF,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,141655.753
+South Africa,ZAF,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,105.7180392
+South Africa,ZAF,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.01955042
+Spain,ESP,Annual wage for skilled female workers (US$ Dollars),w_F_skl,4184092.225
+Spain,ESP,Annual wage for skilled male workers (US$ Dollars),w_M_skl,5534339.527
+Spain,ESP,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2804923.153
+Spain,ESP,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3873929.959
+Spain,ESP,Labor volume for skilled females (millions),v_F_skl,3707815.312
+Spain,ESP,Labor volume for skilled males (millions),v_M_skl,5611508.081
+Spain,ESP,Labor volume for unskilled females (millions),v_F_nsk,2306044.502
+Spain,ESP,Labor volume for unskilled male (millions),v_M_nsk,11518509.1
+Spain,ESP,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.324319786
+Spain,ESP,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.030072387
+Spain,ESP,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.3603953
+Spain,ESP,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.28521253
+Spain,ESP,Value-added from Capital in GTAP10P3COD,gtap10VACapital,531315.8163
+Spain,ESP,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,501030.2106
+Spain,ESP,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Spain,ESP,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Sri Lanka,LKA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,108551.0249
+Sri Lanka,LKA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,139242.3307
+Sri Lanka,LKA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,75327.73449
+Sri Lanka,LKA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,104102.6741
+Sri Lanka,LKA,Labor volume for skilled females (millions),v_F_skl,1962340.529
+Sri Lanka,LKA,Labor volume for skilled males (millions),v_M_skl,3881984.475
+Sri Lanka,LKA,Labor volume for unskilled females (millions),v_F_nsk,826133.9562
+Sri Lanka,LKA,Labor volume for unskilled male (millions),v_M_nsk,1781614.04
+Sri Lanka,LKA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,14.56816984
+Sri Lanka,LKA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.752977294
+Sri Lanka,LKA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,31.1152729
+Sri Lanka,LKA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,12.56357996
+Sri Lanka,LKA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,34334.56178
+Sri Lanka,LKA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,29208.49971
+Sri Lanka,LKA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,94.92086582
+Sri Lanka,LKA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,87.70864238
+Sweden,SWE,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3670947.722
+Sweden,SWE,Annual wage for skilled male workers (US$ Dollars),w_M_skl,4880388.531
+Sweden,SWE,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2461666.392
+Sweden,SWE,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3419721.578
+Sweden,SWE,Labor volume for skilled females (millions),v_F_skl,998817.5127
+Sweden,SWE,Labor volume for skilled males (millions),v_M_skl,1405936.639
+Sweden,SWE,Labor volume for unskilled females (millions),v_F_nsk,425360.5243
+Sweden,SWE,Labor volume for unskilled male (millions),v_M_nsk,2313267.323
+Sweden,SWE,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.325236366
+Sweden,SWE,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.028534241
+Sweden,SWE,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.37025912
+Sweden,SWE,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27597027
+Sweden,SWE,Value-added from Capital in GTAP10P3COD,gtap10VACapital,190302.5698
+Sweden,SWE,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,182351.6908
+Sweden,SWE,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Sweden,SWE,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Switzerland,CHE,Annual wage for skilled female workers (US$ Dollars),w_F_skl,5776081.03
+Switzerland,CHE,Annual wage for skilled male workers (US$ Dollars),w_M_skl,7552163.688
+Switzerland,CHE,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,3864458.044
+Switzerland,CHE,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,5279191.804
+Switzerland,CHE,Labor volume for skilled females (millions),v_F_skl,917804.9487
+Switzerland,CHE,Labor volume for skilled males (millions),v_M_skl,1308062.186
+Switzerland,CHE,Labor volume for unskilled females (millions),v_F_nsk,426022.8265
+Switzerland,CHE,Labor volume for unskilled male (millions),v_M_nsk,2091100.039
+Switzerland,CHE,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.342941038
+Switzerland,CHE,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.03084171
+Switzerland,CHE,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.32836407
+Switzerland,CHE,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.29785318
+Switzerland,CHE,Value-added from Capital in GTAP10P3COD,gtap10VACapital,267652.1481
+Switzerland,CHE,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,345561.7546
+Switzerland,CHE,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Switzerland,CHE,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+"Taiwan, China",TWN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,362828.8299
+"Taiwan, China",TWN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,356751.1191
+"Taiwan, China",TWN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,206044.936
+"Taiwan, China",TWN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,223861.8634
+"Taiwan, China",TWN,Labor volume for skilled females (millions),v_F_skl,1818751.288
+"Taiwan, China",TWN,Labor volume for skilled males (millions),v_M_skl,2881675.047
+"Taiwan, China",TWN,Labor volume for unskilled females (millions),v_F_nsk,1072129.368
+"Taiwan, China",TWN,Labor volume for unskilled male (millions),v_M_nsk,5762444.298
+"Taiwan, China",TWN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.329947355
+"Taiwan, China",TWN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.03648987
+"Taiwan, China",TWN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.35480465
+"Taiwan, China",TWN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27875812
+"Taiwan, China",TWN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,182539.4221
+"Taiwan, China",TWN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,243252.2504
+"Taiwan, China",TWN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+"Taiwan, China",TWN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Tajikistan,TJK,Annual wage for skilled female workers (US$ Dollars),w_F_skl,174177.7359
+Tajikistan,TJK,Annual wage for skilled male workers (US$ Dollars),w_M_skl,228033.3253
+Tajikistan,TJK,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,117676.6916
+Tajikistan,TJK,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,161424.9874
+Tajikistan,TJK,Labor volume for skilled females (millions),v_F_skl,147901.8363
+Tajikistan,TJK,Labor volume for skilled males (millions),v_M_skl,269230.289
+Tajikistan,TJK,Labor volume for unskilled females (millions),v_F_nsk,242868.3507
+Tajikistan,TJK,Labor volume for unskilled male (millions),v_M_nsk,1698001.524
+Tajikistan,TJK,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.200578096
+Tajikistan,TJK,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,5.975936487
+Tajikistan,TJK,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.64424267
+Tajikistan,TJK,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.17924274
+Tajikistan,TJK,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4626.654348
+Tajikistan,TJK,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,2447.338754
+Tajikistan,TJK,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+Tajikistan,TJK,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+Tanzania,TZA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,217049.0919
+Tanzania,TZA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,219604.9566
+Tanzania,TZA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,119317.1925
+Tanzania,TZA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,136285.4621
+Tanzania,TZA,Labor volume for skilled females (millions),v_F_skl,1532835.052
+Tanzania,TZA,Labor volume for skilled males (millions),v_M_skl,3228062.257
+Tanzania,TZA,Labor volume for unskilled females (millions),v_F_nsk,2412751.994
+Tanzania,TZA,Labor volume for unskilled male (millions),v_M_nsk,16671833.7
+Tanzania,TZA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.360845178
+Tanzania,TZA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.026576594
+Tanzania,TZA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.34968717
+Tanzania,TZA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.26289106
+Tanzania,TZA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,14347.10665
+Tanzania,TZA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,25134.1711
+Tanzania,TZA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,116.9544971
+Tanzania,TZA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.2939873
+Thailand,THA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,519974.3992
+Thailand,THA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,604967.7736
+Thailand,THA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,264161.7632
+Thailand,THA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,366397.6202
+Thailand,THA,Labor volume for skilled females (millions),v_F_skl,5340332.628
+Thailand,THA,Labor volume for skilled males (millions),v_M_skl,4469139.447
+Thailand,THA,Labor volume for unskilled females (millions),v_F_nsk,13159804
+Thailand,THA,Labor volume for unskilled male (millions),v_M_nsk,16005508.92
+Thailand,THA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,7.208866506
+Thailand,THA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,20.79536485
+Thailand,THA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,8.069544214
+Thailand,THA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,28.92622443
+Thailand,THA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,206954.9428
+Thailand,THA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,132390.943
+Thailand,THA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,126.3983345
+Thailand,THA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,106.3314134
+Togo,TGO,Annual wage for skilled female workers (US$ Dollars),w_F_skl,113917.3032
+Togo,TGO,Annual wage for skilled male workers (US$ Dollars),w_M_skl,150951.9973
+Togo,TGO,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,59282.87203
+Togo,TGO,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,103949.1232
+Togo,TGO,Labor volume for skilled females (millions),v_F_skl,166909.0522
+Togo,TGO,Labor volume for skilled males (millions),v_M_skl,540820.42
+Togo,TGO,Labor volume for unskilled females (millions),v_F_nsk,1163308.145
+Togo,TGO,Labor volume for unskilled male (millions),v_M_nsk,1387289.383
+Togo,TGO,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.162019516
+Togo,TGO,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,25.7745716
+Togo,TGO,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,14.05647583
+Togo,TGO,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,20.00693306
+Togo,TGO,Value-added from Capital in GTAP10P3COD,gtap10VACapital,1009.667239
+Togo,TGO,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,1922.342605
+Togo,TGO,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,125.421007
+Togo,TGO,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,93.14610438
+Trinidad and Tobago,TTO,Annual wage for skilled female workers (US$ Dollars),w_F_skl,349975.4169
+Trinidad and Tobago,TTO,Annual wage for skilled male workers (US$ Dollars),w_M_skl,360266.2804
+Trinidad and Tobago,TTO,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,190075.7454
+Trinidad and Tobago,TTO,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,225874.2451
+Trinidad and Tobago,TTO,Labor volume for skilled females (millions),v_F_skl,107594.7827
+Trinidad and Tobago,TTO,Labor volume for skilled males (millions),v_M_skl,162911.1488
+Trinidad and Tobago,TTO,Labor volume for unskilled females (millions),v_F_nsk,59737.66755
+Trinidad and Tobago,TTO,Labor volume for unskilled male (millions),v_M_nsk,341945.401
+Trinidad and Tobago,TTO,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.298145551
+Trinidad and Tobago,TTO,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.018557313
+Trinidad and Tobago,TTO,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.42458232
+Trinidad and Tobago,TTO,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.25871482
+Trinidad and Tobago,TTO,Value-added from Capital in GTAP10P3COD,gtap10VACapital,14992.60746
+Trinidad and Tobago,TTO,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,8777.18677
+Trinidad and Tobago,TTO,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,120.2765389
+Trinidad and Tobago,TTO,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,103.2034361
+Tunisia,TUN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,237681.2455
+Tunisia,TUN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,201510.5399
+Tunisia,TUN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,129538.6045
+Tunisia,TUN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,168527.2407
+Tunisia,TUN,Labor volume for skilled females (millions),v_F_skl,1048190.129
+Tunisia,TUN,Labor volume for skilled males (millions),v_M_skl,2891481.027
+Tunisia,TUN,Labor volume for unskilled females (millions),v_F_nsk,17115.63617
+Tunisia,TUN,Labor volume for unskilled male (millions),v_M_nsk,50873.20812
+Tunisia,TUN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,17.95195908
+Tunisia,TUN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,0.234980901
+Tunisia,TUN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,45.88310568
+Tunisia,TUN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,0.929954342
+Tunisia,TUN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,23379.37367
+Tunisia,TUN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,14823.66134
+Tunisia,TUN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,119.3620648
+Tunisia,TUN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.39836347
+Turkey,TUR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,931047.8278
+Turkey,TUR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1015786.564
+Turkey,TUR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,550534.4841
+Turkey,TUR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,703163.0209
+Turkey,TUR,Labor volume for skilled females (millions),v_F_skl,2459506.348
+Turkey,TUR,Labor volume for skilled males (millions),v_M_skl,3745057.124
+Turkey,TUR,Labor volume for unskilled females (millions),v_F_nsk,6649183.661
+Turkey,TUR,Labor volume for unskilled male (millions),v_M_nsk,15777854.87
+Turkey,TUR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,3.808431956
+Turkey,TUR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,13.40301161
+Turkey,TUR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,7.838756812
+Turkey,TUR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.94979963
+Turkey,TUR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,388371.8591
+Turkey,TUR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,224069.4775
+Turkey,TUR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,110.0985102
+Turkey,TUR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,93.82230293
+Uganda,UGA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,111863.7145
+Uganda,UGA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,162605.5626
+Uganda,UGA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,62115.46882
+Uganda,UGA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,105004.0059
+Uganda,UGA,Labor volume for skilled females (millions),v_F_skl,1266350.051
+Uganda,UGA,Labor volume for skilled males (millions),v_M_skl,3178172.857
+Uganda,UGA,Labor volume for unskilled females (millions),v_F_nsk,3996307.396
+Uganda,UGA,Labor volume for unskilled male (millions),v_M_nsk,5768478.695
+Uganda,UGA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,8.354222952
+Uganda,UGA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,11.81793643
+Uganda,UGA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,18.21889612
+Uganda,UGA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,26.60894449
+Uganda,UGA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,15498.8265
+Uganda,UGA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,9417.995588
+Uganda,UGA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.8255327
+Uganda,UGA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.1093228
+Ukraine,UKR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,213997.3684
+Ukraine,UKR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,263740.2237
+Ukraine,UKR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,155498.8356
+Ukraine,UKR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,221021.7696
+Ukraine,UKR,Labor volume for skilled females (millions),v_F_skl,8824836.433
+Ukraine,UKR,Labor volume for skilled males (millions),v_M_skl,11803810.07
+Ukraine,UKR,Labor volume for unskilled females (millions),v_F_nsk,195611.805
+Ukraine,UKR,Labor volume for unskilled male (millions),v_M_nsk,119200.6917
+Ukraine,UKR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,20.62403969
+Ukraine,UKR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,0.583538601
+Ukraine,UKR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,43.36043919
+Ukraine,UKR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,0.431982518
+Ukraine,UKR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,40063.7688
+Ukraine,UKR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,52812.53984
+Ukraine,UKR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,90.33955722
+Ukraine,UKR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.53454437
+United Arab Emirates,ARE,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1552012.824
+United Arab Emirates,ARE,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1902755.073
+United Arab Emirates,ARE,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,967673.2426
+United Arab Emirates,ARE,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1489152.91
+United Arab Emirates,ARE,Labor volume for skilled females (millions),v_F_skl,718827.4869
+United Arab Emirates,ARE,Labor volume for skilled males (millions),v_M_skl,1380886.736
+United Arab Emirates,ARE,Labor volume for unskilled females (millions),v_F_nsk,615014.5233
+United Arab Emirates,ARE,Labor volume for unskilled male (millions),v_M_nsk,3849461.253
+United Arab Emirates,ARE,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.245895989
+United Arab Emirates,ARE,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.006003346
+United Arab Emirates,ARE,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.51226524
+United Arab Emirates,ARE,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.23583542
+United Arab Emirates,ARE,Value-added from Capital in GTAP10P3COD,gtap10VACapital,264025.2428
+United Arab Emirates,ARE,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,97850.65441
+United Arab Emirates,ARE,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,103.8439515
+United Arab Emirates,ARE,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,81.95222945
+United Kingdom,GBR,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3385411.165
+United Kingdom,GBR,Annual wage for skilled male workers (US$ Dollars),w_M_skl,4457039.033
+United Kingdom,GBR,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2267469.463
+United Kingdom,GBR,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,3117811.877
+United Kingdom,GBR,Labor volume for skilled females (millions),v_F_skl,6137947.387
+United Kingdom,GBR,Labor volume for skilled males (millions),v_M_skl,8795632.017
+United Kingdom,GBR,Labor volume for unskilled females (millions),v_F_nsk,2999619.454
+United Kingdom,GBR,Labor volume for unskilled male (millions),v_M_nsk,15210512.14
+United Kingdom,GBR,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.345393924
+United Kingdom,GBR,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.042490346
+United Kingdom,GBR,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.30251511
+United Kingdom,GBR,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.30960062
+United Kingdom,GBR,Value-added from Capital in GTAP10P3COD,gtap10VACapital,1150172.821
+United Kingdom,GBR,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,1104185.324
+United Kingdom,GBR,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,97.43989286
+United Kingdom,GBR,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,92.73844166
+United States of America,USA,Annual wage for skilled female workers (US$ Dollars),w_F_skl,2950049.287
+United States of America,USA,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3672722.161
+United States of America,USA,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,1846505.382
+United States of America,USA,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2225349.888
+United States of America,USA,Labor volume for skilled females (millions),v_F_skl,51891171.86
+United States of America,USA,Labor volume for skilled males (millions),v_M_skl,53251385.58
+United States of America,USA,Labor volume for unskilled females (millions),v_F_nsk,23325041.54
+United States of America,USA,Labor volume for unskilled male (millions),v_M_nsk,31216815.02
+United States of America,USA,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,12.94697898
+United States of America,USA,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,9.952676017
+United States of America,USA,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,21.37424295
+United States of America,USA,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,20.72610205
+United States of America,USA,Value-added from Capital in GTAP10P3COD,gtap10VACapital,4250040.586
+United States of America,USA,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,10211584.01
+United States of America,USA,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,104.092734
+United States of America,USA,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,108.5763287
+Uruguay,URY,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1096530.555
+Uruguay,URY,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1438370.888
+Uruguay,URY,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,647998.9914
+Uruguay,URY,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,874893.2224
+Uruguay,URY,Labor volume for skilled females (millions),v_F_skl,301554.0108
+Uruguay,URY,Labor volume for skilled males (millions),v_M_skl,184998.5984
+Uruguay,URY,Labor volume for unskilled females (millions),v_F_nsk,507586.4471
+Uruguay,URY,Labor volume for unskilled male (millions),v_M_nsk,758171.9436
+Uruguay,URY,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.003815761
+Uruguay,URY,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,14.05210441
+Uruguay,URY,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,6.851518932
+Uruguay,URY,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,38.0925609
+Uruguay,URY,Value-added from Capital in GTAP10P3COD,gtap10VACapital,23472.17635
+Uruguay,URY,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,17946.64805
+Uruguay,URY,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.8270533
+Uruguay,URY,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,107.4843387
+"Venezuela, RB",VEN,Annual wage for skilled female workers (US$ Dollars),w_F_skl,1412111.36
+"Venezuela, RB",VEN,Annual wage for skilled male workers (US$ Dollars),w_M_skl,1368196.934
+"Venezuela, RB",VEN,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,850905.6574
+"Venezuela, RB",VEN,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,1144305.668
+"Venezuela, RB",VEN,Labor volume for skilled females (millions),v_F_skl,2384891.799
+"Venezuela, RB",VEN,Labor volume for skilled males (millions),v_M_skl,1896329.161
+"Venezuela, RB",VEN,Labor volume for unskilled females (millions),v_F_nsk,3055577.684
+"Venezuela, RB",VEN,Labor volume for unskilled male (millions),v_M_nsk,6760571.357
+"Venezuela, RB",VEN,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,5.416625773
+"Venezuela, RB",VEN,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,10.3513311
+"Venezuela, RB",VEN,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,7.576699137
+"Venezuela, RB",VEN,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,41.65534399
+"Venezuela, RB",VEN,Value-added from Capital in GTAP10P3COD,gtap10VACapital,202883.1152
+"Venezuela, RB",VEN,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,250075.0257
+"Venezuela, RB",VEN,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,107.801631
+"Venezuela, RB",VEN,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.15102376
+Vietnam,VNM,Annual wage for skilled female workers (US$ Dollars),w_F_skl,251340.0596
+Vietnam,VNM,Annual wage for skilled male workers (US$ Dollars),w_M_skl,247328.6295
+Vietnam,VNM,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,143051.3755
+Vietnam,VNM,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,155371.9701
+Vietnam,VNM,Labor volume for skilled females (millions),v_F_skl,5829572.579
+Vietnam,VNM,Labor volume for skilled males (millions),v_M_skl,11472686.8
+Vietnam,VNM,Labor volume for unskilled females (millions),v_F_nsk,5223567.41
+Vietnam,VNM,Labor volume for unskilled male (millions),v_M_nsk,32830110.21
+Vietnam,VNM,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.324354223
+Vietnam,VNM,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.0334874
+Vietnam,VNM,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,13.36838564
+Vietnam,VNM,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,39.27377274
+Vietnam,VNM,Value-added from Capital in GTAP10P3COD,gtap10VACapital,64422.04596
+Vietnam,VNM,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,74143.83951
+Vietnam,VNM,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,113.7834354
+Vietnam,VNM,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,102.3465006
+Zambia,ZMB,Annual wage for skilled female workers (US$ Dollars),w_F_skl,3826417.345
+Zambia,ZMB,Annual wage for skilled male workers (US$ Dollars),w_M_skl,3034286.16
+Zambia,ZMB,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,2229799.442
+Zambia,ZMB,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,2521650.939
+Zambia,ZMB,Labor volume for skilled females (millions),v_F_skl,855839.1326
+Zambia,ZMB,Labor volume for skilled males (millions),v_M_skl,3719202.057
+Zambia,ZMB,Labor volume for unskilled females (millions),v_F_nsk,560881.6984
+Zambia,ZMB,Labor volume for unskilled male (millions),v_M_nsk,1245947.112
+Zambia,ZMB,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,6.279181944
+Zambia,ZMB,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,6.700483778
+Zambia,ZMB,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,34.75545745
+Zambia,ZMB,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,17.26487683
+Zambia,ZMB,Value-added from Capital in GTAP10P3COD,gtap10VACapital,9892.881507
+Zambia,ZMB,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,14918.99289
+Zambia,ZMB,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,110.8693518
+Zambia,ZMB,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.35820562
+Zimbabwe,ZWE,Annual wage for skilled female workers (US$ Dollars),w_F_skl,253532.2736
+Zimbabwe,ZWE,Annual wage for skilled male workers (US$ Dollars),w_M_skl,218905.1242
+Zimbabwe,ZWE,Annual wage for unskilled female workers (US$ Dollars),w_F_nsk,147956.7147
+Zimbabwe,ZWE,Annual wage for unskilled male workers (US$ Dollars),w_M_nsk,183219.5881
+Zimbabwe,ZWE,Labor volume for skilled females (millions),v_F_skl,1740764.067
+Zimbabwe,ZWE,Labor volume for skilled males (millions),v_M_skl,3983147.035
+Zimbabwe,ZWE,Labor volume for unskilled females (millions),v_F_nsk,549423.2398
+Zimbabwe,ZWE,Labor volume for unskilled male (millions),v_M_nsk,1218348.658
+Zimbabwe,ZWE,"Share of female skilled worker out of all workers in this sector, %",p_F_skl,9.605963308
+Zimbabwe,ZWE,"Share of female unskilled worker out of all workers in this sector, %",p_F_nsk,5.188190742
+Zimbabwe,ZWE,"Share of male skilled worker out of all workers in this sector, %",p_M_skl,35.57599641
+Zimbabwe,ZWE,"Share of male unskilled worker out of all workers in this sector, %",p_M_nsk,14.62984954
+Zimbabwe,ZWE,Value-added from Capital in GTAP10P3COD,gtap10VACapital,5808.650906
+Zimbabwe,ZWE,Value-added from labor in GTAP10P3COD (in USD 2014 million),gtap10VALabor,6436.721051
+Zimbabwe,ZWE,Wage Premia for Females (the ratio of skilled female workers' wage  to  unskilled female workers' wage),wpremia_F,111.4554923
+Zimbabwe,ZWE,Wage Premia for Males  (the ratio of skilled male workers' wage  to  unskilled male workers' wage),wpremia_M,77.17803331

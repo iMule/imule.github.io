@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Global Gender Pay Disparity — Interactive Globe (2014)</title>
+  <meta name="description" content="3D globe + analytics for exploring gender pay disparities by country (2014)." />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #0b0f19;
+      --muted: #64748b;
+      --border: #e5e7eb;
+      --panel: #ffffffee;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    #about {
+      z-index: 25000
+    }
+
+    body {
+      margin: 0;
+      font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, Ubuntu, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--fg);
+      background: var(--bg)
+    }
+
+    /* Tighter desktop grid */
+    @media(min-width:1200px) {
+      .row {
+        grid-template-columns: 2fr 1fr;
+        grid-auto-rows: minmax(200px, auto)
+      }
+
+      #globe {
+        height: 540px
+      }
+    }
+
+    /* collapsible cards */
+    .card.collapsed .body {
+      display: none
+    }
+
+    .card .tools {
+      margin-left: auto;
+      display: flex;
+      gap: 6px
+    }
+
+    .card .tools .btn {
+      padding: 4px 8px
+    }
+
+    .card.max {
+      position: fixed;
+      inset: 60px 20px 20px 20px;
+      z-index: 60;
+      width: auto;
+      height: auto;
+    }
+
+    .card.max #globe {
+      height: calc(100vh - 160px);
+    }
+
+    .globe-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    #globe canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: inherit;
+    }
+
+    .app {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255, 255, 255, .86);
+      /*backdrop-filter: saturate(120%) blur(8px);*/
+      border-bottom: 1px solid var(--border)
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 16px
+    }
+
+    @media(min-width:960px) {
+      .row {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow)
+    }
+
+    .card>.hdr {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600
+    }
+
+    .card>.body {
+      padding: 12px 14px
+    }
+
+    .muted {
+      color: #6b7280
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 6px 10px;
+      cursor: pointer
+    }
+
+    .btn:hover {
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .06)
+    }
+
+    .legend {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 20;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: var(--shadow);
+      width: 260px
+    }
+
+    .legend-bar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10px;
+      z-index: 20;
+      width: min(700px, 92%);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 10px;
+      box-shadow: var(--shadow);
+      z-index: 20000;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .legend-gradient {
+      flex: 1;
+      height: 10px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #7f3b08, #f6e8c3, #2d004b)
+    }
+
+    .legend-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-top: 2px;
+      color: #475569
+    }
+
+    .chip {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px 10px;
+      z-index: 20
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .3)
+    }
+
+    .modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      width: 680px;
+      max-width: 96vw
+    }
+
+    .modal .hdr {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600
+    }
+
+    .modal .body {
+      padding: 14px
+    }
+
+    .modal .ftr {
+      padding: 10px 14px;
+      background: #f7f7f9;
+      border-top: 1px solid var(--border);
+      color: #61646b;
+      font-size: 12px;
+      border-radius: 0 0 18px 18px
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 999px
+    }
+
+    .globe-wrap {
+      position: relative
+    }
+
+    #globe {
+      width: 100%;
+      height: 520px;
+      border-radius: 18px
+    }
+
+    #scatter,
+    #hist {
+      width: 100%
+    }
+
+    .sr-only {
+      position: absolute;
+      left: -9999px
+    }
+
+    .small {
+      font-size: 12px
+    }
+
+    .grid {
+      display: grid
+    }
+  </style>
+  <!-- libs -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  <script src="https://unpkg.com/three@0.157.0/build/three.min.js"></script>
+  <!-- Pin a specific Globe.gl build -->
+  <script src="https://unpkg.com/globe.gl@2.32.6/dist/globe.gl.min.js"></script>
+  <!-- Add SheetJS (reads the XLSX in the browser) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="app" style="padding:10px 14px;display:flex;gap:10px;align-items:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M12 2a10 10 0 100 20 10 10 0 000-20Zm0 0c3 3 4.5 7 4.5 10S15 19 12 22M12 2C9 5 7.5 9 7.5 12S9 19 12 22M2 12h20"
+          stroke="#111827" stroke-width="1.5" />
+      </svg>
+      <h1 style="font-size:18px;font-weight:700;margin:0">Global Gender Pay Disparity — Interactive Globe (2014)</h1>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <button id="aboutBtn" class="btn" aria-label="About & sources">About</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+    <div class="row">
+      <section class="card" aria-label="3D globe section">
+        <div class="body globe-wrap">
+          <div id="globe" role="img" aria-label="3D globe colored by gender pay gap"></div>
+          <div class="legend-bar" id="legendBar" aria-hidden="false">
+            <div class="legend-row">
+              <span class="small muted">Women earn more</span>
+              <div class="legend-gradient"></div>
+              <span class="small muted">Women earn less</span>
+            </div>
+            <div class="legend-ticks"><span>-10%</span><span>0%</span><span>40%</span></div>
+          </div>
+          <div class="legend" id="legend">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+              <div style="font-weight:600;font-size:13px">Disparities</div>
+              <select id="metric" aria-label="Metric"
+                style="border:1px solid var(--border);border-radius:10px;padding:2px 6px">
+                <option value="gap_overall_pct">Overall gap (%)</option>
+                <option value="parity_index">Parity index (F/M)</option>
+                <option value="gap_skl_pct">Skilled gap (%)</option>
+              </select>
+            </div>
+          </div>
+          <div class="chip small" id="hoverChip" style="display:none"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="hdr">Linked analytics</div>
+        <div class="body">
+          <div class="muted small" style="margin-bottom:6px">Each dot is a country. Left = larger pay gap (women earn
+            less); right = closer to parity. Higher = more women among unskilled workers. Click on the scatterplot to on
+            a particular country.</div>
+          <div id="scatter" style="height:260px"></div>
+        </div>
+        <div id="hist" style="height:90px"></div>
+
+
+    </div>
+    </section>
+
+    <section class="card" style="grid-column:1/-1">
+      <div class="hdr">Country details</div>
+      <div class="body" id="details"><span class="muted">Select a country on the globe or click a point in the
+          scatterplot.</span></div>
+    </section>
+    </div>
+
+    <footer class="small muted" style="padding:0 14px 24px 14px;border-top:1px solid var(--border)">
+      <div style="padding-top:10px">© 2025
+        <a href="http://imule.github.io/">Ian Muehlenhaus</a> licensed under <a
+          href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+          style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+          src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+          style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+          src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt=""
+          style="max-width: 1em;max-height:1em;margin-left: .2em;"> · Base globe imagery © NASA Blue Marble ·
+        Boundaries © Natural Earth via three‑globe. Map created entirely using <a
+          href="https://chatgpt.com/share/68cc2974-7684-800f-9d93-48f0dde21e6a">Web Mapper GPT</a>.
+      </div>
+      More natural language cartography examples <a href="https://imule.github.io/dailymaps/17sep2025/">here</a>.
+      <div style="margin-top:6px"><span>Made with </span></div>
+    </footer>
+  </main>
+
+  <!-- About modal -->
+  <div id="modalRoot" class="sr-only" aria-hidden="true"></div>
+
+  <!-- Required to convert XLSX file to JSON -->
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <script>
+    let DATA = [];
+    let byISO = new Map();
+
+    const HIGHLIGHT = '#0ea5e9'; // teal highlight for the selected country
+
+    (async function init() {
+      // ensure XLSX is ready (since its <script> is deferred)
+      while (!window.XLSX) { await new Promise(r => setTimeout(r, 10)); }
+
+      DATA = await loadGenderXLSX('GDLDEXCEL.xlsx');
+      byISO = new Map(DATA.map(d => [d["Country Code"], d]));
+      nameToISO = buildNameToISO(DATA);
+
+      // first draw AFTER data is ready
+      drawScatter();
+      drawHist();
+      updateDetails();
+      refreshPolygons();
+    })();
+
+    // Reads your GDLDEXCEL.xlsx and shapes fields that the UI already expects.
+    // Reads XLSX and shapes fields your UI already uses.
+    async function loadGenderXLSX(xlsxUrl, sheetName = 'Data') {
+      const res = await fetch(xlsxUrl);
+      if (!res.ok) throw new Error(`Failed to fetch ${xlsxUrl}: ${res.status} ${res.statusText}`);
+      const buf = await res.arrayBuffer();
+
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[sheetName] || wb.Sheets[wb.SheetNames[0]];
+      if (!ws) throw new Error(`No worksheet found in ${xlsxUrl}.`);
+
+      const rows = XLSX.utils.sheet_to_json(ws); // [{ Country Name, Country Code, Indicator..., 2014..., ...}]
+
+      // Detect the year column robustly: "2014" or "2014 [YR2014]" etc.
+      const sample = rows[0] || {};
+      const yearKey = Object.keys(sample).find(k => /^2014/.test(k)) || '2014';
+
+      // Detect indicator column name robustly
+      const indKey =
+        ('Indicator Code' in sample) ? 'Indicator Code' :
+          ('Indicator' in sample) ? 'Indicator' :
+            (Object.keys(sample).find(k => /indicator/i.test(k)) || 'Indicator Code');
+
+      // Normalizer: turn “w F skl”, “W_F_SKL”, etc. into canonical tokens we expect
+      const norm = s => (s ?? '').toString().toLowerCase().replace(/[^a-z0-9]+/g, '_');
+
+      // Map many possible indicator spellings to our canonical keys
+      function toCanonical(ind) {
+        const x = norm(ind);
+        if (/^v_.*f.*sk/.test(x)) return 'v_F_skl';
+        if (/^v_.*m.*sk/.test(x)) return 'v_M_skl';
+        if (/^v_.*f.*(un|n)sk/.test(x)) return 'v_F_nsk';
+        if (/^v_.*m.*(un|n)sk/.test(x)) return 'v_M_nsk';
+        if (/^w_.*f.*sk/.test(x)) return 'w_F_skl';
+        if (/^w_.*m.*sk/.test(x)) return 'w_M_skl';
+        if (/^w_.*f.*(un|n)sk/.test(x)) return 'w_F_nsk';
+        if (/^w_.*m.*(un|n)sk/.test(x)) return 'w_M_nsk';
+        if (/^wp(remia)?_?f/.test(x)) return 'wpremia_F';
+        if (/^wp(remia)?_?m/.test(x)) return 'wpremia_M';
+        return null;
+      }
+
+      const byCode = new Map();
+
+      for (const r of rows) {
+        const code = r['Country Code'];
+        const name = r['Country Name'];
+        const indRaw = r[indKey];
+        const valRaw = r[yearKey];
+
+        if (!code || String(code).startsWith('X')) continue; // skip aggregates
+        if (typeof valRaw === 'undefined' || valRaw === null || valRaw === '') continue;
+
+        if (!byCode.has(code)) {
+          byCode.set(code, {
+            code, name,
+            v_F_skl: 0, v_M_skl: 0, v_F_nsk: 0, v_M_nsk: 0,
+            w_F_skl: 0, w_M_skl: 0, w_F_nsk: 0, w_M_nsk: 0,
+            wpremia_F: null, wpremia_M: null
+          });
+        }
+        const rec = byCode.get(code);
+        const key = toCanonical(indRaw);
+        if (key && key in rec) rec[key] = Number(valRaw);
+      }
+
+      // Derive UI-ready metrics per country
+      const shaped = [];
+      for (const rec of byCode.values()) {
+        const { code, name, v_F_skl, v_M_skl, v_F_nsk, v_M_nsk, w_F_skl, w_M_skl, w_F_nsk, w_M_nsk, wpremia_F, wpremia_M } = rec;
+
+        // Averages per worker (if totals provided)
+        const aFs = v_F_skl ? (w_F_skl / v_F_skl) : null;
+        const aMs = v_M_skl ? (w_M_skl / v_M_skl) : null;
+        const aFn = v_F_nsk ? (w_F_nsk / v_F_nsk) : null;
+        const aMn = v_M_nsk ? (w_M_nsk / v_M_nsk) : null;
+
+        // Category gaps: positive ⇒ women earn less
+        const gap_skl_pct = (aFs != null && aMs != null) ? (1 - (aFs / aMs)) * 100 : null;
+        const gap_nsk_pct = (aFn != null && aMn != null) ? (1 - (aFn / aMn)) * 100 : null;
+
+        // Weighted overall parity
+        const totF = (v_F_skl || 0) + (v_F_nsk || 0);
+        const totM = (v_M_skl || 0) + (v_M_nsk || 0);
+        const wFAll = (aFs != null && aFn != null && totF) ? ((aFs * v_F_skl) + (aFn * v_F_nsk)) / totF : null;
+        const wMAll = (aMs != null && aMn != null && totM) ? ((aMs * v_M_skl) + (aMn * v_M_nsk)) / totM : null;
+
+        // Fallback: if totals weren’t present but premia exist, synthesize a parity_index
+        let parity_index = (wFAll != null && wMAll != null && wMAll !== 0) ? (wFAll / wMAll) : null;
+        if (parity_index == null && wpremia_F != null && wpremia_M != null) {
+          // crude fallback: ratio of female/male premia around a common baseline
+          const f = 1 + Number(wpremia_F);
+          const m = 1 + Number(wpremia_M);
+          if (m !== 0 && isFinite(f) && isFinite(m)) parity_index = f / m;
+        }
+
+        const gap_overall_pct = (parity_index != null) ? (1 - parity_index) * 100 : null;
+
+        const female_share_skl_pct = (v_F_skl + v_M_skl) ? (100 * v_F_skl / (v_F_skl + v_M_skl)) : null;
+        const female_share_nsk_pct = (v_F_nsk + v_M_nsk) ? (100 * v_F_nsk / (v_F_nsk + v_M_nsk)) : null;
+
+        shaped.push({
+          "Country Code": code,
+          "Country Name": name,
+          parity_index,
+          gap_overall_pct,
+          gap_skl_pct,
+          gap_nsk_pct,
+          female_share_skl_pct,
+          female_share_nsk_pct,
+          w_F_skl: aFs, w_M_skl: aMs, w_F_nsk: aFn, w_M_nsk: aMn
+        });
+      }
+
+      console.info('[GPG] countries in DATA:', shaped.length);
+      console.info('[GPG] with parity:', shaped.filter(d => d.parity_index != null).length);
+      return shaped;
+    }
+
+
+    // Boot AFTER libs are loaded
+    /*(async function init() {
+      // Put GDLDEXCEL.xlsx next to this HTML file
+      DATA = await loadGenderXLSX('GDLDEXCEL.xlsx');
+      byISO = new Map(DATA.map(d => [d["Country Code"], d]));
+
+      // first draw (safe now that DATA is an array)
+      drawScatter();
+      drawHist();
+      updateDetails();
+      refreshPolygons(); // will no-op until TopoJSON arrives; called again after fetch resolves
+    })();
+    */
+
+    // Color & height scales (diverging, centered at 0%)
+    const colorScale = d3.scaleDiverging().domain([-10, 0, 40]).interpolator(d3.interpolatePuOr);
+    const heightScale = d3.scaleSqrt().domain([0, 40]).range([0, 0.01]);
+
+    const fmtPct = d3.format('.1f');
+    const fmtRatio = d3.format('.2f');
+    const fmtUSD = v => v == null ? '—' : ('$' + d3.format(',.0f')(v));
+
+    let metric = 'gap_overall_pct';
+    let gapFilter = [-10, 40];
+    let selectedISO = null;
+    let countriesGeo = null;
+    let selectedBins = new Set();        // indices of selected bars
+    let selectedIntervals = [];          // array of [x0, x1] from selected bins
+    const TEAL = '#0ea5e9';
+    function inSelectedIntervals(val) {
+      if (!selectedIntervals || selectedIntervals.length === 0) return true; // no selection = pass
+      return selectedIntervals.some(([a, b]) => val >= a && val <= b);
+    }
+    let nameToISO = new Map();
+
+    function normalizeName(s = '') {
+      return s.toString().toLowerCase()
+        .replace(/[’'`]/g, '')          // quotes
+        .replace(/[\u2013\u2014-]/g, '-')// dashes
+        .replace(/[^a-z0-9\- ]+/g, ' ')  // symbols
+        .replace(/\s+/g, ' ')            // collapse space
+        .trim();
+    }
+
+    // A few tricky aliases between NE country names and data names
+    const ALIAS = new Map([
+      ['united states of america', 'united states'],
+      ['russian federation', 'russia'],
+      ['democratic republic of the congo', 'congo, dem. rep.'],
+      ['republic of the congo', 'congo, rep.'],
+      ['cote divoire', 'cote d\'ivoire'],
+      ['czechia', 'czech republic'],
+      ['eswatini', 'swaziland'],
+      ['myanmar', 'myanmar'], // keep as-is
+      ['north macedonia', 'macedonia, fyr'],
+      ['occupied palestinian territory', 'west bank and gaza'],
+      ['korea, south', 'korea, rep.'],
+      ['korea, north', 'korea, dem. people’s rep.'],
+      ['laos', 'lao pdr'],
+      ['iran', 'iran, islamic rep.'],
+      ['syria', 'syrian arab republic'],
+      ['viet nam', 'vietnam'],
+      ['venezuela', 'venezuela, rb'],
+      ['bolivia', 'bolivia']
+    ]);
+
+    function buildNameToISO(data) {
+      const map = new Map();
+      for (const d of data) {
+        map.set(normalizeName(d['Country Name']), d['Country Code']);
+      }
+      // alias shortcuts point to canonical names we just indexed
+      for (const [neName, dataName] of ALIAS) {
+        const iso = map.get(normalizeName(dataName));
+        if (iso) map.set(neName, iso);
+      }
+      return map;
+    }
+
+    // Get an ISO3 code for a country feature from various possible fields
+    function featureISO(f) {
+      const p = f.properties || {};
+      // Prefer explicit ISO fields if they exist
+      const direct =
+        p.ISO_A3 || p.iso_a3 || p.ADM0_A3 || p.A3 || null;
+      if (direct) return (direct || '').toString().toUpperCase();
+
+      // Fallback: join by (normalized) name using our table from the XLSX
+      const nm = normalizeName(p.ADMIN || p.name || '');
+      return nameToISO.get(nm) || null;
+    }
+
+    function canonISO(code) {
+      const m = {
+        ROM: 'ROU',  // Romania (old)
+        ZAR: 'COD',  // Congo, Dem. Rep.
+        WBG: 'PSE',  // West Bank and Gaza
+        KSV: 'XKX',  // Kosovo
+        TMP: 'TLS',  // Timor-Leste
+        BUR: 'MMR',  // Myanmar
+        SUN: 'RUS'   // legacy USSR code if present
+      };
+      return (m[code] || code || '').toUpperCase();
+    }
+
+    // ——— Globe setup ———
+    const globe = Globe({ animateIn: true })(document.getElementById('globe'))
+      .backgroundColor('rgba(255,255,255,1)')
+      .showGlobe(true)
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+      .showAtmosphere(true)
+      .atmosphereColor('#c7d2fe')
+      .atmosphereAltitude(0.12)
+      //      .showGraticules(true)
+      //      .graticulesColor('rgba(0,0,0,.06)')
+      // colors
+      .polygonStrokeColor(() => '#ffffff')
+      .polygonSideColor(() => 'rgba(0,0,0,0.10)')
+      .polygonCapColor(f => {
+        const iso = canonISO(featureISO(f));
+        const d = byISO.get(iso);
+        if (selectedISO && iso === selectedISO) return HIGHLIGHT; // selected country color
+        if (!d) return '#e5e7eb'; // light gray for no-data
+        const val = (metric === 'parity_index') ? (1 - (d[metric] ?? 1)) * 100 : (d[metric] ?? 0);
+        return colorScale(Math.max(-10, Math.min(40, val)));
+      })
+      // height
+      .polygonAltitude(f => {
+        const iso = canonISO(featureISO(f));
+        const d = byISO.get(iso);
+        if (!d) return 0.01;
+        const val = (metric === 'parity_index') ? (1 - (d[metric] ?? 1)) * 100 : (d[metric] ?? 0);
+        return heightScale(Math.min(40, Math.abs(val)));
+      })
+      // label
+      /*.polygonLabel(f => {
+        const iso = canonISO(featureISO(f));
+        const d = byISO.get(iso);
+        const name = f.properties.ADMIN;
+        if (!d) return `<div class='small' style='padding:6px'>${name}<br><span class='muted'>No data</span></div>`;
+        return popupHTML(d);
+      })
+        */
+
+      .onPolygonHover(f => {
+        const chip = document.getElementById('hoverChip');
+        if (f && byISO.get(featureISO(f))) {
+          chip.style.display = 'inline-block';
+          chip.textContent = byISO.get(featureISO(f))['Country Name'];
+        } else chip.style.display = 'none';
+      })
+      .onPolygonClick(f => {
+        const iso = featureISO(f);
+        selectedISO = (selectedISO === iso) ? null : iso; // toggle
+        updateDetails();
+        drawScatter(); drawHist();                        // keep charts synced
+        globe.polygonsData(globe.polygonsData());         // force recolor for highligh        
+        const c = d3.geoCentroid(f); globe.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 1100);
+      })
+      .polygonsData([]);
+
+    globe.controls().minDistance = 160; globe.controls().maxDistance = 500;
+
+
+    // After you create `const globe = Globe({ animateIn:true })(...)`
+    if (typeof globe.showGraticules === 'function') globe.showGraticules(true);
+    else if (typeof globe.showGraticule === 'function') globe.showGraticule(true);
+
+    if (typeof globe.graticulesColor === 'function') globe.graticulesColor('rgba(0,0,0,.06)');
+    else if (typeof globe.graticuleColor === 'function') globe.graticuleColor('rgba(0,0,0,.06)');
+
+    // Robust TopoJSON loader with local/CDN fallbacks
+    async function loadWorldTopo() {
+      const sources = [
+        './countries-110m.json', // optional local copy (best)
+        'https://cdn.jsdelivr.net/npm/three-globe@2.32.6/example/countries-110m.json',
+        'https://unpkg.com/three-globe@2.32.6/example/countries-110m.json'
+      ];
+      for (const url of sources) {
+        try {
+          const r = await fetch(url, { cache: 'force-cache' });
+          if (r.ok) return await r.json();
+          console.warn('[world topo] not ok:', url, r.status);
+        } catch (e) {
+          console.warn('[world topo] fetch failed:', url, e);
+        }
+      }
+      throw new Error('World TopoJSON could not be loaded from any source.');
+    }
+
+    // call it and hydrate polygons
+    loadWorldTopo().then(world => {
+      const feats = topojson.feature(world, world.objects.countries).features;
+      countriesGeo = feats;
+      refreshPolygons();
+    }).catch(err => {
+      console.error(err);
+    });
+
+    function refreshPolygons() {
+      if (!countriesGeo) return;
+      const filtered = countriesGeo.filter(f => {
+        const d = byISO.get(featureISO(f)); if (!d) return false;
+        const val = (metric === 'parity_index') ? (1 - (d[metric] ?? 1)) * 100 : (d[metric] ?? 0);
+        return inSelectedIntervals(val);   // non-contiguous allowed
+      });
+      globe.polygonsData(filtered);
+    }
+
+    // after you create `const globe = Globe({ animateIn:true })(document.getElementById('globe'))`
+    function resizeGlobe() {
+      const el = document.getElementById('globe');
+      if (!el) return;
+      globe.width(el.clientWidth);
+      globe.height(el.clientHeight);
+    }
+    resizeGlobe();
+    window.addEventListener('resize', resizeGlobe);
+
+    // ——— Scatterplot ———
+    function drawScatter() {
+      const el = document.getElementById('scatter'); el.innerHTML = '';
+      const W = el.clientWidth, H = 260, M = { t: 26, r: 14, b: 42, l: 60 };
+      const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+
+      const data = DATA.map(d => ({
+        iso: d['Country Code'],
+        name: d['Country Name'],
+        parity: d.parity_index,
+        gapOverall: (1 - (d.parity_index ?? 1)) * 100,
+        gapSkilled: d.gap_skl_pct
+      }))
+        .filter(d => d.parity != null && d.gapSkilled != null &&
+          d.gapOverall >= gapFilter[0] && d.gapOverall <= gapFilter[1]);
+
+      const x = d3.scaleLinear()
+        .domain(d3.extent(data, d => d.parity) || [0.6, 1.1]).nice()
+        .range([M.l, W - M.r]);
+
+      // clamp extreme gaps to keep the cloud readable
+      const clampGap = v => Math.max(-60, Math.min(60, v));
+      const y = d3.scaleLinear().domain([-60, 60]).range([H - M.b, M.t]);
+
+      svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(6));
+      svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d => d + '%'));
+
+      // Headline + friendly explainer
+      svg.append('text').attr('x', M.l).attr('y', M.t - 10).attr('font-weight', 700).attr('font-size', 13)
+        .text('Pay parity vs. skilled-workforce gap');
+      svg.append('text').attr('x', M.l).attr('y', M.t + 6).attr('font-size', 11).attr('fill', '#475569')
+        .text('Each dot is a country. Left = larger pay gap (women earn less); right = closer to parity. Higher = bigger gap in skilled jobs. Click a dot to focus the globe.');
+
+      const pts = svg.append('g').selectAll('circle').data(data, d => d.iso).join('circle')
+        .attr('cx', d => x(d.parity))
+        .attr('cy', d => y(clampGap(d.gapSkilled)))
+        .attr('r', d => d.iso === selectedISO ? 5 : 3)
+        .attr('fill', d => colorScale(Math.max(-10, Math.min(40, d.gapOverall))))
+        .attr('stroke', d => d.iso === selectedISO ? '#111827' : 'none')
+        .attr('stroke-width', d => d.iso === selectedISO ? 1.5 : 0)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function () { d3.select(this).attr('r', 5).attr('stroke', '#111827').attr('stroke-width', 1.2); })
+        .on('mouseleave', function (_, d) { d3.select(this).attr('r', d.iso === selectedISO ? 5 : 3).attr('stroke', d.iso === selectedISO ? '#111827' : 'none'); })
+        .on('click', (_, d) => {
+          selectedISO = (selectedISO === d.iso) ? null : d.iso;
+          updateDetails(); drawScatter(); drawHist();
+          globe.polygonsData(globe.polygonsData());
+          if (selectedISO && countriesGeo) {
+            const feat = countriesGeo.find(f => featureISO(f) === d.iso);
+            if (feat) { const c = d3.geoCentroid(feat); globe.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 900); }
+          }
+        });
+
+      // Simple tooltip
+      const tip = d3.select(el).append('div').style('position', 'absolute').style('pointer-events', 'none')
+        .style('background', '#fff').style('border', '1px solid ' + getComputedStyle(document.body).getPropertyValue('--border'))
+        .style('padding', '6px 8px').style('border-radius', '10px').style('box-shadow', '0 4px 14px rgba(0,0,0,.08)')
+        .style('font-size', '12px').style('opacity', 0);
+      pts.on('mousemove', function (event, d) {
+        tip.style('left', (event.offsetX + 12) + 'px').style('top', (event.offsetY - 24) + 'px').style('opacity', 1)
+          .html(`<div style='font-weight:600'>${d.name}</div>
+             <div class='muted'>Parity ${fmtRatio(d.parity)} · Overall gap ${fmtPct(d.gapOverall)}%</div>
+             <div class='muted'>Skilled workforce gap: ${fmtPct(d.gapSkilled)}%</div>`);
+      }).on('mouseleave', () => tip.style('opacity', 0));
+    }
+
+    // ——— Histogram + brush ———
+    let histBrush; // global ref (prevents “brush is not defined”)
+
+    function drawHist() {
+      const el = document.getElementById('hist'); el.innerHTML = '';
+      const W = el.clientWidth, H = 110, M = { t: 6, r: 10, b: 28, l: 26 };
+
+      const vals = DATA.map(d => (1 - (d.parity_index ?? 1)) * 100).filter(v => isFinite(v));
+      const x = d3.scaleLinear().domain([-10, 40]).range([M.l, W - M.r]);
+      const bins = d3.bin().domain(x.domain()).thresholds(30)(vals);
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(bins, b => b.length) || 1]).nice()
+        .range([H - M.b, M.t]);
+
+      const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+
+      // Click-anywhere-to-clear target (sits behind)
+      svg.append('rect')
+        .attr('x', 0).attr('y', 0).attr('width', W).attr('height', H)
+        .attr('fill', 'transparent')
+        .on('click', () => {
+          selectedBins.clear();
+          selectedIntervals = [];
+          refreshPolygons(); drawScatter(); drawHist();
+        });
+
+      // Bars
+      const gBars = svg.append('g');
+      const rects = gBars.selectAll('rect').data(bins).join('rect')
+        .attr('x', d => x(d.x0))
+        .attr('y', d => y(d.length))
+        .attr('width', d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+        .attr('height', d => y(0) - y(d.length))
+        .attr('rx', 2).attr('ry', 2)
+        .attr('fill', (d, i) => selectedBins.size === 0
+          ? '#9ca3af'       // neutral when nothing selected
+          : (selectedBins.has(i) ? TEAL : '#d1d5db'))  // teal if selected, light gray if not
+        .style('cursor', 'pointer')
+        .on('click', (ev, d) => {
+          // Stop the background rect from clearing
+          ev.stopPropagation();
+
+          const i = bins.indexOf(d);
+          const additive = ev.metaKey || ev.ctrlKey;
+
+          if (additive) {
+            // toggle this bin
+            if (selectedBins.has(i)) selectedBins.delete(i); else selectedBins.add(i);
+          } else {
+            // replace selection with just this bin (or clear if already selected)
+            if (selectedBins.size === 1 && selectedBins.has(i)) {
+              selectedBins.clear();
+            } else {
+              selectedBins = new Set([i]);
+            }
+          }
+
+          // Build intervals from the selected bin indices
+          selectedIntervals = [...selectedBins].sort((a, b) => a - b).map(idx => [bins[idx].x0, bins[idx].x1]);
+
+          // Repaint bars & update views
+          rects.attr('fill', (d2, j) => selectedBins.size === 0
+            ? '#9ca3af'
+            : (selectedBins.has(j) ? TEAL : '#d1d5db'));
+          refreshPolygons(); drawScatter(); // hist redraw not needed; we just restyled bars
+        });
+
+      // Axis
+      svg.append('g').attr('transform', `translate(0,${H - M.b})`)
+        .call(d3.axisBottom(x).ticks(6));
+    }
+
+
+
+    // ——— Details panel ———
+    function updateDetails() {
+      const box = document.getElementById('details');
+      if (!selectedISO || !byISO.get(selectedISO)) { box.innerHTML = '<span class="muted">Select a country on the globe or click a point in the scatterplot.</span>'; return; }
+      const d = byISO.get(selectedISO);
+      box.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:14px">
+        <div style="grid-column:1/-1;font-size:16px;font-weight:700">${d['Country Name']}</div>
+        <div>Parity index</div><div style="text-align:right;font-weight:600">${fmtRatio(d.parity_index)}</div>
+        <div>Overall gap</div><div style="text-align:right;font-weight:600">${fmtPct(d.gap_overall_pct)}%</div>
+        <div>Skilled gap</div><div style="text-align:right">${fmtPct(d.gap_skl_pct)}%</div>
+        <div>Female share (skilled)</div><div style="text-align:right">${fmtPct(d.female_share_skl_pct)}%</div>
+      </div>`;
+    }
+
+    function popupHTML(d) {
+      return `
+    <div style="border:1px solid var(--border);border-radius:12px;background:#ffffffdd;padding:6px;box-shadow:${getComputedStyle(document.body).getPropertyValue('--shadow')}">
+      <div style="font-weight:600">${d['Country Name']}</div>
+      <div class="small muted">Overall gap: <b>${fmtPct(d.gap_overall_pct)}%</b> · Parity: <b>${fmtRatio(d.parity_index)}</b></div>
+      <div style="font-size:12px;margin-top:4px;display:grid;grid-template-columns:1fr auto;gap:4px 12px">
+        <div>Skilled gap</div><div style="text-align:right">${fmtPct(d.gap_skl_pct)}%</div>
+        <div>Unskilled gap</div><div style="text-align:right">${fmtPct(d.gap_nsk_pct)}%</div>
+        <div>F share (skilled)</div><div style="text-align:right">${fmtPct(d.female_share_skl_pct)}%</div>
+        <div>F share (unskilled)</div><div style="text-align:right">${fmtPct(d.female_share_nsk_pct)}%</div>
+      </div>
+    </div>`;
+    }
+
+    // Metric selector
+    document.getElementById('metric').addEventListener('change', (e) => { metric = e.target.value; refreshPolygons(); });
+
+    // About modal
+    document.getElementById('aboutBtn').addEventListener('click', () => {
+      const root = document.getElementById('modalRoot'); root.className = 'about'; root.setAttribute('aria-hidden', 'false');
+      root.innerHTML = `
+      <div class='modal-backdrop' onclick="(function(){const r=document.getElementById('modalRoot');r.className='sr-only';r.setAttribute('aria-hidden','true');r.innerHTML='';})()"></div>
+      <div class='modal' id='about' role='dialog' aria-modal='true'>
+        <div class='hdr'>About & Sources <button class='btn' onclick="(function(){const r=document.getElementById('modalRoot');r.className='sr-only';r.setAttribute('aria-hidden','true');r.innerHTML='';})()">Close</button></div>
+        <div class='body'>
+          <p><strong>What you’re seeing.</strong> Countries are colored by the estimated overall gender pay gap in 2014 (positive values indicate women earn less on average; negative values indicate women earn more). Height represents the magnitude of the gap (|gap|).</p>
+          <p><strong>Computation.</strong> Parity index = weighted average (by total labor volume) of female/male wage ratios across skilled & unskilled workers. Overall gap (%) = (1 − parity) × 100. Category gaps are computed separately.</p>
+          <p><strong>Attribution.</strong> © Web Mapper GPT. Base globe imagery © NASA Blue Marble. Country boundaries © Natural Earth via three‑globe. This app embeds derived metrics from an MS Excel file (GDLDEXCEL.xlsx) and does not redistribute the source file. File is freely available online from the World Economic Forum.</p>
+        </div>
+        <div class='ftr small'>Data source: <a href="https://www3.weforum.org/docs/GGGR14/GGGR_CompleteReport_2014.pdf">The Global Gender Gap Report 2014</a> from the World Economic Forum. Visualization created entirely via prompting using with <a href='https://chatgpt.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper' target='_blank' rel='noopener'>Web Mapper GPT</a>.</div>
+      </div>`;
+    });
+
+    // Redraw charts on resize (DATA is already an array after init)
+    window.addEventListener('resize', () => { drawScatter(); drawHist(); });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Sanity checks... 
+    // How many countries have usable parity?
+    console.log('[GPG] with parity:', DATA.filter(d => d.parity_index != null).length);
+
+    // Min & max buttons, etc.
+    function toggleCollapse(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('collapsed');
+      // keep globe responsive when its card changes size
+      if (id === 'globeCard') { setTimeout(resizeGlobe, 120); }
+    }
+    function toggleMax(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('max');
+      if (id === 'globeCard') { setTimeout(resizeGlobe, 120); }
+    }
+
+
+    // Sample any codes not joining to polygons (first 20)
+    const notJoined = DATA
+      .map(d => d['Country Code'].toUpperCase())
+      .filter(iso => !countriesGeo || !countriesGeo.some(f => canonISO(featureISO(f)) === iso));
+    console.log('[GPG] sample non-joined ISO:', [...new Set(notJoined)].slice(0, 20));
+  </script>
+</body>
+
+</html>

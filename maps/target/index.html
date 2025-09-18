@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Target USA: A Brief History</title>
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="preconnect" href="https://d3js.org" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    :root {
+      --bg: #0d0f12;
+      /* page bg */
+      --panel: #13161b;
+      /* panels */
+      --muted: #7a7f87;
+      /* muted text */
+      --text: #e8e9ea;
+      /* primary text */
+      --brand: #e50024;
+      /* Target red */
+      --brand-2: #ffffff;
+      /* white */
+      --shadow: 0 6px 24px rgba(0, 0, 0, .35);
+      --radius: 16px;
+      --radius-lg: 20px;
+      --z-ui: 5000;
+      /* higher than Leaflet overlays */
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    }
+
+    /* Header (original style) */
+    .app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(10, 10, 11, .95), rgba(10, 10, 11, .75));
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      padding: 0 16px 0 20px;
+      z-index: var(--z-ui);
+      backdrop-filter: blur(8px);
+    }
+
+    .app-title {
+      font-weight: 700;
+      letter-spacing: .3px;
+      color: var(--brand-2);
+    }
+
+    .app-title .accent {
+      color: var(--brand);
+    }
+
+    /* Filter drawer (original style) */
+    .filter-wrap {
+      position: relative;
+    }
+
+    .filter-toggle {
+      cursor: pointer;
+      background: var(--panel);
+      color: var(--brand-2);
+      border: 1px solid rgba(255, 255, 255, .08);
+      padding: 8px 12px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-panel {
+      position: absolute;
+      right: 0;
+      top: 56px;
+      width: 340px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      display: none;
+    }
+
+    .filter-panel.open {
+      display: block;
+    }
+
+    .filter-panel h4 {
+      margin: 4px 0 8px;
+      font-size: 15px;
+      color: #fff;
+    }
+
+    .filter-panel label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 8px 0 4px;
+    }
+
+    .filter-panel input[type="text"],
+    .filter-panel select {
+      width: 100%;
+      background: #0f1216;
+      border: 1px solid rgba(255, 255, 255, .08);
+      color: #eaeaea;
+      border-radius: 10px;
+      padding: 8px 10px;
+      outline: none;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 6px 0 2px;
+    }
+
+    .chip {
+      user-select: none;
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #eaeaea;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      background: #0f1216;
+    }
+
+    .chip.active {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px rgba(229, 0, 36, .25) inset;
+    }
+
+    .btn {
+      cursor: pointer;
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      font-weight: 600;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #e8e9ea;
+    }
+
+    /* Map */
+    #map {
+      position: absolute;
+      top: 64px;
+      bottom: 140px;
+      left: 0;
+      right: 0;
+    }
+
+    /* Timeline panel (original style) */
+    .timeline {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      z-index: var(--z-ui);
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .play,
+    .pause,
+    .reset {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .play {
+      background: var(--brand);
+    }
+
+    .pause,
+    .reset {
+      background: #0f1216;
+    }
+
+    .caret {
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: #0f1216;
+    }
+
+    .timeline-body {
+      height: 80px;
+      overflow: hidden;
+      transition: height .25s ease;
+    }
+
+    .timeline.min .timeline-body {
+      height: 0;
+      padding: 0;
+    }
+
+    .year-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Legend — collapses to a pill with caret (never disappears) */
+    .legend {
+      position: fixed;
+      left: 16px;
+      top: 76px;
+      background: rgba(15, 18, 22, .92);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px;
+      z-index: var(--z-ui);
+      transition: all .2s ease;
+    }
+
+    .legend .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .legend .open {
+      background: var(--brand);
+    }
+
+    .legend .close {
+      background: #bbbbbb;
+    }
+
+    .legend .toggle {
+      margin-left: 8px;
+      cursor: pointer;
+      opacity: .8;
+    }
+
+    .legend.collapsed {
+      padding: 6px 8px;
+    }
+
+    .legend.collapsed .label {
+      display: none;
+    }
+
+    .legend.collapsed .toggle {
+      transform: rotate(180deg);
+    }
+
+    /* Source/About modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      display: none;
+      z-index: calc(var(--z-ui) + 1);
+    }
+
+    .modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(680px, 92vw);
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: none;
+      z-index: calc(var(--z-ui) + 2);
+    }
+
+    .modal.open+.modal-backdrop {
+      display: block;
+    }
+
+    .modal.open {
+      display: block;
+    }
+
+    .about-btn {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      background: #0f1216;
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #eaeaea;
+      border-radius: 12px;
+      padding: 8px 12px;
+      cursor: pointer;
+      z-index: var(--z-ui);
+    }
+
+    /* Marker (SVG) animations + sizes */
+    .tgt-marker {
+      width: 17px;
+      height: 17px;
+      display: grid;
+      place-items: center;
+      transition: filter .25s ease, transform .25s ease, opacity .25s ease;
+      transform-origin: center;
+    }
+
+    .tgt-marker svg {
+      width: 17px;
+      height: 17px;
+      display: block;
+    }
+
+    .tgt-appear {
+      animation: tgtFadeGrow .7s ease-out;
+    }
+
+    .tgt-bounce {
+      animation: tgtBounce .6s ease-out;
+    }
+
+    .tgt-closing {
+      animation: tgtShrinkFade .6s ease-in forwards;
+    }
+
+    .tgt-marker.is-closed svg {
+      mix-blend-mode: color-burn;
+      opacity: .95;
+      filter: contrast(1.1);
+    }
+
+    .grow-new {
+      animation: growNew 3s ease-out;
+    }
+
+    @keyframes growNew {
+      0% {
+        transform: scale(1);
+      }
+
+      15% {
+        transform: scale(1.25);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes tgtFadeGrow {
+      0% {
+        opacity: 0;
+        transform: scale(.7);
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes tgtBounce {
+      0% {
+        transform: translateY(-3px);
+      }
+
+      50% {
+        transform: translateY(3px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes tgtShrinkFade {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: .65;
+        transform: scale(.92);
+      }
+    }
+
+    /* Popup styling (original) */
+    .leaflet-popup-content-wrapper {
+      background: #0f1216;
+      color: #eaeaea;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+    }
+
+    .leaflet-popup-tip {
+      background: #0f1216;
+    }
+
+    .popup h4 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 10px;
+      font-size: 13px;
+      color: #cfd2d6;
+    }
+
+    .meta .k {
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip-mini {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+    }
+
+    .chip-mini.on {
+      border-color: var(--brand);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .chip-mini.off {
+      opacity: .55;
+      filter: grayscale(1);
+    }
+
+    /* Drag-n-drop overlay (removed by default; kept for fallback) */
+    .load-overlay {
+      position: absolute;
+      inset: 64px 0 140px 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(13, 15, 18, .7);
+      z-index: var(--z-ui);
+      border: 3px dashed rgba(255, 255, 255, .15);
+      border-radius: 18px;
+      margin: 10px;
+    }
+
+    .load-overlay.show {
+      display: flex;
+    }
+
+    .load-overlay .inner {
+      text-align: center;
+      color: #eaeaea;
+    }
+
+    .load-overlay .inner h3 {
+      margin: 0 0 6px;
+    }
+
+    /* Hide Leaflet zoom controls per defaults */
+    .leaflet-control-zoom,
+    .leaflet-control-attribution {
+      display: none !important;
+    }
+
+    /* Histogram styles */
+    .bar rect {
+      fill: #ffffff;
+      opacity: .9;
+    }
+
+    .bar rect.selected {
+      fill: #e50024;
+      opacity: 1;
+    }
+
+    .bar rect.played {
+      fill: #e50024;
+      opacity: .5;
+    }
+
+    .sr-only {
+      position: absolute;
+      left: -9999px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="app-header" role="banner">
+    <div class="app-title" aria-label="Map title">
+      <span class="accent">Target</span> USA: A Brief History
+    </div>
+    <div class="filter-wrap">
+      <button class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterPanel"
+        title="Open filters">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 5h18M6 12h12M10 19h4" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        Filters
+      </button>
+      <div class="filter-panel" id="filterPanel" role="dialog" aria-label="Filter stores">
+        <h4>Find stores</h4>
+        <label for="q">Search (city, state, address)</label>
+        <input id="q" type="text" placeholder="e.g., Minneapolis, MN or 123 Main St, Austin" />
+        <div class="filter-row">
+          <div style="flex:1">
+            <label for="stateSel">State</label>
+            <select id="stateSel">
+              <option value="">All</option>
+            </select>
+          </div>
+          <div style="flex:1">
+            <label for="citySel">City</label>
+            <select id="citySel">
+              <option value="">All</option>
+            </select>
+          </div>
+        </div>
+        <label>Amenities</label>
+        <div class="chip-row">
+          <div class="chip" data-amenity="starbucks">Starbucks</div>
+          <div class="chip" data-amenity="cvs">CVS</div>
+        </div>
+        <label for="statusSel">Status</label>
+        <select id="statusSel">
+          <option value="all">All stores</option>
+          <option value="open">Open only</option>
+          <option value="closed">Closed only</option>
+        </select>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px">
+          <button class="btn ghost" id="resetFilters">Reset</button>
+          <button class="btn" id="applyFilters">Apply & Zoom</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="map" role="region" aria-label="Map of Target store openings and closures"></div>
+
+  <div class="legend" id="legend" aria-live="polite">
+    <span class="dot open" aria-hidden="true"></span> <span class="label">Opening</span>
+    <span class="dot close" aria-hidden="true"></span> <span class="label">Closure</span>
+    <span class="toggle" id="legendToggle" title="Collapse legend">▾</span>
+  </div>
+
+  <div class="timeline" id="timeline">
+    <div class="timeline-header">
+      <div class="controls">
+        <button class="play" id="playBtn" title="Play"><svg width="18" height="18" viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path d="M8 5v14l11-7L8 5z" fill="#fff" />
+          </svg></button>
+        <button class="pause" id="pauseBtn" title="Pause"><svg width="18" height="18" viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="#fff" />
+          </svg></button>
+        <button class="reset" id="resetBtn" title="Reset"><svg width="18" height="18" viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path d="M12 6V3L7 8l5 5V10a5 5 0 11-5 5H6a6 6 0 106-9z" fill="#fff" />
+          </svg></button>
+        <span class="year-label">Year: <strong id="yearNow">—</strong></span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px">
+        <button class="caret" id="caretBtn" title="Minimize timeline">▾</button>
+      </div>
+    </div>
+    <div class="timeline-body">
+      <div id="hist" style="width:100%; height:72px;"></div>
+    </div>
+  </div>
+
+  <button class="about-btn" id="aboutBtn" aria-haspopup="dialog">About & Sources</button>
+  <div class="modal" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <h3 id="aboutTitle" style="margin:.2rem 0 .6rem">About this map</h3>
+    <p style="color:#cfd2d6; font-size:14px; line-height:1.5">Animated history of Target store openings and closures
+      across the United States. Dark theme with red/white accents, timeline histogram (single-series, selectable,
+      play-progress), and filter drawer. Data source: user-provided Target stores dataset. Basemap © CARTO. Built with
+      Leaflet, D3, Turf. Attribution includes “Web Mapper GPT”.</p>
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px"><button class="btn"
+        id="closeAbout">Close</button></div>
+  </div>
+  <div class="modal-backdrop" id="aboutBackdrop" aria-hidden="true"></div>
+
+  <div class="load-overlay" id="loadOverlay" aria-live="polite">
+    <div class="inner">
+      <h3>Loading data…</h3>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    (function () {
+      const $ = sel => document.querySelector(sel);
+      const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+      /* Icon SVG — robust circles version to avoid cropping; 17x17 */
+      const targetSVG = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 200 200' preserveAspectRatio='xMidYMid meet' aria-label='Target bullseye store marker' role='img'>
+  <circle cx='100' cy='100' r='98' fill='#E50024'/>
+  <circle cx='100' cy='100' r='60' fill='#fff'/>
+  <circle cx='100' cy='100' r='24' fill='#E50024'/>
+</svg>`;
+
+      function makeDivIcon(isClosed) {
+        return L.divIcon({
+          className: 'tgt-marker' + (isClosed ? ' is-closed' : ''),
+          html: targetSVG,
+          iconSize: [17, 17], iconAnchor: [8.5, 8.5], popupAnchor: [0, -8]
+        });
+      }
+
+      /* Map init */
+      // FIX: prevent "Map container is already initialized"
+      const mapContainer = L.DomUtil.get('map');
+      if (mapContainer && mapContainer._leaflet_id) {
+        try { window._wmLeafletMap && window._wmLeafletMap.remove(); } catch (e) { }
+        mapContainer._leaflet_id = null;  // <— important: clear Leaflet's internal flag
+      }
+      const map = (window._wmLeafletMap = L.map(mapContainer, {
+        zoomControl: false,
+        attributionControl: false,
+        minZoom: 3
+      }));
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: 'Basemap © CARTO · Data © user · Made with Web Mapper GPT',
+        subdomains: 'abcd', maxZoom: 19
+      }).addTo(map);
+
+      const BBOX_CONUS = L.latLngBounds([[24.5, -125.0], [49.5, -66.5]]);
+      const BBOX_US_WIDE = L.latLngBounds([[17.5, -170.0], [72.0, -60.0]]);
+
+      let dataAll = null;        // full GeoJSON FeatureCollection
+      let features = [];         // normalized features
+      const markers = new Map(); // id -> Leaflet marker
+      let openEvents = [];       // events timeline
+
+      // Animation-by-year state
+      let yearKeys = [];               // sorted years of openings
+      let playedYears = new Set();     // years already revealed during play
+      let playTimer = null;
+      let playYearIdx = -1;            // current index into yearKeys; -1 before starting
+      let zCounter = 1000;             // z-index for newly added markers
+
+      // UI refs
+      const loadOverlay = $('#loadOverlay');
+      const playBtn = $('#playBtn');
+      const pauseBtn = $('#pauseBtn');
+      const resetBtn = $('#resetBtn');
+      const yearNow = $('#yearNow');
+      const caretBtn = $('#caretBtn');
+      const timelineEl = $('#timeline');
+      const histEl = d3.select('#hist');
+
+      // Filters
+      const filterToggle = $('#filterToggle');
+      const filterPanel = $('#filterPanel');
+      const qInput = $('#q');
+      const stateSel = $('#stateSel');
+      const citySel = $('#citySel');
+      const statusSel = $('#statusSel');
+      const chips = $$('.chip');
+      const resetFilters = $('#resetFilters');
+      const applyFilters = $('#applyFilters');
+
+      // About modal
+      const aboutBtn = $('#aboutBtn');
+      const aboutModal = $('#aboutModal');
+      const aboutBackdrop = $('#aboutBackdrop');
+      const closeAbout = $('#closeAbout');
+
+      // Legend collapse (never disappears)
+      const legend = $('#legend');
+      $('#legendToggle').addEventListener('click', () => legend.classList.toggle('collapsed'));
+
+      // Filter drawer toggle
+      filterToggle.addEventListener('click', () => {
+        const open = !filterPanel.classList.contains('open');
+        filterPanel.classList.toggle('open', open);
+        filterToggle.setAttribute('aria-expanded', String(open));
+      });
+
+      // Amenity chips
+      chips.forEach(ch => ch.addEventListener('click', () => ch.classList.toggle('active')));
+
+      resetFilters.addEventListener('click', () => {
+        qInput.value = ''; stateSel.value = ''; citySel.value = ''; statusSel.value = 'all'; chips.forEach(c => c.classList.remove('active'));
+        selectedYears.clear();
+        applyCurrentFilters(true);
+      });
+
+      applyFilters.addEventListener('click', () => {
+        applyCurrentFilters(true);
+        filterPanel.classList.remove('open');
+        filterToggle.setAttribute('aria-expanded', 'false');
+      });
+
+      // About modal
+      function toggleAbout(open) {
+        aboutModal.classList.toggle('open', open);
+        aboutBackdrop.style.display = open ? 'block' : 'none';
+      }
+      aboutBtn.addEventListener('click', () => toggleAbout(true));
+      closeAbout.addEventListener('click', () => toggleAbout(false));
+      aboutBackdrop.addEventListener('click', () => toggleAbout(false));
+
+      // Timeline collapse
+      caretBtn.addEventListener('click', () => timelineEl.classList.toggle('min'));
+
+      // Load colocated GeoJSON only (no drag-drop required)
+      fetch('target_stores.geojson').then(async r => {
+        if (!r.ok) throw new Error('missing geojson');
+        const gj = await r.json();
+        await loadDataAsGeoJSON(gj);
+      }).catch(() => {
+        loadOverlay.classList.add('show');
+        map.setView([39.8, -98.6], 4); // fallback center
+      });
+
+      /* =====================
+         Data normalization & layer construction
+         ===================== */
+      function normalizeToFC(gj) {
+        if (!gj) throw new Error('Empty GeoJSON');
+        if (gj.type === 'FeatureCollection') return gj;
+        if (Array.isArray(gj)) return { type: 'FeatureCollection', features: gj };
+        if (gj.type === 'Feature') return { type: 'FeatureCollection', features: [gj] };
+        throw new Error('Unsupported GeoJSON');
+      }
+
+      function getProp(obj, keys) {
+        const lk = Object.fromEntries(Object.keys(obj || {}).map(k => [k.toLowerCase(), obj[k]]));
+        for (const key of keys) { if (lk.hasOwnProperty(key.toLowerCase())) return lk[key.toLowerCase()]; }
+      }
+
+      function parseDate(any) {
+        if (!any) return null; if (any instanceof Date) return any; let s = String(any).trim(); if (!s) return null;
+        if (/^[0-9]{8}$/.test(s)) { const y = +s.slice(0, 4), m = +s.slice(4, 6), d = +s.slice(6, 8); return new Date(Date.UTC(y, m - 1, d)); }
+        const num = +s; if (Number.isFinite(num) && num > 10_000 && num < 4_102_444_800_000) return new Date(num);
+        const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t);
+      }
+
+      function yearOf(d) { return d ? d.getUTCFullYear() : null; }
+      function coerceDate(val) { const d = parseDate(val); if (!d) return null; if (String(val).length === 4) return new Date(Date.UTC(+val, 0, 1)); return d; }
+      function normalizeBool(v) { if (v === true || v === false) return v; const s = String(v || '').toLowerCase(); if (['y', 'yes', 'true', '1', 't'].includes(s)) return true; if (['n', 'no', 'false', '0', 'f'].includes(s)) return false; return false; }
+
+      async function loadDataAsGeoJSON(gj) {
+        loadOverlay.classList.remove('show');
+        dataAll = normalizeToFC(gj);
+        features = dataAll.features.map((f, i) => {
+          const p = f.properties || {};
+          const id = getProp(p, ['store', 'store_id', 'storeid', 'store_num', 'store_no', 'store_number', 'str_nbr', 'store_nbr']) || i + 1;
+          const openRaw = getProp(p, ['grand_opening_date', 'open_date', 'opened', 'date_open', 'grandopen', 'go_date', 'year_opened', 'year_opene']);
+          const closeRaw = getProp(p, ['close_date', 'closed', 'closure_date', 'date_close', 'year_closed', 'year_close']);
+          const address = getProp(p, ['address', 'addr', 'street', 'street_addr', 'st_address']);
+          const city = getProp(p, ['city', 'town']);
+          const state = getProp(p, ['state', 'st', 'state_abbr', 'statecode']);
+          const cvs = normalizeBool(getProp(p, ['cvs', 'has_cvs', 'cvs_pharmacy']));
+          const starbucks = normalizeBool(getProp(p, ['starbucks', 'has_starbucks', 'sbux']));
+          const open = coerceDate(openRaw); const close = coerceDate(closeRaw); const status = close ? 'closed' : 'open';
+          return { f, id: String(id), open, close, address: address || '', city: city || '', state: state || '', cvs, starbucks, status };
+        });
+
+        buildEvents();
+        buildStatesAndCities();
+        buildAllMarkers();
+
+        // Fit & constrain
+        const b = L.geoJSON(dataAll).getBounds();
+        map.fitBounds(b); map.setMaxBounds(padBounds(b, 10));
+
+        // Build histogram
+        buildHistogram();
+      }
+
+      function padBounds(b, padDeg) { const sw = b.getSouthWest(), ne = b.getNorthEast(); return L.latLngBounds([[sw.lat - padDeg, sw.lng - padDeg], [ne.lat + padDeg, ne.lng + padDeg]]); }
+
+      function buildEvents() {
+        const ev = []; for (const it of features) { if (it.open) ev.push({ date: it.open, type: 'open', it }); if (it.close) ev.push({ date: it.close, type: 'close', it }); }
+        ev.sort((a, b) => a.date - b.date); openEvents = ev;
+        const setYears = new Set(features.map(f => yearOf(f.open)).filter(Boolean));
+        yearKeys = Array.from(setYears).sort((a, b) => a - b);
+        playYearIdx = -1; playedYears.clear(); yearNow.textContent = '—';
+      }
+
+      const markerLayer = L.layerGroup().addTo(map);
+
+      function buildAllMarkers() {
+        markerLayer.clearLayers(); markers.clear();
+        features.forEach(item => {
+          const [lng, lat] = item.f.geometry.coordinates;
+          const m = L.marker([lat, lng], { icon: makeDivIcon(item.status === 'closed'), alt: 'Target store' });
+          m.bindPopup(makePopup(item));
+          m.addTo(markerLayer);
+          if (item.status === 'closed') { m.setZIndexOffset(10); } else { m.setZIndexOffset(100); }
+          markers.set(item.id, m);
+        });
+      }
+
+      function makePopup(item) {
+        const yr = item.open ? yearOf(item.open) : '—';
+        const go = item.open ? item.open.toISOString().slice(0, 10) : '—';
+        const statusLabel = item.close ? 'Closed' : 'Open';
+        const cvsCls = item.cvs ? 'chip-mini on' : 'chip-mini off';
+        const sbxCls = item.starbucks ? 'chip-mini on' : 'chip-mini off';
+        const cvsLabel = item.cvs ? '<strong>CVS</strong>' : 'CVS';
+        const sbxLabel = item.starbucks ? '<strong>Starbucks</strong>' : 'Starbucks';
+        return `
+        <div class="popup">
+          <h4>Store #${escapeHtml(item.id)} <span style="font-weight:600; color:${item.close ? '#bbb' : 'var(--brand)'}; font-size:12px;">(${statusLabel})</span></h4>
+          <div class="meta">
+            <div class="k">Year Opened</div><div>${yr}</div>
+            <div class="k">Grand Opening</div><div>${go}</div>
+            <div class="k">Address</div><div>${escapeHtml(item.address || '—')}</div>
+            <div class="k">City</div><div>${escapeHtml(item.city || '—')}</div>
+            <div class="k">State</div><div>${escapeHtml(item.state || '—')}</div>
+          </div>
+          <div class="chips">
+            <span class="${sbxCls}">${sbxLabel}</span>
+            <span class="${cvsCls}">${cvsLabel}</span>
+          </div>
+        </div>`;
+      }
+
+      function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c])); }
+
+      /* =====================
+         Histogram (single white series + selection + play progress)
+         ===================== */
+      let selectedYears = new Set();
+
+      function buildHistogram() {
+        const counts = d3.rollup(features.filter(f => f.open), v => v.length, f => yearOf(f.open));
+        const data = yearKeys.map(y => ({ year: y, count: counts.get(y) || 0 }));
+        const width = histEl.node().clientWidth, height = 72;
+        histEl.selectAll('*').remove();
+        const svg = histEl.append('svg').attr('width', width).attr('height', height);
+        const x = d3.scaleBand().domain(data.map(d => d.year)).range([6, width - 6]).padding(0.2);
+        const y = d3.scaleLinear().domain([0, d3.max(data, d => d.count) || 1]).nice().range([height - 16, 6]);
+
+        const bars = svg.selectAll('.bar').data(data).enter().append('g').attr('class', 'bar');
+        bars.append('rect')
+          .attr('x', d => x(d.year))
+          .attr('y', d => y(d.count))
+          .attr('width', x.bandwidth())
+          .attr('height', d => y(0) - y(d.count))
+          .style('cursor', 'pointer')
+          .on('click', (ev, d) => {
+            const multi = ev.ctrlKey || ev.metaKey;
+            if (multi) { if (selectedYears.has(d.year)) selectedYears.delete(d.year); else selectedYears.add(d.year); }
+            else { if (selectedYears.size === 1 && selectedYears.has(d.year)) selectedYears.clear(); else selectedYears = new Set([d.year]); }
+            updateHistogramStyles(svg);
+            applyCurrentFilters(true);
+          })
+          .each(function (d) { /* initial classes */ });
+
+        // sparse labels
+        const lblEvery = Math.ceil(data.length / 12);
+        svg.selectAll('.lbl').data(data.filter((d, i) => i % lblEvery === 0)).enter().append('text')
+          .attr('class', 'lbl')
+          .attr('x', d => x(d.year) + x.bandwidth() / 2)
+          .attr('y', height - 2)
+          .attr('text-anchor', 'middle')
+          .attr('fill', '#9aa0a6')
+          .attr('font-size', 10)
+          .text(d => d.year);
+
+        updateHistogramStyles(svg);
+      }
+
+      function updateHistogramStyles(svg) {
+        const rects = (svg || d3.select('#hist svg')).selectAll('rect');
+        rects.classed('selected', d => selectedYears.has(d.year));
+        rects.classed('played', d => playedYears.has(d.year));
+      }
+
+      /* =====================
+         Filters (respect selected years)
+         ===================== */
+      function buildStatesAndCities() {
+        const states = Array.from(new Set(features.map(f => f.state).filter(Boolean))).sort();
+        stateSel.innerHTML = '<option value="">All</option>' + states.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+        stateSel.addEventListener('change', () => buildCities());
+        buildCities();
+      }
+      function buildCities() {
+        const selState = stateSel.value;
+        const cities = Array.from(new Set(features.filter(f => !selState || f.state === selState).map(f => f.city).filter(Boolean))).sort();
+        citySel.innerHTML = '<option value="">All</option>' + cities.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+      }
+
+      function getFilteredFeatures() {
+        const q = qInput.value.trim().toLowerCase();
+        const selState = stateSel.value; const selCity = citySel.value; const status = statusSel.value;
+        const needStarbucks = chips.find(c => c.dataset.amenity === 'starbucks').classList.contains('active');
+        const needCVS = chips.find(c => c.dataset.amenity === 'cvs').classList.contains('active');
+
+        return features.filter(f => {
+          if (selState && f.state !== selState) return false;
+          if (selCity && f.city !== selCity) return false;
+          if (status !== 'all' && f.status !== status) return false;
+          if (needStarbucks && !f.starbucks) return false;
+          if (needCVS && !f.cvs) return false;
+          if (q) { const hay = [f.address, f.city, f.state].join(' ').toLowerCase(); if (!hay.includes(q)) return false; }
+          if (selectedYears.size > 0) { const y = yearOf(f.open); if (!selectedYears.has(y)) return false; }
+          return true;
+        });
+      }
+
+      function applyCurrentFilters(zoom) {
+        const passed = getFilteredFeatures();
+        // rebuild markers for filtered set (keep closed styling)
+        markerLayer.clearLayers();
+        for (const it of passed) {
+          const m = markers.get(it.id) || L.marker([it.f.geometry.coordinates[1], it.f.geometry.coordinates[0]], { icon: makeDivIcon(it.status === 'closed') });
+          m.setIcon(makeDivIcon(it.status === 'closed'));
+          m.bindPopup(makePopup(it));
+          m.addTo(markerLayer);
+        }
+        if (zoom && passed.length) { const gj = { type: 'FeatureCollection', features: passed.map(p => p.f) }; const b = L.geoJSON(gj).getBounds(); map.fitBounds(b.pad(.1)); }
+        yearNow.textContent = selectedYears.size === 1 ? Array.from(selectedYears)[0] : '—';
+        updateHistogramStyles();
+      }
+
+      /* =====================
+         Play / Pause / Reset (accumulating stores)
+         ===================== */
+      playBtn.addEventListener('click', startPlay);
+      pauseBtn.addEventListener('click', pausePlay);
+      resetBtn.addEventListener('click', resetPlay);
+
+      function startPlay() {
+        if (playTimer) return; // already playing
+        // If first start, hide all then accumulate
+        if (playYearIdx === -1) {
+          markerLayer.clearLayers();
+          playedYears.clear();
+        }
+        playTimer = setInterval(stepPlay, 800); // tempo
+      }
+
+      function pausePlay() { if (playTimer) { clearInterval(playTimer); playTimer = null; } }
+
+      function resetPlay() { pausePlay(); playYearIdx = -1; playedYears.clear(); yearNow.textContent = '—'; buildAllMarkers(); updateHistogramStyles(); map.fitBounds(BBOX_CONUS); }
+
+      function stepPlay() {
+        if (playYearIdx >= yearKeys.length - 1) { pausePlay(); return; }
+        playYearIdx++;
+        const y = yearKeys[playYearIdx];
+        playedYears.add(y);
+        yearNow.textContent = y;
+
+        // Add newly opened this year (bring to top and animate grow)
+        const newly = features.filter(f => yearOf(f.open) === y);
+        newly.forEach(it => {
+          let m = markers.get(it.id);
+          if (!m) {
+            const [lng, lat] = it.f.geometry.coordinates; m = L.marker([lat, lng], { icon: makeDivIcon(false) }); m.bindPopup(makePopup(it)); markers.set(it.id, m);
+          } else { m.setIcon(makeDivIcon(false)); }
+          m.addTo(markerLayer);
+          m.setZIndexOffset(++zCounter);
+          const el = m.getElement(); if (el) { el.classList.add('grow-new'); setTimeout(() => el.classList.remove('grow-new'), 3000); }
+        });
+
+        // Apply closures occurring this year
+        const closing = features.filter(f => f.close && yearOf(f.close) === y);
+        closing.forEach(it => {
+          const m = markers.get(it.id); if (m) { m.setIcon(makeDivIcon(true)); const el = m.getElement(); if (el) { el.classList.add('tgt-closing'); setTimeout(() => el.classList.remove('tgt-closing'), 700); } }
+        });
+
+        // Camera: if any newly in AK/HI -> full US, else fit visible within CONUS
+        if (newly.length) {
+          const anyNonConus = newly.some(it => !BBOX_CONUS.contains(L.latLng(it.f.geometry.coordinates[1], it.f.geometry.coordinates[0])));
+          const visibles = []; markerLayer.eachLayer(l => visibles.push(l.getLatLng()));
+          const b = visibles.length ? L.latLngBounds(visibles) : BBOX_CONUS;
+          map.fitBounds(anyNonConus ? b.extend(BBOX_US_WIDE).pad(.1) : b.pad(.12), { animate: true });
+        }
+
+        updateHistogramStyles();
+      }
+
+      /* Keyboard: Space toggles play/pause and resumes from pause */
+      document.addEventListener('keydown', (e) => { if (e.code === 'Space') { e.preventDefault(); playTimer ? pausePlay() : startPlay(); } });
+
+    })();
+  </script>
+</body>
+
+</html>

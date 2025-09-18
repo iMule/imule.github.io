@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Russian Attacks on Civilians in Ukraine (Bellingcat dataset)</title>
+
+<link rel="preconnect" href="https://unpkg.com" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<link rel="stylesheet" href="https://unpkg.com/nouislider@15.7.1/dist/nouislider.min.css" />
+
+<style>
+  :root {
+    --ui-bg: #ffffff;
+    --ui-fg: #111;
+    --muted: #555;
+    --shadow: 0 2px 12px rgba(0,0,0,.18);
+  }
+  html, body, #map { height: 100%; margin: 0; background:#fafafa; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+  #map { position: relative; }
+
+  /* Controls wrapper (left column) */
+  .controls {
+    position:absolute; top:10px; left:10px; z-index:1000;
+    display:flex; flex-direction:column; gap:10px; width:300px; max-width:calc(100% - 20px);
+  }
+  .panel {
+    background: var(--ui-bg); color: var(--ui-fg);
+    border-radius: 10px; box-shadow: var(--shadow);
+    padding: 10px 12px;
+  }
+
+  /* Legend (interactive) */
+  .legend { position: relative; }
+  .legend-header {
+    display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px;
+  }
+  .legend-title { font-size:14px; font-weight:700; }
+  .legend-actions { display:flex; gap:6px; }
+  .legend-btn {
+    border:none; background:#f1f3f5; color:#333; padding:4px 8px; border-radius:6px; cursor:pointer;
+    font-size:12px;
+  }
+  .legend-btn[hidden] { display:none; }
+  .legend-content { display:grid; grid-template-columns:auto 1fr auto; gap:6px 8px; align-items:center; }
+  .legend-item { display:contents; cursor:pointer; user-select:none; }
+  .legend-swatch { width:18px; height:18px; border-radius:50%; border:1px solid rgba(0,0,0,.1); display:flex; align-items:center; justify-content:center; }
+  .legend-icon { width:14px; height:14px; }
+  .legend-label { font-size:13px; }
+  .legend-count { font-size:11px; color:#777; text-align:right; }
+  .legend-collapsed .legend-content { display:none; }
+
+  /* Filters */
+  .filters small { color:#666; }
+  .filters .row { display:flex; align-items:center; gap:8px; margin:6px 0; }
+  #areaList { display:grid; grid-template-columns:1fr 1fr; gap:6px 8px; margin-top:8px; max-height:140px; overflow:auto; }
+  #dateSlider { margin:10px 4px 0; }
+
+  /* Icon markers (uniform size) */
+  .sym {
+    position: relative;
+    width: 26px; height: 26px; transform: translate(-13px,-13px);
+    display:flex; align-items:center; justify-content:center;
+    filter: drop-shadow(0 0 6px rgba(0,0,0,.25));
+    transition: opacity .15s;
+  }
+  .sym svg { width: 18px; height: 18px; }
+  .dim { opacity: .15 !important; }
+  .hid { display:none !important; } /* used when filtered out entirely */
+  .glow svg { filter: drop-shadow(0 0 4px rgba(255,255,255,.0)); }
+  .flicker { animation: flicker 1.8s steps(3, end) infinite; }
+  @keyframes flicker { 0%,100%{ filter: brightness(1); } 30%{ filter: brightness(1.15); } 60%{ filter: brightness(.9); } }
+
+  /* Cluster styling: circular badges */
+  .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {
+    background: rgba(255,255,255,.95);
+    border: 2px solid rgba(0,0,0,.15);
+    color:#111; border-radius: 999px; padding: 0;
+  }
+  .marker-cluster div {
+    width: 34px; height: 34px; line-height: 34px; border-radius: 17px;
+    text-align:center; font-weight:700; font-size:13px;
+    background: linear-gradient(to bottom, #fff, #f2f2f2);
+  }
+
+  /* Top-right: Credits button */
+  #creditsBtn {
+    position:absolute; top:10px; right:10px; z-index:1000;
+    background: var(--ui-bg); color: var(--ui-fg);
+    padding:6px 10px; border-radius:8px; box-shadow: var(--shadow); font-size:12px; border:none; cursor:pointer;
+  }
+
+  /* Bottom-left: Home button */
+  #homeBtn {
+    position:absolute; bottom:18px; left:12px; z-index:1000;
+    background:#fff; border:1px solid rgba(0,0,0,.1); border-radius:6px; padding:6px 8px; font-size:12px; cursor:pointer;
+    box-shadow: 0 1px 6px rgba(0,0,0,.15);
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    position:fixed; inset:0; background:rgba(0,0,0,.4); display:none; align-items:center; justify-content:center; z-index:2000;
+  }
+  .modal {
+    background:#fff; color:#111; width:min(640px, 92vw); max-height:80vh; overflow:auto;
+    border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.35); padding:16px 18px;
+  }
+  .modal h2 { margin:0 0 8px; font-size:18px; }
+  .modal .close { position:absolute; top:10px; right:16px; background:#0000; border:none; font-size:20px; cursor:pointer; }
+
+  /* Dark theme bg for body only (tiles handle themselves) */
+  .dark body, .dark #map { background:#0b0e12; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<!-- Left-side controls -->
+<div class="controls">
+  <!-- Legend (interactive) -->
+  <div id="legend" class="panel legend">
+    <div class="legend-header">
+      <div class="legend-title">Weapon System</div>
+      <div class="legend-actions">
+        <button id="legendToggle" class="legend-btn" title="Minimize/Maximize">▢</button>
+        <button id="resetBtn" class="legend-btn" hidden>Reset</button>
+      </div>
+    </div>
+    <div id="legendContent" class="legend-content"><!-- filled in JS --></div>
+  </div>
+
+  <!-- Filters panel -->
+  <div class="panel filters">
+    <div class="row">
+      <label><input type="checkbox" id="darkToggle"> Dark theme</label>
+      <label><input type="checkbox" id="animToggle" checked> Animations</label>
+    </div>
+
+    <div style="margin-top:6px;">
+      <div style="font-weight:700; font-size:13px;">Date range</div>
+      <div id="dateSlider"></div>
+      <div id="dateRange" style="font-size:12px; color:#666; margin-top:6px;">Loading...</div>
+    </div>
+
+    <div style="margin-top:10px;">
+      <div style="font-weight:700; font-size:13px;">Area Type</div>
+      <div id="areaList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Top-right Credits -->
+<button id="creditsBtn" title="References & Sources">References</button>
+
+<!-- Bottom-left Home -->
+<button id="homeBtn" title="Reset view to full extent">Home</button>
+
+<!-- Modal -->
+<div id="modalWrap" class="modal-backdrop">
+  <div class="modal">
+    <button id="modalClose" class="close" aria-label="Close">×</button>
+    <h2>References & Sources</h2>
+    <p style="font-size:14px; color:#333; line-height:1.4;">
+      Dataset: Bellingcat / (uploaded JSON) “ukr-civharm-2025-09-12.json”.<br/>
+      Fields used include: coordinates, date, description, <em>Weapon System</em>, <em>Type of area affected</em>, and source URLs embedded per event.<br/>
+      Basemaps: CARTO (light_all / dark_all).<br/>
+      Mapping: Leaflet + MarkerCluster. Styling and interaction designed for a human-geography emphasis.
+    </p>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/nouislider@15.7.1/dist/nouislider.min.js"></script>
+
+<script>
+  // ---------------- Config ----------------
+  const DATA_URL = 'data/ukr-civharm-2025-09-12.json'; // place your JSON here
+
+  // CARTO free tiles
+  const CARTO_LIGHT = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  const CARTO_DARK  = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  const ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors & <a href="https://carto.com/attributions">CARTO</a>';
+
+  // Normalize Weapon System values to our categories
+  function normalizeWeapon(val) {
+    const v = (val || '').toLowerCase();
+    if (!v) return 'Other/Unknown';
+    if (v.includes('small')) return 'Small arms';
+    if (v.includes('vehicle')) return 'Vehicle-mounted';
+    if (v.includes('air')) return 'Air strike';
+    if (v.includes('cluster')) return 'Cluster munitions';
+    if (v.includes('rocket')) return 'HE rocket artillery';
+    if (v.includes('ballistic') || v.includes('cruise') || v.includes('missile')) return 'Missile';
+    return 'Other/Unknown';
+  }
+
+  // Category color palette
+  const COLORS = {
+    'Small arms': '#6D4C41',
+    'Vehicle-mounted': '#00897B',
+    'Missile': '#5E35B1',
+    'Air strike': '#039BE5',
+    'Cluster munitions': '#E53935',
+    'HE rocket artillery': '#FB8C00',
+    'Other/Unknown': '#9E9E9E'
+  };
+
+  // Tiny inline SVG icons (uniform viewBox, recolored via fill)
+  const ICON_SVG = {
+    'Small arms': `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 11h6l2-2h5l2-1 1 2-1 1h-2l-2 2H9l-1 1H6l-1-2H3z"/></svg>`,
+    'Vehicle-mounted': `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 14h8l4-3h3v2h-2l-3 2H8l-1 2H5l-1-3zM6 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 .001 4A2 2 0 0 0 16 18z"/></svg>`,
+    'Missile': `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 20l4-1 4-4 5-1 4-6-6 4-1 5-4 4-1 4zM14 3l7 7 0 0-4 2-5-5 2-4z"/></svg>`,
+    'Air strike': `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 12l8-2 4-8 2 2-2 6 6 2-1 2-6-1-2 6-2-2 2-4-7-3z"/></svg>`,
+    'Cluster munitions': `<svg viewBox="0 0 24 24"><g fill="currentColor"><circle cx="7" cy="7" r="3"/><circle cx="13" cy="6" r="2.5"/><circle cx="10" cy="12" r="2.5"/><circle cx="16" cy="12" r="2"/><circle cx="12" cy="17" r="2.3"/></g></svg>`,
+    'HE rocket artillery': `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 13l12-8 2 2-8 12-4-2 2-4zm15-5l5 5-3 1-3-3 1-3z"/></svg>`,
+    'Other/Unknown': `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2 5h5l-4 3 2 5-5-3-5 3 2-5-4-3h5z"/></svg>`
+  };
+
+  // ---------------- Map ----------------
+  const map = L.map('map', {
+    center: [49.0, 32.5],
+    zoom: 6,
+    minZoom: 5,
+    maxBounds: [[43.2, 20.5], [53.5, 42.5]]
+  });
+
+  const light = L.tileLayer(CARTO_LIGHT, { attribution: ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+  const dark  = L.tileLayer(CARTO_DARK,  { attribution: ATTR, subdomains: 'abcd', maxZoom: 19 });
+
+  // UI toggles
+  const darkToggle = document.getElementById('darkToggle');
+  darkToggle.addEventListener('change', () => {
+    if (darkToggle.checked) { map.removeLayer(light); dark.addTo(map); document.body.style.background='#0b0e12'; }
+    else { map.removeLayer(dark); light.addTo(map); document.body.style.background='#fafafa'; }
+  });
+
+  // Animations toggle
+  let animationsOn = true;
+  const animToggle = document.getElementById('animToggle');
+  animToggle.addEventListener('change', () => {
+    animationsOn = animToggle.checked;
+    document.querySelectorAll('.sym').forEach(el => el.classList.toggle('flicker', animationsOn));
+  });
+
+  // Legend build
+  const legendWrap = document.getElementById('legend');
+  const legendContent = document.getElementById('legendContent');
+  const legendToggle = document.getElementById('legendToggle');
+  const resetBtn = document.getElementById('resetBtn');
+
+  const selected = new Set(); // selected categories
+  function updateLegendSelectionUI() {
+    // tweak opacity in legend: selected=1, unselected but present=.7, not present=.4 (handled per-item)
+    Array.from(legendContent.querySelectorAll('[data-cat]')).forEach(row => {
+      const cat = row.getAttribute('data-cat');
+      const active = selected.has(cat);
+      const label = row.querySelector('.legend-label'); const sw = row.querySelector('.legend-swatch');
+      const count = row.querySelector('.legend-count');
+      const level = active ? 1 : (selected.size ? 0.6 : 1);
+      label.style.opacity = level; sw.style.opacity = level; count.style.opacity = level;
+    });
+    resetBtn.hidden = selected.size === 0;
+  }
+  legendToggle.addEventListener('click', () => {
+    legendWrap.classList.toggle('legend-collapsed');
+  });
+  resetBtn.addEventListener('click', () => {
+    selected.clear(); updateLegendSelectionUI(); applyCategoryVisibility();
+  });
+
+  // Cluster layer with circle badges
+  const clusters = L.markerClusterGroup({
+    disableClusteringAtZoom: 11,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    iconCreateFunction: (cluster) => {
+      const count = cluster.getChildCount();
+      let size = 'small';
+      if (count >= 50) size = 'large';
+      else if (count >= 10) size = 'medium';
+      const div = document.createElement('div');
+      div.className = `marker-cluster marker-cluster-${size}`;
+      const inner = document.createElement('div');
+      inner.textContent = count;
+      div.appendChild(inner);
+      return L.divIcon({ html: div, className: '', iconSize: L.point(40,40) });
+    }
+  });
+  clusters.on('clusterclick', (a) => {
+    // Zoom to the bounds of the cluster (conventional behavior)
+    a.layer.zoomToBounds({ padding: [40, 40] });
+  });
+  map.addLayer(clusters);
+
+  // Home button
+  const homeBtn = document.getElementById('homeBtn');
+  let dataBounds = null;
+  homeBtn.addEventListener('click', () => { if (dataBounds) map.fitBounds(dataBounds, { padding:[30,30] }); });
+
+  // Credits modal
+  const creditsBtn = document.getElementById('creditsBtn');
+  const modalWrap = document.getElementById('modalWrap');
+  const modalClose = document.getElementById('modalClose');
+  creditsBtn.onclick = () => modalWrap.style.display = 'flex';
+  modalClose.onclick = () => modalWrap.style.display = 'none';
+  modalWrap.onclick = (e) => { if (e.target === modalWrap) modalWrap.style.display = 'none'; };
+
+  // --------- Build markers from data + filters ----------
+  const allMarkers = []; // { marker, cat, area, dateNum }
+  const catCounts = {};  // for legend counts
+  const areasSet = new Set();
+
+  function categoryColor(cat) { return COLORS[cat] || COLORS['Other/Unknown']; }
+
+  function makeDivIcon(cat) {
+    const color = categoryColor(cat);
+    const svg = ICON_SVG[cat] || ICON_SVG['Other/Unknown'];
+    const el = document.createElement('div');
+    el.className = 'sym flicker';
+    el.style.color = color; // SVG uses currentColor
+    if (!animationsOn) el.classList.remove('flicker');
+    el.innerHTML = svg;
+    return L.divIcon({ className: '', html: el, iconSize: [26,26], iconAnchor: [13,13], popupAnchor: [0,-10] });
+  }
+
+  function popupHTML(rec, cat, areaStr, dateStr) {
+    const loc = rec.location || '';
+    const srcs = Array.isArray(rec.sources) ? rec.sources : [];
+    const links = srcs
+      .filter(s => s.path && s.path.startsWith('http'))
+      .slice(0, 4)
+      .map((s,i) => `<a href="${s.path}" target="_blank" rel="noopener">Source ${i+1}</a>`)
+      .join(' • ');
+    return `
+      <div style="min-width:260px">
+        <div style="font-weight:700">${loc || 'Untitled location'}</div>
+        <div style="color:#555">${dateStr || 'Unknown date'}</div>
+        <hr style="border:none;border-top:1px solid #eee; margin:6px 0">
+        <div><strong>Weapon:</strong> ${cat}</div>
+        <div><strong>Area affected:</strong> ${areaStr || '—'}</div>
+        <div style="margin-top:4px">${rec.description || ''}</div>
+        ${links ? `<div style="margin-top:6px;font-size:12px">${links}</div>` : ''}
+        <div style="margin-top:6px;font-size:11px;color:#777">Record ID: ${rec.id}</div>
+      </div>`;
+  }
+
+  // Date parsing to numeric (days since epoch)
+  function dateToNumber(dstr) {
+    if (!dstr) return null;
+    const d = new Date(dstr);
+    return isNaN(d.getTime()) ? null : Math.floor(d.getTime()/86400000);
+  }
+  function numToDateString(n) {
+    if (n == null) return '';
+    const d = new Date(n * 86400000);
+    return d.toISOString().slice(0,10);
+  }
+
+  // Area types from filters[]
+  function extractFilters(rec, key) {
+    const filters = Array.isArray(rec.filters) ? rec.filters : [];
+    return filters.filter(f => f.key === key).map(f => f.value);
+  }
+
+  // Load data
+  fetch(DATA_URL).then(r => r.json()).then(data => {
+    const records = Array.isArray(data) ? data : (data.records || data.items || []);
+    let minDay = Infinity, maxDay = -Infinity;
+    const latlngs = [];
+
+    records.forEach(rec => {
+      const lat = parseFloat(rec.latitude), lon = parseFloat(rec.longitude);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+
+      const weaponVals = extractFilters(rec, 'Weapon System');
+      const cat = normalizeWeapon(weaponVals[0] || rec.weapon || '');
+      const areaVals = extractFilters(rec, 'Type of area affected');
+      const areaStr = areaVals.join(', ');
+      areaVals.forEach(v => areasSet.add(v));
+
+      const dateStr = rec.date || '';
+      const dn = dateToNumber(dateStr);
+      if (dn != null) { minDay = Math.min(minDay, dn); maxDay = Math.max(maxDay, dn); }
+
+      // Legend counts
+      catCounts[cat] = (catCounts[cat] || 0) + 1;
+
+      const icon = makeDivIcon(cat);
+      const marker = L.marker([lat, lon], { icon, alt: cat });
+      marker.bindPopup(popupHTML(rec, cat, areaStr, dateStr), { maxWidth: 320 });
+
+      allMarkers.push({ marker, cat, areas: new Set(areaVals), dateNum: dn });
+      clusters.addLayer(marker);
+      latlngs.push([lat, lon]);
+    });
+
+    if (latlngs.length) {
+      dataBounds = L.latLngBounds(latlngs);
+      map.fitBounds(dataBounds, { padding:[30,30] });
+    }
+
+    buildLegend();
+    buildAreaList();
+    initDateSlider(minDay, maxDay);
+    applyAllFilters(); // initial render
+  });
+
+  // -------- Legend interactivity ----------
+  function buildLegend() {
+    legendContent.innerHTML = '';
+    Object.keys(COLORS).forEach(cat => {
+      const color = COLORS[cat];
+      const count = catCounts[cat] || 0;
+
+      const sw = document.createElement('div'); sw.className = 'legend-swatch'; sw.style.color = color;
+      sw.innerHTML = (ICON_SVG[cat] || ICON_SVG['Other/Unknown']).replace('currentColor', color);
+      sw.firstChild.classList.add('legend-icon');
+
+      const lbl = document.createElement('div'); lbl.className = 'legend-label'; lbl.textContent = cat;
+      const cnt = document.createElement('div'); cnt.className = 'legend-count'; cnt.textContent = count;
+
+      const frag = document.createElement('div'); // container not used (we use display:contents), but for events
+      frag.className = 'legend-item';
+      frag.setAttribute('data-cat', cat);
+      frag.appendChild(sw); frag.appendChild(lbl); frag.appendChild(cnt);
+      frag.onclick = () => toggleCategory(cat);
+      legendContent.appendChild(frag);
+    });
+    updateLegendSelectionUI();
+  }
+
+  function toggleCategory(cat) {
+    if (selected.has(cat)) {
+      selected.delete(cat); // clicking selected -> dim it (others may remain selected)
+    } else {
+      selected.add(cat);
+    }
+    updateLegendSelectionUI();
+    applyCategoryVisibility();
+  }
+
+  function applyCategoryVisibility() {
+    // If none selected: everyone 100% opacity
+    const none = selected.size === 0;
+    allMarkers.forEach(o => {
+      const el = o.marker._icon; if (!el) return;
+      if (none) {
+        el.classList.remove('dim');
+      } else {
+        // selected -> full; others -> dim
+        if (selected.has(o.cat)) el.classList.remove('dim');
+        else el.classList.add('dim');
+      }
+    });
+  }
+
+  // -------- Area filter ----------
+  const areaList = document.getElementById('areaList');
+  const activeAreas = new Set();
+  function buildAreaList() {
+    areaList.innerHTML = '';
+    const values = Array.from(areasSet).sort();
+    values.forEach(v => {
+      const id = 'area_' + v.replace(/\W+/g,'_');
+      const wrap = document.createElement('label');
+      wrap.style.fontSize = '12px';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.id = id; cb.value = v; cb.checked = true;
+      cb.onchange = () => {
+        if (cb.checked) activeAreas.add(v); else activeAreas.delete(v);
+        applyAllFilters();
+      };
+      activeAreas.add(v);
+      wrap.appendChild(cb);
+      wrap.appendChild(document.createTextNode(' ' + v));
+      areaList.appendChild(wrap);
+    });
+  }
+
+  // -------- Date range slider ----------
+  const dateSlider = document.getElementById('dateSlider');
+  const dateRangeLabel = document.getElementById('dateRange');
+  let dateMin = null, dateMax = null, rangeMin = null, rangeMax = null;
+
+  function initDateSlider(minDay, maxDay) {
+    if (!isFinite(minDay) || !isFinite(maxDay)) {
+      dateRangeLabel.textContent = 'No dates available';
+      return;
+    }
+    dateMin = minDay; dateMax = maxDay;
+    noUiSlider.create(dateSlider, {
+      start: [minDay, maxDay],
+      connect: true, step: 1, range: { min: minDay, max: maxDay },
+      tooltips: { to: v => numToDateString(Math.round(v)) }
+    });
+    rangeMin = minDay; rangeMax = maxDay;
+    dateRangeLabel.textContent = `${numToDateString(rangeMin)} to ${numToDateString(rangeMax)}`;
+    dateSlider.noUiSlider.on('update', (vals) => {
+      rangeMin = Math.round(vals[0]); rangeMax = Math.round(vals[1]);
+      dateRangeLabel.textContent = `${numToDateString(rangeMin)} to ${numToDateString(rangeMax)}`;
+      applyAllFilters();
+    });
+  }
+
+  // -------- Combined filtering (date + area) ----------
+  function applyAllFilters() {
+    const noneSelectedCats = selected.size === 0;
+
+    allMarkers.forEach(o => {
+      const el = o.marker._icon; if (!el) return;
+
+      // Area filter
+      const areaPass = (activeAreas.size === 0) || [...o.areas].some(a => activeAreas.has(a)) || (o.areas.size === 0);
+
+      // Date filter
+      const datePass = (rangeMin == null || rangeMax == null || o.dateNum == null) ||
+                       (o.dateNum >= rangeMin && o.dateNum <= rangeMax);
+
+      const visibleByFilters = areaPass && datePass;
+
+      // Show/hide by filters
+      if (visibleByFilters) el.classList.remove('hid'); else el.classList.add('hid');
+
+      // Category opacity logic
+      if (!visibleByFilters) return; // hidden anyway
+      if (noneSelectedCats) el.classList.remove('dim');
+      else {
+        if (selected.has(o.cat)) el.classList.remove('dim');
+        else el.classList.add('dim');
+      }
+    });
+
+    // Show reset button only when any category is selected or any area/date differs from full
+    const filtersActive =
+      selected.size > 0 ||
+      (activeAreas.size > 0 && activeAreas.size !== areasSet.size) ||
+      (rangeMin !== dateMin || rangeMax !== dateMax);
+    resetBtn.hidden = !filtersActive;
+  }
+</script>
+</body>
+</html>
