@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Russian Attacks on Civilians in Ukraine (Bellingcat dataset)</title>
+<link rel="preconnect" href="https://api.mapbox.com" />
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  html, body, #map { height: 100%; margin: 0; background:#fafafa; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+  .controls { position:absolute; top:10px; left:10px; z-index:1000; background:#fff; padding:10px 12px; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,.2); max-width:300px; }
+  .controls h1 { font-size:16px; margin:0 0 6px; }
+  .row { display:flex; gap:10px; align-items:center; margin:6px 0; }
+  .legend { margin-top:6px; display:grid; grid-template-columns:auto 1fr; gap:6px 10px; }
+  .swatch { width:14px; height:14px; border-radius:50%; box-shadow:0 0 0 2px rgba(0,0,0,.08) inset; }
+
+  /* Explosion marker (mimetic) */
+  .blast {
+    position: relative;
+    width: 26px; height: 26px;
+    transform: translate(-13px,-13px);
+    filter: drop-shadow(0 0 6px rgba(0,0,0,.25));
+  }
+  .blast .core {
+    position:absolute; inset:0;
+    background: var(--color);
+    clip-path: polygon(50% 0%, 60% 30%, 100% 30%, 65% 50%, 78% 100%, 50% 70%, 22% 100%, 35% 50%, 0% 30%, 40% 30%);
+    border-radius: 6px;
+  }
+  .blast .halo {
+    position:absolute; inset:-6px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color) 35%, transparent), transparent 60%);
+    opacity:.55; border-radius:50%; filter: blur(2px);
+  }
+  /* gentle pulse + flicker (toggleable) */
+  .blast.glow .halo { animation: pulse 2.6s ease-in-out infinite; }
+  .blast.flicker .core { animation: flicker 1.8s steps(3, end) infinite; }
+  @keyframes pulse { 0%,100% { opacity:.45; transform: scale(1); } 50% { opacity:.8; transform: scale(1.12); } }
+  @keyframes flicker { 0%,100% { filter: brightness(1); } 30% { filter: brightness(1.15); } 60% { filter: brightness(.9); } }
+
+  /* Minimal cluster styles */
+  .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {
+    background: rgba(255,255,255,.92);
+    border: 2px solid rgba(0,0,0,.15);
+    color:#111; border-radius: 18px; padding:4px 8px; font-weight:700;
+  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="controls" id="ui">
+  <h1>Attacks on Civilians (since 2022)</h1>
+  <div style="font-size:12px;color:#555">Data: Bellingcat collected incidents • Popups cite original posts where available.</div>
+  <div class="row">
+    <label><input type="checkbox" id="darkToggle"> Dark theme</label>
+    <label><input type="checkbox" id="animToggle" checked> Animations</label>
+  </div>
+  <div class="legend" id="legend"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<script>
+  // ---- Config ----
+  const MAPBOX_TOKEN = 'YOUR_MAPBOX_TOKEN';
+  const DATA_URL = 'data/ukr-civharm-2025-09-12.json'; // your uploaded file
+
+  // Weapon System -> color
+  const COLORS = {
+    'Cluster munitions': '#E53935',
+    'HE rocket artillery': '#FB8C00',
+    'Ballistic missile': '#8E24AA',
+    'Cruise missile': '#5E35B1',
+    'Air strike': '#039BE5',
+    'Small arms': '#6D4C41',
+    'Vehicle mounted weapon': '#00897B',
+    'Unknown': '#9E9E9E'
+  };
+
+  // ---- Map ----
+  const map = L.map('map', {
+    center: [49.0, 32.5],
+    zoom: 6,
+    minZoom: 5,
+    maxBounds: [[43.2, 20.5], [53.5, 42.5]]
+  });
+
+  const light = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
+    { attribution: '&copy; OpenStreetMap & CARTO, Map by Web Mapper GPT' }
+  ).addTo(map);
+  const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png',
+    { attribution: '&copy; OpenStreetMap & CARTO, Map by Web Mapper GPT' }
+  );
+  
+  /*const light = L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`, {
+    tileSize: 512, zoomOffset: -1, attribution: '&copy; OpenStreetMap, Mapbox'
+  }).addTo(map);
+  const dark = L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`, {
+    tileSize: 512, zoomOffset: -1, attribution: '&copy; OpenStreetMap, Mapbox'
+  });*/
+
+  // ---- UI toggles ----
+  const darkToggle = document.getElementById('darkToggle');
+  darkToggle.addEventListener('change', () => {
+    if (darkToggle.checked) { map.removeLayer(light); dark.addTo(map); document.body.style.background='#0b0e12'; }
+    else { map.removeLayer(dark); light.addTo(map); document.body.style.background='#fafafa'; }
+  });
+
+  let animationsOn = true;
+  const animToggle = document.getElementById('animToggle');
+  animToggle.addEventListener('change', () => {
+    animationsOn = animToggle.checked;
+    document.querySelectorAll('.blast').forEach(el => {
+      el.classList.toggle('glow', animationsOn);
+      el.classList.toggle('flicker', animationsOn);
+    });
+  });
+
+  // ---- Legend ----
+  const legend = document.getElementById('legend');
+  Object.entries(COLORS).forEach(([label, color]) => {
+    const sw = document.createElement('div'); sw.className = 'swatch'; sw.style.background = color;
+    const lbl = document.createElement('div'); lbl.textContent = label;
+    legend.appendChild(sw); legend.appendChild(lbl);
+  });
+
+  // ---- Marker factory (mimetic explosion) ----
+  function explosionIcon(color) {
+    const div = document.createElement('div');
+    div.className = 'blast glow flicker';
+    div.style.setProperty('--color', color);
+    if (!animationsOn) { div.classList.remove('glow','flicker'); }
+    const halo = document.createElement('div'); halo.className = 'halo';
+    const core = document.createElement('div'); core.className = 'core';
+    div.appendChild(halo); div.appendChild(core);
+    return L.divIcon({ className: '', html: div, iconSize: [26,26], iconAnchor: [13,13], popupAnchor: [0,-10] });
+  }
+
+  // ---- Popup ----
+  function popupHTML(rec) {
+    const date = rec.date || 'Unknown date';
+    const loc = rec.location || '';
+    const filters = Array.isArray(rec.filters) ? rec.filters : [];
+    const areaTypes = filters.filter(f => f.key === 'Type of area affected').map(f => f.value);
+    const weaponTypes = filters.filter(f => f.key === 'Weapon System').map(f => f.value);
+    const area = areaTypes.length ? areaTypes.join(', ') : '—';
+    const weapon = weaponTypes.length ? weaponTypes.join(', ') : 'Unknown';
+    const srcs = Array.isArray(rec.sources) ? rec.sources : [];
+
+    // sources list
+    const links = srcs
+      .filter(s => s.path && s.path.startsWith('http'))
+      .slice(0, 4) // keep popups tidy
+      .map((s,i) => `<a href="${s.path}" target="_blank" rel="noopener">Source ${i+1}</a>`)
+      .join(' • ');
+
+    return `
+      <div style="min-width:260px">
+        <div style="font-weight:700">${loc || 'Untitled location'}</div>
+        <div style="color:#555">${date}</div>
+        <hr style="border:none;border-top:1px solid #eee; margin:6px 0">
+        <div><strong>Area affected:</strong> ${area}</div>
+        <div><strong>Weapon:</strong> ${weapon}</div>
+        <div style="margin-top:4px">${rec.description || ''}</div>
+        ${links ? `<div style="margin-top:6px;font-size:12px">${links}</div>` : ''}
+        <div style="margin-top:6px;font-size:11px;color:#777">Record ID: ${rec.id}</div>
+      </div>`;
+  }
+
+  // ---- Cluster layer ----
+  const cluster = L.markerClusterGroup({
+    disableClusteringAtZoom: 11,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false
+  });
+  map.addLayer(cluster);
+
+  // ---- Load JSON and render ----
+  fetch(DATA_URL).then(r => r.json()).then(data => {
+    const records = Array.isArray(data) ? data : (data.records || data.items || []);
+    records.forEach(rec => {
+      const lat = parseFloat(rec.latitude), lon = parseFloat(rec.longitude);
+      if (Number.isFinite(lat) && Number.isFinite(lon)) {
+        // pick color by first Weapon System present
+        const filters = Array.isArray(rec.filters) ? rec.filters : [];
+        const weapon = (filters.find(f => f.key === 'Weapon System') || {}).value || 'Unknown';
+        const color = COLORS[weapon] || COLORS['Unknown'];
+        const marker = L.marker([lat, lon], { icon: explosionIcon(color), alt: weapon })
+          .bindPopup(popupHTML(rec), { maxWidth: 320 });
+        cluster.addLayer(marker);
+      }
+    });
+  }).catch(err => console.error('Data load error:', err));
+</script>
+</body>
+</html>
