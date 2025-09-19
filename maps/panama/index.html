@@ -279,7 +279,7 @@ const map = L.map('map', { zoomControl:false, preferCanvas:true });
 // Colorful topo + hillshade stack
 const esriTopo = L.tileLayer('https://{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
   subdomains: ['server','services'],
-  attribution: 'Tiles © Esri — Esri, FAO, NOAA, USGS, © OpenStreetMap contributors | Created using Web Mapper GPT'
+  attribution: 'Tiles © Esri — Esri, FAO, NOAA, USGS, © OpenStreetMap contributors | Created using <a href="https://chatgpt.com/share/68cca47e-2704-800f-a4b6-05d2e2415e5f">Web Mapper GPT</a>'
 }).addTo(map);
 const hillshade = L.tileLayer('https://{s}.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}', {
   subdomains: ['server','services'], opacity: 0.45, attribution: ''
