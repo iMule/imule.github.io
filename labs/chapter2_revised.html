@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab — CRAFT Prompting: Minnesota Wells (Web Cartography 2.0)</title>
+
+  <!-- Site styles & behavior (optional; override inline styles when present) -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+
+  <style>
+    /* Temporary inline styles. The book site can override via style.css */
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --accent-2: #0ea5e9;
+      --border: #e2e8f0;
+      --ok: #16a34a;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+    }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1000px; margin: 2.5rem auto; padding: 0 1rem; }
+    header.hero {
+      background: linear-gradient(135deg, #e6f0ff, #eef9ff);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    header.hero h1 { margin: 0 0 0.25rem; font-size: clamp(1.6rem, 2.8vw, 2.4rem); }
+    header.hero p.lead { margin: 0.25rem 0 0; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.25rem; }
+    @media (min-width: 900px) { .grid { grid-template-columns: 2fr 1fr; } }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.25rem; box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+    }
+    h2 { margin-top: 0; font-size: clamp(1.1rem, 2.2vw, 1.4rem); }
+    h3 { margin-top: 1.25rem; font-size: 1.05rem; }
+    .pill {
+      display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.8rem;
+      border: 1px solid var(--border); background: #fff; color: var(--muted); margin-right: 0.5rem;
+    }
+    .btn {
+      display: inline-block; padding: 0.6rem 0.9rem; border-radius: 10px; border: 1px solid var(--border);
+      background: #fff; cursor: pointer; font-weight: 600;
+    }
+    .btn.primary { background: var(--accent); color: white; border-color: transparent; }
+    .btn.ghost { background: transparent; }
+    .note {
+      border-left: 4px solid var(--accent-2); padding: 0.75rem 1rem; background: #f0f9ff;
+    }
+    .warn {
+      border-left: 4px solid var(--bad); padding: 0.75rem 1rem; background: #fff5f5; color: #7f1d1d;
+    }
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li { padding-left: 1.9rem; position: relative; margin: 0.35rem 0; }
+    .checklist li::before { content: "☐"; position: absolute; left: 0; top: 0; color: var(--muted); }
+    .checklist li.done::before { content: "☑"; color: var(--ok); }
+    code, pre { background: #0b1220; color: #e6edf3; border-radius: 8px; }
+    code { padding: 0.15rem 0.35rem; }
+    pre { padding: 0.9rem; overflow-x: auto; }
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border); border-bottom-width: 3px; padding: 0.15rem 0.4rem; border-radius: 6px; background: #fff;
+    }
+    .callout { border: 1px dashed var(--border); padding: 1rem; border-radius: 12px; background: #fbfdff; }
+    .columns { columns: 2 320px; column-gap: 1rem; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .meta { display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="meta">
+        <span class="pill">Part I · Chapter 2 Lab</span>
+        <span class="pill">CRAFT</span>
+        <span class="pill">Guardrails</span>
+        <span class="pill">JSON</span>
+      </div>
+      <h1>Lab — CRAFT Prompting: Minnesota Wells & Water Quality</h1>
+      <p class="lead">
+        Practice turning vague asks into defensible, render-ready specs using <strong>Web Mapper GPT</strong>. You’ll build the
+        <em>same</em> map four ways—default, stepwise, long narrative, and JSON schema—and publish each to <code>username.github.io</code> for comparison.
+      </p>
+      <div style="margin-top:1rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <a class="btn primary" target="_blank" rel="noopener" href="https://chatgpt.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper">Open Web Mapper GPT</a>
+        <a class="btn" href="#variants">Skip to Prompts</a>
+        <a class="btn ghost" href="#rubric">Rubric</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="card">
+        <h2>Overview</h2>
+        <p>
+          Your audience is the Minnesota public: homeowners and residents who want to locate their well, read key attributes
+          (year drilled, depth, formation/soil), and understand proximity to water-pollution sites, summarized by county.
+          You’ll iterate your prompt structure (CRAFT) and watch quality, honesty, and usability improve.
+        </p>
+
+        <div class="note">
+          <strong>Datasets:</strong> Minnesota Wells (points), Minnesota Water Pollution Sites (points/polygons), Minnesota Counties (polygons). If any dataset isn’t at hand, require an <span class="mono">UNKNOWN</span> response and suggested official sources rather than invention.
+        </div>
+
+        <h2>Learning Outcomes</h2>
+        <ul class="checklist">
+          <li>Express <strong>Context</strong> (audience, purpose) in the prompt itself.</li>
+          <li>Set a firm <strong>Role</strong> and <strong>guardrails</strong> (no fabrication; accessibility).</li>
+          <li>Specify an output <strong>Format</strong> (JSON spec) you can publish.</li>
+          <li>Add <strong>Tests</strong> (contrast flag, self-critique) to prevent hallucinations.</li>
+        </ul>
+
+        <h2 id="setup">Part A — Setup (one-time)</h2>
+        <div class="columns">
+          <ol>
+            <li>Create/confirm your <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> account.</li>
+            <li>Install <a href="https://desktop.github.com/" target="_blank" rel="noopener">GitHub Desktop</a> and <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VS Code</a>.</li>
+            <li>Create a repo (e.g., <code>web-cartography-labs</code>). Clone with GitHub Desktop.</li>
+            <li>Add folders:
+              <code>labs/wells/variant-default</code>,
+              <code>labs/wells/variant-steps</code>,
+              <code>labs/wells/variant-long</code>,
+              <code>labs/wells/variant-json</code>.
+            </li>
+            <li>Plan to host via GitHub Pages (Settings → Pages). Each variant will be browsable at a folder URL.</li>
+          </ol>
+        </div>
+
+        <h2 id="variants">Part B — Prompt Variants (copy & adapt in Web Mapper GPT)</h2>
+
+        <h3>Variant A — “Crappy Default” (on purpose)</h3>
+        <div class="callout">
+          <p class="warn" style="margin:0;">
+            <strong>Hallucination risk: High.</strong> This vague request invites invented layers, projections, and legends.
+          </p>
+        </div>
+        <pre data-copy><code>Make a detailed interactive map of Minnesota wells and water pollution sites with all relevant layers and the best legend.</code></pre>
+
+        <h3>Variant B — Step-by-Step (structured ask + options)</h3>
+        <pre data-copy><code>You are a cartography design assistant. Never fabricate data. If required info is missing, return {"status":"UNKNOWN","missing":[...]} and suggest likely sources.
+
+Task: Draft a responsive public-facing map for Minnesota showing:
+1) private wells (ID, year drilled, depth, formation/soil),
+2) water pollution sites (points/polygons),
+3) county boundaries.
+
+Constraints:
+- Audience: general public (mobile + desktop).
+- Accessibility: WCAG AA; avoid hue-only meaning.
+- Extent/projection: Minnesota; EPSG:3857; no 3D.
+- Legend: ≤4 classes; plain-language labels; units included.
+- Interaction: on-hover tooltips; filter by county; optional “near me”.
+
+Return: a short plan (≤120 words) and 3 design options labeled A/B/C.</code></pre>
+
+        <h3>Variant C — Long Narrative (when policy & story matter)</h3>
+        <pre data-copy><code>SYSTEM: You are a cartography design assistant who prioritizes clarity, honesty, and accessibility. Never fabricate data; return {"status":"UNKNOWN","missing":[...]} when needed.
+
+USER GOAL: Help Minnesota residents find their well, view attributes (year, depth, formation/soil), and see proximity to known water-pollution sites summarized by county.
+
+CONTEXT:
+- Audience: general public (mobile-first).
+- Geography: Minnesota; county names and light basemap.
+- Datasets: wells, water pollution sites, counties. If not provided, mark UNKNOWN and suggest official sources.
+
+CONSTRAINTS:
+- Palette: color-blind-safe; avoid red/green conflicts.
+- Symbols: distinct shapes for wells vs. pollution; subtle county outlines.
+- Legend: plain-language; ≤4 classes; include units.
+- Labels: county names only; avoid collisions.
+- Performance: initial load ≲ 5 MB.
+
+OUTPUT: (1) concise rationale (≤120 words), (2) filter behavior steps, (3) minimal embed-ready HTML scaffold.</code></pre>
+
+        <h3>Variant D — JSON Schema (render-ready spec)</h3>
+        <pre data-copy><code>SYSTEM: You are a cartography design assistant. Never fabricate data; if missing, return {"status":"UNKNOWN","missing":[...]}.
+
+USER: Produce a responsive map spec for Minnesota wells (points), water pollution sites (points/polygons), and counties (polygons) for a public audience.
+
+Return ONE JSON object with EXACT keys:
+{
+  "style": {
+    "well_symbol": {"shape":"circle","size":6,"fill":"#276ef1","stroke":"#1b4db8"},
+    "pollution_symbol": {"shape":"triangle","size":7,"fill":"#b42318","stroke":"#7a271a"},
+    "county_outline": {"stroke":"#94a3b8","width":0.8,"opacity":0.8},
+    "palette_notes": "color-blind-safe; no red/green conflicts"
+  },
+  "layout": {
+    "title": "Minnesota Wells & Water Quality",
+    "legend_position":"bottom-right",
+    "labels":"county_names_only",
+    "basemap":"light"
+  },
+  "interaction": {
+    "tooltips":"on-hover",
+    "filters":["county_dropdown","near_me_toggle"],
+    "details_panel": true
+  },
+  "accessibility": {"contrast_pass": true, "min_label_px": 14},
+  "data_requirements": ["wells","pollution_sites","counties"],
+  "rationale": "≤120 words explaining classification/symbol choices"
+}
+
+No extra prose outside the JSON object. If uncertain, keep fields and set placeholders; also return an accompanying UNKNOWN object listing missing items.</code></pre>
+
+        <h2>Part C — Publish & Compare</h2>
+        <ol>
+          <li>For each variant, save outputs to its folder (specs, scaffold HTML/CSS/JS, notes).</li>
+          <li>Commit & push. Visit each URL (e.g., <code>/labs/wells/variant-json/</code>).</li>
+          <li>Capture two screenshots per variant (mobile width & desktop).</li>
+        </ol>
+
+        <h2 id="rubric">Rubric</h2>
+        <ul class="checklist">
+          <li>CRAFT present in final prompt(s) (Context, Role, Ask, Format, Tests).</li>
+          <li>Honesty & grounding: UNKNOWN policy used correctly; no fabricated sources.</li>
+          <li>Accessibility: WCAG AA contrast, plain-language legend, mobile viability.</li>
+          <li>Comparative insight: reflection ties prompt structure to map quality.</li>
+        </ul>
+
+        <h2>Troubleshooting</h2>
+        <div class="callout">
+          <p><strong>Invalid JSON?</strong> Paste back: “Repair this JSON to match the schema exactly and explain changes in one sentence.”</p>
+          <p><strong>Cluttered map?</strong> Reduce classes, simplify symbology, restrict labels to county names.</p>
+          <p><strong>Slow loads?</strong> Ask for a performance budget (e.g., “initial load &lt; 5 MB”) and reduce symbol complexity.</p>
+        </div>
+
+        <h2>Reflection (200–300 words)</h2>
+        <p>Which variant yielded the most trustworthy and usable map for the public? Why? Cite at least one specific guardrail or CRAFT element that changed the outcome.</p>
+      </main>
+
+      <aside class="card">
+        <h3>CRAFT Quick Reference</h3>
+        <p><strong>C</strong>ontext · <strong>R</strong>ole · <strong>A</strong>sk · <strong>F</strong>ormat · <strong>T</strong>ests</p>
+
+        <h3>Paste-Ready Guardrails</h3>
+        <ul>
+          <li>“Never fabricate data; if missing, return <code>{"status":"UNKNOWN","missing":[...]}</code>.”</li>
+          <li>“Explain classification trade-offs in ≤120 words.”</li>
+          <li>“Verify WCAG AA; if any swatch fails, return a compliant alternative.”</li>
+          <li>“Provide a brief self-critique and one revision.”</li>
+        </ul>
+
+        <h3>Files You’ll Produce</h3>
+        <ul>
+          <li><code>variant-*/index.html</code>, <code>style.css</code>, <code>script.js</code></li>
+          <li>Specs (e.g., <code>spec.json</code>) + screenshots</li>
+          <li><code>reflection.md</code></li>
+        </ul>
+
+        <h3>Hook Points (for script.js)</h3>
+        <ul>
+          <li>Bind copy-to-clipboard on <code>&lt;pre data-copy&gt;</code>.</li>
+          <li>Optional: live-preview a JSON spec via a simple viewer.</li>
+          <li>Toggle the checklist states based on learner interactions.</li>
+        </ul>
+
+        <h3>Common Pitfalls</h3>
+        <ul>
+          <li>Prompts without audience/purpose → muddy specs.</li>
+          <li>“All layers / best legend” → invites hallucinations.</li>
+          <li>No critique loop → first draft calcifies.</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="card">
+      <h2>Copy-Ready Mini Prompts</h2>
+      <div class="columns">
+        <pre data-copy><code>Design a mobile-first choropleth of well depth by county. Audience: public. Purpose: locate deep-well regions. Limit to 3 classes; ensure WCAG AA; justify classification choice.</code></pre>
+        <pre data-copy><code>Propose two legends (desktop + mobile). Critique readability for non-technical users and choose one.</code></pre>
+        <pre data-copy><code>Return a JSON map spec with layers, color tokens, label rules, interactions; then a refined version after a brief self-critique.</code></pre>
+        <pre data-copy><code>Suggest an accessibility checklist for this map and flag likely failure points.</code></pre>
+      </div>
+    </section>
+
+    <footer class="wrap">
+      <p>© Web Cartography, 2.0 — Natural Language Map Design. Inline styles provided for portability; override via <code>style.css</code>. Behavior hooks land in <code>script.js</code>.</p>
+    </footer>
+  </div>
+</body>
+</html>
