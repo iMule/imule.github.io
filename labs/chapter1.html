@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab 1 — Prompt Director Warm‑Up (Web Cartography 2.0)</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <style>
+    /* Temporary inline styles. The book site can override via style.css */
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --accent-2: #0ea5e9;
+      --border: #e2e8f0;
+      --ok: #16a34a;
+      --warn: #f59e0b;
+    }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; line-height: 1.5; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1000px; margin: 2.5rem auto; padding: 0 1rem; }
+    header.hero { background: linear-gradient(135deg, #e6f0ff, #eef9ff); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; }
+    header.hero h1 { margin: 0 0 0.25rem; font-size: clamp(1.6rem, 2.8vw, 2.4rem); }
+    header.hero p.lead { margin: 0.25rem 0 0; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.25rem; }
+    @media (min-width: 900px) { .grid { grid-template-columns: 2fr 1fr; } }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 0 rgba(0,0,0,0.03); }
+    h2 { margin-top: 0; font-size: clamp(1.1rem, 2.2vw, 1.4rem); }
+    h3 { margin-top: 1.25rem; font-size: 1.05rem; }
+    .pill { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.8rem; border: 1px solid var(--border); background: #fff; color: var(--muted); margin-right: 0.5rem; }
+    .btn { display: inline-block; padding: 0.6rem 0.9rem; border-radius: 10px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-weight: 600; }
+    .btn.primary { background: var(--accent); color: white; border-color: transparent; }
+    .btn.ghost { background: transparent; }
+    .note { border-left: 4px solid var(--accent-2); padding: 0.75rem 1rem; background: #f0f9ff; }
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li { padding-left: 1.9rem; position: relative; margin: 0.35rem 0; }
+    .checklist li::before { content: "☐"; position: absolute; left: 0; top: 0; color: var(--muted); }
+    .checklist li.done::before { content: "☑"; color: var(--ok); }
+    code, pre { background: #0b1220; color: #e6edf3; border-radius: 8px; }
+    code { padding: 0.15rem 0.35rem; }
+    pre { padding: 0.9rem; overflow-x: auto; }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; border: 1px solid var(--border); border-bottom-width: 3px; padding: 0.15rem 0.4rem; border-radius: 6px; background: #fff; }
+    footer { color: var(--muted); margin-top: 2rem; }
+    .callout { border: 1px dashed var(--border); padding: 1rem; border-radius: 12px; background: #fbfdff; }
+    .columns { columns: 2 320px; column-gap: 1rem; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <span class="pill">Part I · Chapter 1 Lab</span>
+        <span class="pill">LLM‑First</span>
+        <span class="pill">Prompt Director</span>
+      </div>
+      <h1>Lab 1 — Prompt Director Warm‑Up</h1>
+      <p class="lead">From coder to director: you’ll design by <em>prompt</em>, not by pushing pixels. This lab pairs with Chapter 1 and introduces a lightweight LLM‑first pipeline.</p>
+      <div style="margin-top:1rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <a class="btn primary" target="_blank" rel="noopener" href="https://chatgpt.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper">Open Web Mapper GPT</a>
+        <a class="btn" href="#part-a">Skip to Part A</a>
+        <a class="btn ghost" href="#rubric">Rubric</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="card">
+        <h2>Overview</h2>
+        <p><strong>Goal:</strong> Use natural‑language prompts to produce a clear, audience‑specific web‑map specification. You’ll practice the <em>Prompt Director</em> workflow (goals → constraints → critique loop), then capture your outputs in a repo you can iterate on in later labs.</p>
+
+        <div class="note">
+          <strong>What’s different:</strong> Coding and GUIs are now <em>supporting</em> actors. Your primary deliverable is a <span class="mono">prompt → map‑spec → critique → refined‑spec</span> sequence you can regenerate at will.
+        </div>
+
+        <h2>Learning Outcomes</h2>
+        <ul class="checklist">
+          <li>Express a map’s <strong>purpose</strong> and <strong>audience</strong> as explicit prompt clauses.</li>
+          <li>Translate design constraints (accessibility, device, layers) into prompt language.</li>
+          <li>Run a structured <strong>critique loop</strong> and capture revisions.</li>
+          <li>Initialize a GitHub repo and sync with <em>GitHub Desktop</em> + <em>VS Code</em> for ongoing iterations.</li>
+        </ul>
+
+        <h2 id="part-a">Part A — Setup: GitHub + VS Code (one‑time)</h2>
+        <div class="columns">
+          <ol>
+            <li>Create a free <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> account.</li>
+            <li>Install <a href="https://desktop.github.com/" target="_blank" rel="noopener">GitHub Desktop</a> and <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VS Code</a>.</li>
+            <li>In GitHub (web), create a new repo named <code>web‑cartography‑labs</code>. Initialize with a README.</li>
+            <li>Open GitHub Desktop → <em>File → Clone repository</em> → pick your repo.</li>
+            <li>Open the cloned folder in VS Code. Add a folder <code>lab‑01</code> and place this HTML file there (plus placeholder <code>style.css</code> and <code>script.js</code>).</li>
+            <li>Commit your changes in GitHub Desktop → <em>Publish</em>.</li>
+            <li>(Optional) Enable GitHub Pages for the repo (Settings → Pages) to host your lab files.</li>
+          </ol>
+        </div>
+
+        <h2>Part B — Prompt‑to‑Spec with Web Mapper GPT</h2>
+        <p>Open <a href="https://chatgpt.com/g/g-68af432e3ee481919b9605d8593bb913-web-mapper" target="_blank" rel="noopener">Web Mapper GPT</a>. Use the <strong>Chapter 1 Cheat Sheet</strong> scaffolds and adapt them to a dataset of your choice (or an instructor‑provided one).</p>
+
+        <h3>Starter Prompt (copy & adapt)</h3>
+        <pre><code>You are a cartographic assistant. 
+Create a map that shows [TOPIC/DATASET] for [AUDIENCE]. 
+The map’s main purpose is [COMMUNICATION GOAL]. 
+Constraints:
+- Mobile-first, accessible to color-blind viewers (WCAG AA contrast).
+- Limit to 3 legend categories and 3 interactive layers.
+- Optimize labels for small screens; avoid dense text.
+Return:
+1) A brief rationale for audience and purpose (≤120 words).
+2) A JSON-like map spec (layers, colors, symbols, interactions).
+3) A self-critique and a refined alternative.</code></pre>
+
+        <div class="callout">
+          <strong>Tip:</strong> If the model returns vague or over‑engineered specs, tighten the constraints or ask it to <em>explain trade‑offs</em> before committing to a design.
+        </div>
+
+        <h3>Minimal Capture Protocol</h3>
+        <ol>
+          <li>Paste your <strong>initial prompt</strong> into <code>lab‑01/prompt.md</code>.</li>
+          <li>Export the <strong>first spec</strong> as <code>lab‑01/spec‑v1.json</code> (copy from the model output).</li>
+          <li>Run a <strong>critique loop</strong> (ask for a self‑critique + revision). Save as <code>spec‑v2.json</code>.</li>
+          <li>Commit your files and push to GitHub. Add short commit messages (e.g., <span class="mono">feat: v1 spec</span>, <span class="mono">refine: v2 palette + legend</span>).</li>
+        </ol>
+
+        <h2>Part C — Reflection (short)</h2>
+        <p>In <code>lab‑01/reflection.md</code>, answer:</p>
+        <ul>
+          <li>How did <em>audience and purpose</em> change the design?</li>
+          <li>What constraints had the biggest effect on clarity or usability?</li>
+          <li>What would you try differently in your next prompt?</li>
+        </ul>
+
+        <h2 id="rubric">Submission & Rubric</h2>
+        <ul class="checklist">
+          <li class="done">Repo initialized (GitHub + Desktop + VS Code).</li>
+          <li>Prompt file (<code>prompt.md</code>) with clear goals, audience, and constraints.</li>
+          <li>Two specs (<code>spec‑v1.json</code>, <code>spec‑v2.json</code>) with meaningful changes.</li>
+          <li>Reflection (<code>reflection.md</code>) that ties back to audience/purpose.</li>
+          <li>(Optional) GitHub Pages link to your hosted <code>lab‑01</code> page.</li>
+        </ul>
+
+        <h2>Stretch Goals</h2>
+        <ul>
+          <li>Ask the model for an <strong>accessibility audit</strong> (color contrast, label sizes) and incorporate fixes.</li>
+          <li>Prompt the model to generate <strong>alt text</strong> for screenshots or key map states.</li>
+          <li>Request a <strong>bivariate</strong> alternative and compare cognitive load.</li>
+        </ul>
+
+      </main>
+
+      <aside class="card">
+        <h3>Why this Lab?</h3>
+        <p>In Web Cartography 2.0, your leverage comes from language. You’re learning to encode design principles into prompts and iterate quickly.</p>
+        <h3>Files You’ll Have</h3>
+        <ul>
+          <li><code>lab‑01/index.html</code> (this file)</li>
+          <li><code>lab‑01/style.css</code> (future stylesheet)</li>
+          <li><code>lab‑01/script.js</code> (future interactions)</li>
+          <li><code>lab‑01/prompt.md</code>, <code>spec‑v1.json</code>, <code>spec‑v2.json</code>, <code>reflection.md</code></li>
+        </ul>
+        <h3>Hook Points (for script.js)</h3>
+        <ul>
+          <li>Add listeners to “Copy Prompt” buttons (look for <code>data-copy</code> attributes).</li>
+          <li>Load a JSON spec preview into the page.</li>
+          <li>Toggle <span class="kbd">☐/☑</span> on checklist items.</li>
+        </ul>
+        <h3>Common Pitfalls</h3>
+        <ul>
+          <li>Prompts without audience/purpose → muddy specs.</li>
+          <li>Too many layers → cognitive overload.</li>
+          <li>No critique loop → the first draft calcifies.</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="card">
+      <h2>Copy‑Ready Prompt Variations</h2>
+      <div class="columns">
+        <pre data-copy><code>Design a mobile‑first choropleth of [TOPIC]. Audience: [GROUP]. Purpose: [GOAL]. Limit to 3 classes; ensure WCAG AA contrast; justify classification choice.</code></pre>
+        <pre data-copy><code>Propose two alternative legend designs (desktop + mobile). Critique readability and explain which better supports the audience.</code></pre>
+        <pre data-copy><code>Return a JSON map spec with layers, color tokens, label rules, and interactions. Then produce a refined version after a self‑critique.</code></pre>
+        <pre data-copy><code>Suggest an accessibility checklist for this map and flag likely failure points.</code></pre>
+      </div>
+    </section>
+
+    <footer class="wrap">
+      <p>© Web Cartography, 2.0 — Natural Language Map Design. This page ships with inline styles for convenience; override via <code>style.css</code>.</p>
+    </footer>
+  </div>
+</body>
+</html>

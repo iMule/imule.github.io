@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Lab: Prompting by CRAFT — Minnesota Wells & Water Quality</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- External styles (optional; will override inline styles when added) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root{
+      --bg:#f7f9fc; --card:#ffffff; --ink:#20242a; --muted:#5a6470; --accent:#2f74ff;
+      --ok:#1a9b63; --warn:#c97c00; --bad:#c24141; --border:#e7ecf4;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+         color:var(--ink);background:var(--bg);line-height:1.55}
+    header{background:linear-gradient(180deg,#f0f6ff,rgba(240,246,255,0));padding:2.5rem 1rem 1rem}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 1rem}
+    h1{margin:0 0 .25rem;font-size:1.9rem}
+    .sub{color:var(--muted);margin:.25rem 0 0}
+    .grid{display:grid;gap:1rem}
+    @media (min-width:900px){.grid-2{grid-template-columns:1.2fr .8fr}}
+    section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem}
+    h2{margin-top:.2rem}
+    h3{margin-top:1rem;font-size:1.05rem}
+    .badge{display:inline-block;padding:.2rem .5rem;border-radius:999px;background:#eef3ff;color:#24408f;font-weight:600;font-size:.8rem}
+    .note{background:#fff7e8;border:1px solid #ffe2ad;color:#5f3b00;padding:.75rem;border-radius:10px}
+    .tip{background:#eefcf4;border:1px solid #cfeede;color:#0f5132;padding:.75rem;border-radius:10px}
+    .warn{background:#fff2f2;border:1px solid #ffd3d3;color:#6d1414;padding:.75rem;border-radius:10px}
+    .card{background:var(--card);border:1px dashed var(--border);border-radius:12px;padding:.9rem}
+    .flex{display:flex;gap:.6rem;flex-wrap:wrap}
+    .btn{appearance:none;border:1px solid var(--border);background:#fff;padding:.45rem .7rem;border-radius:10px;cursor:pointer}
+    .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+    .btn.ghost{background:transparent}
+    code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    pre{background:#0f172a;color:#e5e7eb;border-radius:10px;padding:.9rem;overflow:auto}
+    .pill{font-size:.8rem;color:#334155;background:#f1f5f9;border:1px solid var(--border);
+          padding:.2rem .45rem;border-radius:999px}
+    details{border:1px solid var(--border);border-radius:12px;background:#fbfdff}
+    details>summary{cursor:pointer;padding:.75rem 1rem;font-weight:600;list-style:none}
+    details>div{padding:0 1rem 1rem}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:.6rem;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+    .kicker{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-size:.78rem}
+    .copy-ok{color:var(--ok);font-size:.9rem}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="kicker">Web Cartography, 2.0 — Practice Lab</span>
+    <h1>Prompting by CRAFT: Minnesota Wells & Water Quality</h1>
+    <p class="sub">Practice turning vague asks into defensible map specs using <strong>Web Mapper GPT</strong>, then publish each result to <code>username.github.io</code> and compare.</p>
+  </div>
+</header>
+
+<main class="wrap grid grid-2">
+  <!-- Left column: narrative & tasks -->
+  <section>
+    <h2>Overview</h2>
+    <p>
+      You’ll design the <em>same</em> interactive web map multiple times using different prompt styles—first “bad,” then progressively better—so you can feel how structure changes outcomes. The audience is the Minnesota public:
+      homeowners and residents who want to locate their well, understand basic attributes (e.g., year drilled, depth, soil/formation), and see proximity to known water pollution sites, summarized by county.
+    </p>
+    <p class="note">
+      <strong>Goal:</strong> learn to apply <strong>CRAFT</strong> (Context · Role · Ask · Format · Tests) and compare: a default prompt → a step-by-step prompt → a long narrative prompt → a JSON-schema prompt. You’ll capture Web Mapper GPT’s output, publish it, and critique.
+    </p>
+
+    <h2>What you need</h2>
+    <ul>
+      <li><strong>Web Mapper GPT</strong> (your in-book assistant for generating map specs).</li>
+      <li>A computer with a simple IDE (VS Code or equivalent) and <strong>GitHub Desktop</strong> (or CLI if you prefer).</li>
+      <li>A GitHub repository configured for <strong>GitHub Pages</strong> at <code>username.github.io</code>.</li>
+      <li>Datasets (you may provide or link these on the companion site):
+        <ul>
+          <li>Minnesota Wells (attributes: well ID, year, depth, aquifer/soil/formation, coordinates)</li>
+          <li>Minnesota Water Pollution Sites (e.g., permitted sites, cleanup areas, coordinates, basic status)</li>
+          <li>Minnesota Counties (polygons with names and GEOIDs)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>Workflow (high-level)</h2>
+    <ol>
+      <li>Run each prompt variant in Web Mapper GPT.</li>
+      <li>Export the generated map spec (and any assets) into a simple web folder.</li>
+      <li>Commit & push to <code>username.github.io/wells-lab/variant-*</code>.</li>
+      <li>Open both versions in the browser and <strong>compare usability & integrity</strong>.</li>
+    </ol>
+
+    <details>
+      <summary>Publishing refresher (GitHub Pages)</summary>
+      <div>
+        <p>Create or open your <code>username.github.io</code> repo. Make a folder <code>/wells-lab/variant-default</code> and place your HTML/CSS/JS files there. Commit with a clear message and push. Your page will be at <code>https://username.github.io/wells-lab/variant-default/</code>. Repeat for other variants.</p>
+      </div>
+    </details>
+
+    <h2>The Audience & Scenario (Context)</h2>
+    <p>
+      The public needs a simple, trustworthy map to: (1) find their well, (2) see key attributes, and (3) understand proximity to pollution sites. The map should work on phones. Legends must use plain language and avoid misleading precision. If data is missing, the map must say so instead of guessing.
+    </p>
+
+    <h2>Prompt Variants</h2>
+    <p>
+      Below are four prompt styles. Start with the “crappy default,” then iterate toward structured outputs. Use the <em>copy</em> buttons and paste into Web Mapper GPT. Save the resulting specs as separate variants and publish each one.
+    </p>
+
+    <h3>Variant A — The “Crappy Default” Prompt (on purpose)</h3>
+    <div class="card">
+      <div class="flex">
+        <span class="pill">Hallucination risk: <strong class="warn">High</strong></span>
+        <button class="btn" data-copy="#p-default">Copy prompt</button>
+        <span class="copy-ok" id="ok-default" hidden>✓ Copied</span>
+      </div>
+      <pre id="p-default">Make a detailed interactive map of Minnesota wells and water pollution sites with all relevant layers and the best legend.</pre>
+      <p class="warn"><strong>Why it’s bad:</strong> “detailed,” “all relevant layers,” and “best legend” invite invention and clutter. Expect made-up choices.</p>
+    </div>
+
+    <h3>Variant B — Step-by-Step Prompt (chain-of-thought for the model’s process, not yours)</h3>
+    <div class="card">
+      <div class="flex">
+        <span class="pill">Hallucination risk: <strong>Lower</strong></span>
+        <button class="btn" data-copy="#p-step">Copy prompt</button>
+        <span class="copy-ok" id="ok-step" hidden>✓ Copied</span>
+      </div>
+      <pre id="p-step">You are a cartography design assistant. Never fabricate data. If required info is missing, return {"status":"UNKNOWN","missing":[...]} and suggest likely sources.
+
+Task: Draft a responsive web map for the Minnesota public showing:
+1) point locations of private wells with key attributes (ID, year drilled, depth, formation/soil), 
+2) point or polygon water pollution sites,
+3) county boundaries for context.
+
+Constraints:
+- Audience: non-technical public on mobile and desktop.
+- Accessibility: meet WCAG AA contrast; avoid encoding meaning with hue alone.
+- Projection/extent: EPSG:3857, Minnesota extent; no 3D.
+- Legend: ≤4 classes; plain-language labels; include units.
+- Interaction: hover tooltips; optional filter by county and “near me” if available.
+
+Return: a short prose plan (≤120 words) followed by 3 concrete map design options labeled A/B/C.</pre>
+      <p class="tip"><strong>Why it’s better:</strong> explicit audience, constraints, and an UNKNOWN policy reduce guessing and surface trade-offs.</p>
+    </div>
+
+    <h3>Variant C — Long Narrative Prompt (when context really matters)</h3>
+    <div class="card">
+      <div class="flex">
+        <span class="pill">Hallucination risk: <strong>Moderate</strong></span>
+        <button class="btn" data-copy="#p-long">Copy prompt</button>
+        <span class="copy-ok" id="ok-long" hidden>✓ Copied</span>
+      </div>
+      <pre id="p-long">SYSTEM: You are a cartography design assistant who prioritizes clarity, honesty, and accessibility. Never fabricate data; return {"status":"UNKNOWN","missing":[...]} when needed.
+
+USER GOAL: Help Minnesota residents find their well and understand basic attributes (year drilled, depth, soil/formation), and see proximity to known water pollution sites, summarized by county.
+
+CONTEXT:
+- Audience: general public (mobile-first).
+- Geography: Minnesota; include county names and simple basemap.
+- Datasets: Minnesota wells (points), water pollution sites (points/polygons), Minnesota counties (polygons). If not provided, mark UNKNOWN and suggest official sources.
+
+CONSTRAINTS:
+- Palette: color-blind-safe; avoid red-green conflicts.
+- Symbols: distinct glyphs for wells vs. pollution sites; county outlines subtle.
+- Legend: plain-language; units included; no more than 4 classes.
+- Labels: county names only; avoid label collisions.
+- Performance: initial load under ~5MB if possible.
+
+OUTPUT: Provide (1) a concise rationale (≤120 words), and (2) a step list for how the map will handle filters (by county and proximity), then (3) a minimal embed-ready HTML scaffold.</pre>
+      <p>Use this when story and policy context are crucial, but still cap verbosity and require an embed scaffold so you can ship.</p>
+    </div>
+
+    <h3>Variant D — JSON-Schema Prompt (for render-ready specs)</h3>
+    <div class="card">
+      <div class="flex">
+        <span class="pill">Hallucination risk: <strong>Lowest</strong></span>
+        <button class="btn" data-copy="#p-json">Copy prompt</button>
+        <span class="copy-ok" id="ok-json" hidden>✓ Copied</span>
+      </div>
+      <pre id="p-json">SYSTEM: You are a cartography design assistant. Never fabricate data; if missing, return {"status":"UNKNOWN","missing":[...]}.
+
+USER: Produce a responsive map spec for Minnesota wells (points), water pollution sites (points/polygons), and counties (polygons) for a public audience.
+
+Return a single JSON object with EXACT keys: 
+{
+  "style": { 
+    "well_symbol": {"shape":"circle","size":6,"fill":"#276ef1","stroke":"#1b4db8"},
+    "pollution_symbol": {"shape":"triangle","size":7,"fill":"#b42318","stroke":"#7a271a"},
+    "county_outline": {"stroke":"#94a3b8","width":0.8,"opacity":0.8},
+    "palette_notes": "color-blind-safe; no red/green conflicts"
+  },
+  "layout": {
+    "title": "Minnesota Wells & Water Quality",
+    "legend_position":"bottom-right",
+    "labels":"county_names_only",
+    "basemap":"light"
+  },
+  "interaction": {
+    "tooltips":"on-hover",
+    "filters":["county_dropdown","near_me_toggle"],
+    "details_panel":true
+  },
+  "accessibility": {"contrast_pass": true, "min_label_px": 14},
+  "data_requirements": ["wells","pollution_sites","counties"],
+  "rationale": "≤120 words explaining classification/symbol choices"
+}
+
+No extra prose outside the JSON object. If any field is uncertain, keep the field and set a sensible placeholder plus add it to "missing" in an accompanying UNKNOWN object.</pre>
+      <p>This variant is easiest to validate, compare, and publish. It’s the closest to “language → working map.”</p>
+    </div>
+
+    <h2>Deliverables</h2>
+    <ul>
+      <li>Four published variants:
+        <ul>
+          <li><code>/wells-lab/variant-default/</code></li>
+          <li><code>/wells-lab/variant-steps/</code></li>
+          <li><code>/wells-lab/variant-long/</code></li>
+          <li><code>/wells-lab/variant-json/</code></li>
+        </ul>
+      </li>
+      <li>A short reflection (200–300 words): which prompt produced the most <em>trustworthy</em> and <em>usable</em> result? Why?</li>
+      <li>Two screenshots per variant (mobile width & desktop).</li>
+    </ul>
+
+    <h2>Evaluation rubric</h2>
+    <table>
+      <thead><tr><th>Criterion</th><th>Exceeds</th><th>Meets</th><th>Needs work</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>CRAFT usage</td>
+          <td>All five elements are explicit and consistent across variants.</td>
+          <td>Most elements present; minor omissions.</td>
+          <td>Multiple elements missing; vague asks.</td>
+        </tr>
+        <tr>
+          <td>Honesty & grounding</td>
+          <td>UNKNOWN policy used correctly; sources suggested; no fabrications.</td>
+          <td>Generally grounded; minor ambiguities.</td>
+          <td>Evidence of invented data/methods.</td>
+        </tr>
+        <tr>
+          <td>Accessibility</td>
+          <td>Contrast checked; clear legends; mobile-friendly.</td>
+          <td>Mostly compliant; small issues remain.</td>
+          <td>Poor contrast; unclear legends; mobile issues.</td>
+        </tr>
+        <tr>
+          <td>Comparative insight</td>
+          <td>Reflection clearly links prompt structure to map quality.</td>
+          <td>Reflection identifies some differences.</td>
+          <td>Reflection vague or missing.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Troubleshooting</h2>
+    <p class="tip"><strong>Invalid JSON?</strong> Paste it back to Web Mapper GPT: “Repair this JSON to conform exactly to the schema and explain what changed in one sentence.”</p>
+    <p class="tip"><strong>Cluttered map?</strong> Tighten constraints: fewer classes, plain-language legend, county labels only.</p>
+    <p class="tip"><strong>Slow loads?</strong> Ask for a performance budget in the prompt (e.g., initial load &lt; 5 MB) and simplify symbols.</p>
+    <p class="tip"><strong>Ambiguous sources?</strong> Enforce the UNKNOWN policy and request 2 suggested authoritative sources.</p>
+  </section>
+
+  <!-- Right column: quick reference & checklist -->
+  <section>
+    <h2>CRAFT Quick Reference</h2>
+    <p><strong>C</strong>ontext (audience, purpose, scope) · <strong>R</strong>ole (who the model is) · <strong>A</strong>sk (precise task) · <strong>F</strong>ormat (JSON/spec/rationale) · <strong>T</strong>ests (checks/critique).</p>
+    <div class="card">
+      <h3>Paste-ready guardrails</h3>
+      <ul>
+        <li>“Never fabricate data; if missing, return <code>{"status":"UNKNOWN","missing":[...]}</code>.”</li>
+        <li>“Explain classification trade-offs in ≤120 words.”</li>
+        <li>“Verify WCAG AA; if any swatch fails, return a compliant alternative.”</li>
+        <li>“Provide a brief self-critique and one revision.”</li>
+      </ul>
+    </div>
+
+    <h3>What to compare across variants</h3>
+    <ul>
+      <li>Did the prompt reduce guessing (projection, palette, legend)?</li>
+      <li>Are tooltips clear for non-technical users?</li>
+      <li>Are county labels legible on mobile?</li>
+      <li>Do symbols for wells vs. pollution sites stay distinct?</li>
+      <li>Does any variant invent data or methods?</li>
+    </ul>
+
+    <h3>Optional stretch goals</h3>
+    <ul>
+      <li>Add a “Near Me” button with safe geolocation messaging.</li>
+      <li>Provide a “Share” link to copy the current county filter.</li>
+      <li>Publish a short “About this map” page citing sources and limitations.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="wrap" style="padding:2rem 1rem 3rem;color:var(--muted)">
+  <p>When your four variants are live, share links and reflections with your cohort. Remember: prompting is design. Compare, critique, revise.</p>
+</footer>
+
+<!-- External script (optional; will override inline script when added) -->
+<script src="script.js"></script>
+
+<script>
+  // Minimal JS: copy-to-clipboard for prompts
+  document.querySelectorAll('[data-copy]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const sel = btn.getAttribute('data-copy');
+      const node = document.querySelector(sel);
+      if(!node) return;
+      try{
+        await navigator.clipboard.writeText(node.textContent);
+        const okId = 'ok-' + sel.replace('#p-','');
+        const ok = document.getElementById(okId);
+        if(ok){ ok.hidden = false; setTimeout(()=> ok.hidden = true, 1600); }
+      }catch(e){ alert('Copy failed. Select and copy manually.'); }
+    });
+  });
+</script>
+</body>
+</html>
