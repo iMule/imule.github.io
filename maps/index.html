@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>World Potato Day — Global Potato Production</title>
+
+<!-- Leaflet -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- D3 + TopoJSON + Turf -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/topojson-client@3"></script>
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+
+<style>
+  :root{
+    --mocha-900:#2a1a12;
+    --mocha-800:#3b2418;
+    --mocha-700:#523322;
+    --mocha-600:#6a4630;
+    --mocha-500:#8a5b3e;
+    --mocha-200:#e7dacb;
+    --cream:#f7f2eb;
+    --accent:#f2b450; /* golden potato light */
+    --accent-2:#e8873a;
+  }
+
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--mocha-900);
+    color: var(--cream);
+  }
+
+  header{
+    padding:12px 18px;
+    background: linear-gradient(90deg, var(--mocha-900), var(--mocha-800));
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+
+  header h1{
+    margin:0;
+    font-size: clamp(20px, 3vw, 30px);
+    letter-spacing:0.5px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  header h1 .spud{
+    font-size:1.2em;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+  }
+
+  #layout{
+    display:grid;
+    grid-template-columns: 1.4fr 0.9fr;
+    min-height: calc(100vh - 60px);
+  }
+
+  #map{
+    position:relative;
+    height:100%;
+  }
+
+  #chartPanel{
+    background: var(--mocha-800);
+    border-left:1px solid rgba(255,255,255,0.08);
+    padding:10px 12px 6px 12px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  #chartTitle{
+    font-weight:700;
+    font-size: clamp(14px, 1.8vw, 18px);
+    color: var(--mocha-200);
+    margin:4px 6px 2px 6px;
+  }
+
+  #chart{
+    flex:1;
+    min-height:320px;
+    background: var(--mocha-900);
+    border-radius:14px;
+    padding:8px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  }
+
+  #legend{
+    position:absolute;
+    top:12px;
+    right:12px;
+    background: rgba(42,26,18,0.9);
+    color: var(--cream);
+    padding:10px 12px;
+    border-radius:12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    font-size:13px;
+    max-width:220px;
+    z-index:1000;
+  }
+  #legend details summary{
+    cursor:pointer;
+    font-weight:700;
+    color: var(--mocha-200);
+  }
+  #legend .row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:6px;
+  }
+  #legend .miniSpud{
+    width:26px; height:26px;
+  }
+
+  #sourcesBtn{
+    position:absolute;
+    bottom:14px; right:14px;
+    z-index:1200;
+    background: var(--mocha-700);
+    color: var(--cream);
+    border:none;
+    padding:8px 10px;
+    font-weight:700;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 6px 16px rgba(0,0,0,0.35);
+  }
+  #sourcesBtn:hover{ background: var(--mocha-600); }
+
+  #modalBack{
+    position:fixed; inset:0;
+    background: rgba(0,0,0,0.5);
+    display:none;
+    z-index:2000;
+  }
+  #modal{
+    position:fixed;
+    left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    width:min(560px, 92vw);
+    background: var(--cream);
+    color:#111;
+    border-radius:16px;
+    padding:14px 16px;
+    display:none;
+    z-index:2001;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+  #modal h3{ margin:4px 0 8px 0; }
+  #modal p, #modal li{ font-size:14px; line-height:1.45; }
+  #modal .close{
+    position:absolute; right:10px; top:8px;
+    background:#0000; border:none; font-size:20px; cursor:pointer;
+  }
+
+  /* Popup styling */
+  .leaflet-popup-content-wrapper{
+    background: var(--cream);
+    border-radius:14px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.35);
+  }
+  .leaflet-popup-content{
+    margin:10px 12px;
+    color:#1a140f;
+    font-size:14px;
+  }
+  .popup-title{
+    font-weight:800;
+    font-size:16px;
+    margin-bottom:4px;
+  }
+  .popup-stat{
+    display:flex; justify-content:space-between;
+    gap:10px; padding:3px 0;
+    border-bottom:1px dashed rgba(0,0,0,0.12);
+  }
+  .popup-stat:last-child{ border-bottom:none; }
+
+  /* Responsive */
+  @media (max-width: 900px){
+    #layout{
+      grid-template-columns:1fr;
+      grid-template-rows: 60vh auto;
+    }
+    #chartPanel{ border-left:none; border-top:1px solid rgba(255,255,255,0.08); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="spud">🥔</span> World Potato Day Map: Who Grows the Most Spuds?</h1>
+</header>
+
+<div id="layout">
+  <div id="map">
+    <div id="legend">
+      <details open>
+        <summary>Legend</summary>
+        <div class="row">
+          <svg class="miniSpud" viewBox="0 0 64 64" aria-label="Potato symbol">
+            <path d="M18 10 C8 16,6 34,14 46 C22 58,44 60,54 46 C64 32,58 14,42 8 C32 4,24 6,18 10 Z"
+              fill="var(--accent)" stroke="var(--mocha-900)" stroke-width="2"></path>
+          </svg>
+          <div>Potato size ∝ 2023 production (tonnes)</div>
+        </div>
+        <div style="margin-top:6px; opacity:.9;">
+          Click a potato or a bar to spotlight a country.
+        </div>
+      </details>
+    </div>
+
+    <button id="sourcesBtn">Sources & Credits</button>
+  </div>
+
+  <aside id="chartPanel">
+    <div id="chartTitle">Top 10 Potato Producers (2023)</div>
+    <div id="chart"></div>
+    <div style="font-size:12px; color:var(--mocha-200); opacity:.9; padding:0 6px 6px;">
+      Data: FAOSTAT (production) + World Bank (population)
+    </div>
+  </aside>
+</div>
+
+<div id="modalBack"></div>
+<div id="modal" role="dialog" aria-modal="true">
+  <button class="close" aria-label="Close">✕</button>
+  <h3>Sources & Credits</h3>
+  <p><b>Potato production:</b> FAOSTAT, Production: Crops and livestock products (Potatoes, 2023).</p>
+  <p><b>Population:</b> World Bank WDI, SP.POP.TOTL (2023).</p>
+  <p><b>Boundaries:</b> Natural Earth Admin-0 via world-atlas TopoJSON (public domain).</p>
+  <p>Made with <b>Web Mapper GPT</b>. Happy World Potato Day! 🥔</p>
+</div>
+
+<script>
+(async function(){
+
+  const YEAR = 2023;
+  const POTATO_ITEM_CODE = 116;      // FAO potatoes
+  const PROD_ELEMENT_CODE = 5510;    // "Production" (tonnes) in QCL domain
+
+  // --- Basemap (mocha-tinted) ---
+  const map = L.map("map", {
+    zoomControl:false,
+    attributionControl:true,
+    worldCopyJump:true,
+    minZoom:1.5,
+    maxZoom:6
+  }).setView([20, 0], 2);
+
+  const base = L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    { attribution: '&copy; OpenStreetMap & CARTO | Web Mapper GPT' }
+  ).addTo(map);
+
+  // Sepia/mocha filter under layers
+  base.getContainer().style.filter = "sepia(0.85) saturate(0.7) hue-rotate(330deg) brightness(0.9)";
+
+  // --- Utility formatting ---
+  const fmt = d3.format(",.0f");
+
+  // --- Minimalist potato SVG icon factory ---
+  function potatoSVG(fill= "var(--accent)", stroke="var(--mocha-900)", glow=false){
+    return `
+    <svg width="64" height="64" viewBox="0 0 64 64" aria-label="Potato icon"
+      style="filter:${glow ? "drop-shadow(0 0 6px rgba(242,180,80,.9))" : "none"}">
+      <path d="M18 10 C8 16,6 34,14 46 C22 58,44 60,54 46 C64 32,58 14,42 8 C32 4,24 6,18 10 Z"
+        fill="${fill}" stroke="${stroke}" stroke-width="2" />
+      <circle cx="24" cy="22" r="2.2" fill="${stroke}" opacity="0.40"/>
+      <circle cx="38" cy="20" r="1.8" fill="${stroke}" opacity="0.35"/>
+      <circle cx="30" cy="36" r="2.0" fill="${stroke}" opacity="0.30"/>
+      <circle cx="44" cy="34" r="1.5" fill="${stroke}" opacity="0.30"/>
+    </svg>`;
+  }
+
+  // --- Fetch country boundaries (TopoJSON -> GeoJSON) ---
+  const topo = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+  const countries = topojson.feature(topo, topo.objects.countries);
+
+  const countryLayer = L.geoJSON(countries, {
+    style: {
+      color: "rgba(247,242,235,0.35)",
+      weight: 1,
+      fillColor: "rgba(59,36,24,0.35)",
+      fillOpacity: 0.5
+    }
+  }).addTo(map);
+
+  // Bounds padding rule: restrict pan/zoom to ~10 degrees beyond data extent
+  const b = countryLayer.getBounds().pad(0.08);
+  map.setMaxBounds(b);
+
+  // --- Fetch FAOSTAT production data ---
+  // FAOSTAT API endpoint (v1). We request all areas for potatoes production in tonnes.
+  const faoUrl =
+    `https://api.fao.org/api/v1/en/Production/Crops_Livestock_Products?item_code=${POTATO_ITEM_CODE}&element_code=${PROD_ELEMENT_CODE}&year=${YEAR}&area_code=all`;
+
+  const faoRes = await fetch(faoUrl);
+  const faoJson = await faoRes.json();
+  const faoData = faoJson.data || [];
+
+  // Map FAO area -> value
+  const prodByName = new Map();
+  faoData.forEach(d=>{
+    if(d.Unit === "tonnes" && d.Value != null){
+      prodByName.set(d.Area, +d.Value);
+    }
+  });
+
+  // --- Fetch World Bank population ---
+  const popUrl =
+    `https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?date=${YEAR}&format=json&per_page=20000`;
+  const popRes = await fetch(popUrl);
+  const popJson = await popRes.json();
+  const popData = (popJson && popJson[1]) ? popJson[1] : [];
+
+  const popByIso3 = new Map();
+  popData.forEach(d=>{
+    if(d.countryiso3code && d.value != null){
+      popByIso3.set(d.countryiso3code, +d.value);
+    }
+  });
+
+  // --- Name reconciliation between FAOSTAT and Natural Earth ---
+  const aliases = new Map([
+    ["United States of America","United States"],
+    ["Russian Federation","Russia"],
+    ["Viet Nam","Vietnam"],
+    ["Iran (Islamic Republic of)","Iran"],
+    ["Türkiye","Turkey"],
+    ["Bolivia (Plurinational State of)","Bolivia"],
+    ["Czechia","Czech Republic"],
+    ["United Republic of Tanzania","Tanzania"],
+    ["Syrian Arab Republic","Syria"],
+    ["Democratic Republic of the Congo","Congo, Dem. Rep."],
+    ["Republic of the Congo","Congo, Rep."]
+  ]);
+
+  function normalizeName(n){
+    return (n||"")
+      .replace(/\s*\(.*?\)\s*/g,"")
+      .replace(/&/g,"and")
+      .trim();
+  }
+
+  function lookupProduction(neName){
+    const tryNames = [
+      neName,
+      aliases.get(neName),
+      normalizeName(neName),
+      aliases.get(normalizeName(neName))
+    ].filter(Boolean);
+
+    for(const nm of tryNames){
+      if(prodByName.has(nm)) return prodByName.get(nm);
+    }
+    return null;
+  }
+
+  // --- Build joined dataset with centroids ---
+  const joined = countries.features.map(f=>{
+    const neName = f.properties.name;
+    const prod = lookupProduction(neName);
+    const iso3 = f.id; // numeric ISO in world-atlas, not ISO3. We'll store name-based only.
+    const centroid = turf.centroid(f).geometry.coordinates; // [lon, lat]
+    // We'll try to get ISO3 from NE if present; world-atlas doesn't include ISO3.
+    const pop = null; // filled after name-based match below
+    return { feature:f, neName, prod, centroid, pop };
+  }).filter(d=>d.prod != null);
+
+  // crude name->ISO3 matching for population (World Bank gives ISO3)
+  // We'll build a helper by country name from WB response.
+  const wbNameToIso3 = new Map(popData.map(d=>[d.country.value, d.countryiso3code]));
+  function wbIso3FromName(neName){
+    const candidates = [
+      neName,
+      aliases.get(neName),
+      normalizeName(neName),
+      aliases.get(normalizeName(neName))
+    ].filter(Boolean);
+    for(const c of candidates){
+      if(wbNameToIso3.has(c)) return wbNameToIso3.get(c);
+    }
+    return null;
+  }
+
+  joined.forEach(d=>{
+    const iso3c = wbIso3FromName(d.neName);
+    if(iso3c && popByIso3.has(iso3c)){
+      d.pop = popByIso3.get(iso3c);
+      d.iso3 = iso3c;
+    }
+  });
+
+  // --- Symbol scaling ---
+  const prodValues = joined.map(d=>d.prod);
+  const prodExtent = d3.extent(prodValues);
+
+  // area proportional scaling (sqrt)
+  const sizeScale = d3.scaleSqrt()
+    .domain(prodExtent)
+    .range([18, 80]); // px
+
+  // --- Interactivity state ---
+  let selectedCountry = null;
+  const potatoMarkers = new Map(); // neName -> marker
+  const countryPolys = new Map();  // neName -> layer
+
+  // index polygon layers by name for highlighting
+  countryLayer.eachLayer(l=>{
+    const name = l.feature?.properties?.name;
+    if(name) countryPolys.set(name, l);
+  });
+
+  function styleCountries(dimAll=false){
+    countryLayer.eachLayer(l=>{
+      l.setStyle({
+        color: dimAll ? "rgba(247,242,235,0.15)" : "rgba(247,242,235,0.35)",
+        weight: selectedCountry && l.feature.properties.name===selectedCountry ? 2.5 : 1,
+        fillColor: selectedCountry && l.feature.properties.name===selectedCountry
+          ? "rgba(242,180,80,0.25)"
+          : "rgba(59,36,24,0.35)",
+        fillOpacity: selectedCountry ? (l.feature.properties.name===selectedCountry ? 0.8 : 0.25) : 0.5
+      });
+    });
+  }
+
+  function stylePotatoes(){
+    potatoMarkers.forEach((m, name)=>{
+      const d = m.__data__;
+      const sz = sizeScale(d.prod);
+      const isSel = selectedCountry === name;
+      const html = potatoSVG(
+        isSel ? "var(--accent)" : "rgba(242,180,80,0.9)",
+        "var(--mocha-900)",
+        isSel
+      );
+      m.setIcon(L.divIcon({
+        className:"",
+        html,
+        iconSize:[sz, sz],
+        iconAnchor:[sz/2, sz/2]
+      }));
+      const el = m.getElement();
+      if(el){
+        el.style.opacity = selectedCountry ? (isSel ? 1 : 0.35) : 0.95;
+        el.style.transition = "opacity .2s ease, transform .2s ease";
+        el.style.transform = isSel ? "scale(1.06)" : "scale(1)";
+        el.style.cursor = "pointer";
+      }
+    });
+  }
+
+  function popupHTML(d){
+    return `
+      <div class="popup-title">${d.neName}</div>
+      <div class="popup-stat"><span>Potatoes (2023)</span><b>${fmt(d.prod)} t</b></div>
+      <div class="popup-stat"><span>Population (2023)</span><b>${d.pop ? fmt(d.pop) : "n/a"}</b></div>
+    `;
+  }
+
+  function selectCountry(name, openPopup=true){
+    if(selectedCountry === name){
+      selectedCountry = null;
+      styleCountries(false);
+      stylePotatoes();
+      updateBars();
+      map.closePopup();
+      return;
+    }
+    selectedCountry = name;
+    styleCountries(true);
+    stylePotatoes();
+    updateBars();
+
+    if(openPopup){
+      const m = potatoMarkers.get(name);
+      if(m){
+        m.bindPopup(popupHTML(m.__data__), { closeButton:false, autoPan:true })
+         .openPopup();
+      }
+    }
+  }
+
+  // --- Add potato markers ---
+  joined.forEach(d=>{
+    const sz = sizeScale(d.prod);
+    const marker = L.marker([d.centroid[1], d.centroid[0]], {
+      icon: L.divIcon({
+        className:"",
+        html: potatoSVG(),
+        iconSize:[sz, sz],
+        iconAnchor:[sz/2, sz/2]
+      })
+    }).addTo(map);
+
+    marker.__data__ = d;
+
+    marker.on("click", ()=> selectCountry(d.neName, true));
+    marker.on("mouseover", ()=>{
+      if(!selectedCountry){
+        marker.getElement().style.opacity = 1;
+        marker.getElement().style.transform = "scale(1.07)";
+      }
+    });
+    marker.on("mouseout", ()=>{
+      if(!selectedCountry){
+        marker.getElement().style.opacity = 0.95;
+        marker.getElement().style.transform = "scale(1)";
+      }
+    });
+
+    potatoMarkers.set(d.neName, marker);
+  });
+
+  // --- Build top-10 bar chart ---
+  const top10 = joined
+    .slice()
+    .sort((a,b)=>b.prod-a.prod)
+    .slice(0,10);
+
+  const chartDiv = document.getElementById("chart");
+  const width = chartDiv.clientWidth;
+  const height = Math.max(chartDiv.clientHeight, 320);
+  const margin = {top:18, right:12, bottom:24, left:110};
+
+  const svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  const x = d3.scaleLinear()
+    .domain([0, d3.max(top10, d=>d.prod)*1.05])
+    .range([margin.left, width-margin.right]);
+
+  const y = d3.scaleBand()
+    .domain(top10.map(d=>d.neName))
+    .range([margin.top, height-margin.bottom])
+    .padding(0.18);
+
+  svg.append("g")
+    .attr("transform", `translate(0,${height-margin.bottom})`)
+    .call(d3.axisBottom(x).ticks(4).tickFormat(d=>d/1e6+"M"))
+    .call(g=>g.selectAll("text").attr("fill","var(--mocha-200)"))
+    .call(g=>g.selectAll("path,line").attr("stroke","rgba(247,242,235,0.25)"));
+
+  svg.append("g")
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y))
+    .call(g=>g.selectAll("text").attr("fill","var(--mocha-200)"))
+    .call(g=>g.selectAll("path,line").attr("stroke","rgba(247,242,235,0.25)"));
+
+  const bars = svg.append("g")
+    .selectAll("rect")
+    .data(top10)
+    .join("rect")
+    .attr("x", x(0))
+    .attr("y", d=>y(d.neName))
+    .attr("height", y.bandwidth())
+    .attr("rx", 8)
+    .attr("width", d=>x(d.prod)-x(0))
+    .attr("fill", "var(--accent-2)")
+    .attr("opacity", 0.9)
+    .style("cursor","pointer")
+    .on("mouseenter", (_,d)=> {
+      if(!selectedCountry) selectCountry(d.neName, false);
+    })
+    .on("mouseleave", (_,d)=> {
+      if(selectedCountry === d.neName) return;
+      if(selectedCountry==null){
+        styleCountries(false);
+        stylePotatoes();
+        updateBars();
+      }
+    })
+    .on("click", (_,d)=> selectCountry(d.neName, true));
+
+  const labels = svg.append("g")
+    .selectAll("text.value")
+    .data(top10)
+    .join("text")
+    .attr("class","value")
+    .attr("x", d=>x(d.prod)+6)
+    .attr("y", d=>y(d.neName) + y.bandwidth()/2 + 4)
+    .attr("fill","var(--mocha-200)")
+    .attr("font-size","12px")
+    .text(d=>fmt(d.prod));
+
+  function updateBars(){
+    bars
+      .attr("fill", d=> selectedCountry===d.neName ? "var(--accent)" : "var(--accent-2)")
+      .attr("opacity", d=> selectedCountry ? (selectedCountry===d.neName ? 1 : 0.35) : 0.9);
+    labels
+      .attr("opacity", d=> selectedCountry ? (selectedCountry===d.neName ? 1 : 0.55) : 1);
+  }
+
+  // --- Sources modal ---
+  const modalBack = document.getElementById("modalBack");
+  const modal = document.getElementById("modal");
+  const openModal = ()=>{
+    modalBack.style.display="block";
+    modal.style.display="block";
+  };
+  const closeModal=()=>{
+    modalBack.style.display="none";
+    modal.style.display="none";
+  };
+  document.getElementById("sourcesBtn").onclick=openModal;
+  modalBack.onclick=closeModal;
+  modal.querySelector(".close").onclick=closeModal;
+
+})();
+</script>
+</body>
+</html>
