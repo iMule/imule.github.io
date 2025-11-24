@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lärmverstöße an Sonntagen – Pliezhausen 2025</title>
+
+  <!-- Leaflet + MarkerCluster + noUiSlider CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-o9N1j7kP6+H2U6kG3wZ9WmGkPp1LQp1C6tGZ8m2M+7E="
+    crossorigin=""
+  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css" />
+
+  <style>
+    :root{
+      --bg: #f4f5f7;
+      --panel: rgba(255,255,255,0.92);
+      --panel-border: rgba(0,0,0,0.08);
+      --text: #1f2328;
+      --muted: #606770;
+      --accent: #3a3f45;
+      --accent-soft: #8a9097;
+      --danger: #2f3337;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+      --radius: 14px;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+    }
+
+    .app {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+      background: #e9eaec;
+    }
+
+    /* Top title bar */
+    .titlebar {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      z-index: 1000;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(6px);
+    }
+    .titlebar h1{
+      font-size: clamp(16px, 2.2vw, 20px);
+      line-height: 1.2;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .titlebar .subtitle{
+      font-size: clamp(12px, 1.8vw, 13px);
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Right-side tools */
+    .tools{
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .tool-btn{
+      appearance: none;
+      border: 1px solid var(--panel-border);
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+      white-space: nowrap;
+    }
+    .tool-btn:hover{ background:#f7f8f9; border-color: rgba(0,0,0,0.12); }
+    .tool-btn:active{ transform: translateY(1px); }
+
+    .search-wrap{ position: relative; }
+    .search-input{
+      border: 1px solid var(--panel-border);
+      background: #fff;
+      padding: 7px 30px 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      outline: none;
+      width: min(44vw, 220px);
+    }
+    .search-input::placeholder{ color:#9aa0a6; }
+    .search-clear{
+      position:absolute; right:6px; top:50%; transform:translateY(-50%);
+      border:none; background:transparent; cursor:pointer; color:#9aa0a6; font-size:16px; line-height:1;
+      padding:2px 6px;
+    }
+
+    /* Filter dropdown panel */
+    .filter-wrap{
+      position: relative;
+    }
+    .filter-panel{
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      width: min(86vw, 340px);
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      display: none;
+      z-index: 1200;
+      backdrop-filter: blur(6px);
+    }
+    .filter-panel.open{ display:block; }
+    .filter-section{
+      display: grid;
+      gap: 8px;
+      padding: 6px 0;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .filter-section:first-child{
+      border-top: none;
+      padding-top: 0;
+    }
+    .filter-title{
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .filter-help{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    /* noUiSlider minimalist restyle */
+    .noUi-target{
+      border: none;
+      background: #e6e7ea;
+      box-shadow: none;
+      height: 6px;
+      border-radius: 999px;
+    }
+    .noUi-connect{
+      background: #3a3f45;
+    }
+    .noUi-handle{
+      width: 18px; height: 18px;
+      border-radius: 999px;
+      border: 2px solid white;
+      background: #3a3f45;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+      right: -9px; top: -7px;
+      cursor: grab;
+    }
+    .noUi-handle:before, .noUi-handle:after{ display:none; }
+    .range-labels{
+      display:flex; justify-content:space-between; font-size:12px; color: var(--muted);
+    }
+
+    /* Multi-select list (minimal) */
+    .multi-select{
+      max-height: 150px;
+      overflow: auto;
+      display: grid;
+      gap: 6px;
+      padding-right: 2px;
+    }
+    .check-row{
+      display:flex; align-items:center; gap:8px; font-size: 13px;
+    }
+    .check-row input{ accent-color: #3a3f45; }
+
+    /* Legend panel */
+    .legend {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 1000;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      width: min(74vw, 280px);
+      backdrop-filter: blur(6px);
+    }
+    .legend header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      cursor:pointer;
+      user-select:none;
+    }
+    .legend h2{
+      font-size: 14px;
+      margin: 0;
+      font-weight: 700;
+    }
+    .legend .chev{
+      font-size: 18px;
+      color: var(--muted);
+      transform: rotate(0deg);
+      transition: transform .2s ease;
+    }
+    .legend.collapsed .chev{ transform: rotate(-90deg); }
+    .legend .content{
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .legend.collapsed .content{ display:none; }
+    .legend-item{
+      display:flex; align-items:center; gap:8px;
+      color: var(--text);
+    }
+    .dot{
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--danger);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.08) inset;
+      flex: 0 0 auto;
+    }
+    .dot.muted{ background: var(--accent-soft); }
+    .legend small{ color: var(--muted); line-height:1.35; }
+
+    /* Modal */
+    .modal-backdrop{
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 2000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+    }
+    .modal{
+      width: min(92vw, 520px);
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--panel-border);
+      padding: 14px 16px;
+    }
+    .modal h3{
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .modal p, .modal li{
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text);
+    }
+    .modal .muted{ color: var(--muted); }
+    .modal .close-row{
+      display:flex; justify-content:flex-end; margin-top: 10px;
+    }
+
+    /* Leaflet popup restyle */
+    .leaflet-popup-content-wrapper{
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--panel-border);
+    }
+    .leaflet-popup-content{
+      margin: 10px 12px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .popup-title{
+      font-weight: 800; margin-bottom: 6px; font-size: 15px;
+    }
+    .popup-grid{ display: grid; gap: 4px; }
+    .popup-row{ display:flex; gap: 6px; }
+    .popup-key{ color: var(--muted); min-width: 105px; }
+    .popup-val{ color: var(--text); font-weight: 600; }
+
+    /* MarkerCluster subdued style */
+    .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {
+      background-color: rgba(70,75,80,0.15);
+    }
+    .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div{
+      background-color: rgba(70,75,80,0.75);
+      color: #fff;
+      font-weight: 800;
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+    }
+
+    /* Hide default Leaflet controls for clean newspaper UI */
+    .leaflet-control-container{ display:none; }
+
+    @media (max-width: 560px){
+      .titlebar{ padding: 8px 10px; }
+      .search-input{ width: 48vw; }
+      .popup-key{ min-width: 90px; }
+      .filter-panel{ width: min(92vw, 320px); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="titlebar" role="banner" aria-label="Kartentitel und Werkzeuge">
+      <div>
+        <h1>Lärmverstöße an Sonntagen – Pliezhausen 2025</h1>
+        <div class="subtitle">Gemeldete Ruhestörungen im Gemeindegebiet</div>
+      </div>
+
+      <div class="tools" role="group" aria-label="Werkzeuge">
+        <div class="search-wrap">
+          <input id="searchInput" class="search-input" type="search"
+                 placeholder="Adresse / Stichwort filtern…" aria-label="Filter" />
+          <button id="searchClear" class="search-clear" aria-label="Filter löschen">×</button>
+        </div>
+
+        <!-- Minimal filter dropdown -->
+        <div class="filter-wrap">
+          <button id="filterBtn" class="tool-btn" type="button" aria-label="Filter öffnen">
+            Filter
+          </button>
+          <div id="filterPanel" class="filter-panel" aria-hidden="true">
+            <div class="filter-section">
+              <div class="filter-title">Sonntags-Zeitraum</div>
+              <div id="dateSlider" aria-label="Zeitraum Slider"></div>
+              <div class="range-labels">
+                <div id="dateMinLabel">–</div>
+                <div id="dateMaxLabel">–</div>
+              </div>
+              <div class="filter-help">Ziehen Sie die Griffe, um Sonntage einzugrenzen.</div>
+            </div>
+
+            <div class="filter-section">
+              <div class="filter-title">Verstoßtypen</div>
+              <div id="activityList" class="multi-select" aria-label="Verstoßtypen auswählen"></div>
+              <div class="filter-help">Mehrfachauswahl möglich.</div>
+            </div>
+
+            <div class="filter-section">
+              <button id="clearFilters" class="tool-btn" type="button">Filter zurücksetzen</button>
+            </div>
+          </div>
+        </div>
+
+        <button id="resetView" class="tool-btn" type="button" aria-label="Ansicht zurücksetzen">
+          Ansicht zurücksetzen
+        </button>
+        <button id="sourcesBtn" class="tool-btn" type="button" aria-label="Quellen und Hinweise">
+          Quellen / About
+        </button>
+      </div>
+    </div>
+
+    <div id="map" role="application" aria-label="Karte der Lärmbeschwerden"></div>
+
+    <section id="legend" class="legend" aria-label="Legende">
+      <header id="legendHeader" aria-expanded="true">
+        <h2>Legende</h2>
+        <div class="chev">▾</div>
+      </header>
+      <div class="content">
+        <div class="legend-item">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Einzelne Meldung</span>
+        </div>
+        <div class="legend-item">
+          <span class="dot muted" aria-hidden="true"></span>
+          <span>Mehrere Meldungen (Cluster)</span>
+        </div>
+        <small>
+          Tipp: Klicken Sie auf Punkte für Details. Bei dichtem
+          Auftreten werden Meldungen gruppiert.
+        </small>
+      </div>
+    </section>
+
+    <!-- Sources / About Modal -->
+    <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal">
+        <h3>Quellen & Hinweise</h3>
+        <p>
+          <strong>Daten:</strong> Sunday-Lärmverstöße Pliezhausen (2025), bereitgestellt durch die Gemeinde /
+          lokale Meldesysteme. (Datei: <em>pliezhausen_noise_violations_2025.geojson</em>)
+        </p>
+        <p class="muted">
+          Die Karte dient der Orientierung. Positionen können aus Datenschutz-
+          und Meldegründen leicht generalisiert sein.
+        </p>
+        <ul>
+          <li><strong>Basiskarte:</strong> CARTO Positron (OpenStreetMap-Daten).</li>
+          <li><strong>Erstellt mit:</strong> Web Mapper GPT.</li>
+        </ul>
+        <div class="close-row">
+          <button id="closeModal" class="tool-btn" type="button">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet + MarkerCluster + noUiSlider JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o8EeB9QHk7QG0uSx4j0YvVw3kS8nYQK7Wv5A2f1r0XQ="
+    crossorigin=""
+  ></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
+
+  <script>
+    // ------- Config -------
+    const GEOJSON_URL = "./pliezhausen_noise_violations_2025.geojson";
+    const DATE_FIELD = "date";       // confirmed from your data
+    const TYPE_FIELD = "activity";   // confirmed from your data
+
+    // Soft gray basemap without texture
+    const BASEMAP = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; OpenStreetMap contributors &copy; CARTO | Web Mapper GPT',
+        maxZoom: 19
+      }
+    );
+
+    // ------- Map init -------
+    const map = L.map("map", {
+      zoomControl: false,
+      attributionControl: false,
+      scrollWheelZoom: true,
+      doubleClickZoom: true,
+      boxZoom: false,
+      keyboard: false
+    }).addLayer(BASEMAP);
+
+    L.control.attribution({ position: "bottomright" })
+      .addAttribution('Web Mapper GPT')
+      .addTo(map);
+
+    const clusterGroup = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      spiderfyOnMaxZoom: true,
+      disableClusteringAtZoom: 18,
+      maxClusterRadius: 40
+    });
+
+    let rawGeojson;
+    let dataBounds;
+    let geoLayer;
+
+    // Filter state
+    let searchTerm = "";
+    let dateMin = null;
+    let dateMax = null;
+    let selectedTypes = new Set(); // if empty => show all
+
+    // ------- Helpers -------
+    const pad2 = n => String(n).padStart(2, "0");
+    function fmtDate(d){
+      return `${pad2(d.getDate())}.${pad2(d.getMonth()+1)}.${d.getFullYear()}`;
+    }
+    function parseDate(val){
+      // expects ISO or yyyy-mm-dd
+      const d = new Date(val);
+      return isNaN(d) ? null : d;
+    }
+    function isSunday(d){ return d && d.getDay() === 0; }
+
+    function firstSundayOfYear(year){
+      const d = new Date(year, 0, 1);
+      while (d.getDay() !== 0) d.setDate(d.getDate() + 1);
+      return d;
+    }
+    function lastSundayOfYear(year){
+      const d = new Date(year, 11, 31);
+      while (d.getDay() !== 0) d.setDate(d.getDate() - 1);
+      return d;
+    }
+
+    function prettyKey(k){
+      return k.replace(/_/g," ").replace(/\b[a-z]/g, m => m.toUpperCase());
+    }
+
+    function buildPopup(props){
+      const title =
+        props.titel || props.title || props.typ || props.type ||
+        props.kategorie || props.category || "Lärmmeldung";
+
+      const likelyOrder = [
+        "date","datum","time","uhrzeit","place","adresse","ort",
+        "activity","kategorie","typ","beschreibung","estimated_decibel"
+      ];
+
+      const keys = Object.keys(props || {});
+      const ordered = [
+        ...likelyOrder.filter(k => keys.includes(k)),
+        ...keys.filter(k => !likelyOrder.includes(k))
+      ];
+
+      const rows = ordered.map(k => {
+        const v = props[k];
+        if (v === null || v === undefined || v === "") return "";
+        return `
+          <div class="popup-row">
+            <div class="popup-key">${prettyKey(k)}</div>
+            <div class="popup-val">${String(v)}</div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="popup-title">${title}</div>
+        <div class="popup-grid">${rows || "<em>Keine Details vorhanden.</em>"}</div>
+      `;
+    }
+
+    function markerStyle(){
+      return {
+        radius: 6,
+        weight: 1,
+        color: "#ffffff",
+        fillColor: "#2f3337",
+        fillOpacity: 0.9
+      };
+    }
+
+    function pointToLayer(feature, latlng){
+      const marker = L.circleMarker(latlng, markerStyle(feature));
+      marker.bindPopup(buildPopup(feature.properties || {}), { maxWidth: 320 });
+      return marker;
+    }
+
+    function fitAndConstrain(bounds){
+      if (!bounds || !bounds.isValid()) return;
+
+      map.fitBounds(bounds.pad(0.18), { animate: false });
+
+      const southWest = bounds.getSouthWest();
+      const northEast = bounds.getNorthEast();
+      const padded = L.latLngBounds(
+        L.latLng(southWest.lat - 10, southWest.lng - 10),
+        L.latLng(northEast.lat + 10, northEast.lng + 10)
+      );
+      map.setMaxBounds(padded);
+      map.setMinZoom(Math.max(map.getZoom() - 3, 10));
+      map.setMaxZoom(19);
+    }
+
+    function renderGeojson(fc){
+      clusterGroup.clearLayers();
+      geoLayer = L.geoJSON(fc, { pointToLayer });
+      clusterGroup.addLayer(geoLayer);
+      map.addLayer(clusterGroup);
+
+      dataBounds = geoLayer.getBounds();
+      fitAndConstrain(dataBounds);
+    }
+
+    function filterAndRender(){
+      if (!rawGeojson) return;
+
+      const feats = rawGeojson.features || [];
+      const term = searchTerm.trim().toLowerCase();
+
+      const filtered = feats.filter(f => {
+        const p = f.properties || {};
+
+        // date range
+        const d = parseDate(p[DATE_FIELD]);
+        if (!d) return false;
+        if (dateMin && d < dateMin) return false;
+        if (dateMax && d > dateMax) return false;
+
+        // type filter
+        const t = String(p[TYPE_FIELD] || "").trim();
+        if (selectedTypes.size && !selectedTypes.has(t)) return false;
+
+        // search term
+        if (term){
+          const hay = Object.values(p).join(" ").toLowerCase();
+          if (!hay.includes(term)) return false;
+        }
+        return true;
+      });
+
+      renderGeojson({ type: "FeatureCollection", features: filtered });
+    }
+
+    // ------- Filters UI init -------
+    const dateMinLabel = document.getElementById("dateMinLabel");
+    const dateMaxLabel = document.getElementById("dateMaxLabel");
+    const sliderEl = document.getElementById("dateSlider");
+    let slider;
+
+    function initSlider(year){
+      const startMin = firstSundayOfYear(year);
+      const startMax = lastSundayOfYear(year);
+
+      const allSundays = [];
+      const cursor = new Date(startMin);
+      while (cursor <= startMax){
+        allSundays.push(new Date(cursor));
+        cursor.setDate(cursor.getDate() + 7);
+      }
+
+      // map sunday index <-> date
+      function idxToDate(i){ return allSundays[i] || startMin; }
+      function dateToIdx(d){
+        const t0 = allSundays[0].getTime();
+        return Math.round((d.getTime() - t0) / (7*24*3600*1000));
+      }
+
+      slider = noUiSlider.create(sliderEl, {
+        start: [0, allSundays.length - 1],
+        connect: true,
+        step: 1,
+        range: {
+          min: 0,
+          max: allSundays.length - 1
+        },
+        format: {
+          to: v => Math.round(v),
+          from: v => Number(v)
+        }
+      });
+
+      // default range
+      dateMin = startMin;
+      dateMax = startMax;
+      dateMinLabel.textContent = fmtDate(dateMin);
+      dateMaxLabel.textContent = fmtDate(dateMax);
+
+      slider.on("update", (values) => {
+        const i0 = values[0], i1 = values[1];
+        dateMin = idxToDate(i0);
+        dateMax = idxToDate(i1);
+        dateMinLabel.textContent = fmtDate(dateMin);
+        dateMaxLabel.textContent = fmtDate(dateMax);
+      });
+
+      slider.on("change", filterAndRender);
+
+      // expose for reset
+      slider._idxToDate = idxToDate;
+      slider._dateToIdx = dateToIdx;
+      slider._allSundays = allSundays;
+    }
+
+    function initTypeChecklist(features){
+      const listEl = document.getElementById("activityList");
+      listEl.innerHTML = "";
+
+      const types = Array.from(
+        new Set(features.map(f => String((f.properties||{})[TYPE_FIELD] || "").trim()))
+      ).filter(Boolean).sort((a,b) => a.localeCompare(b));
+
+      types.forEach(type => {
+        const id = "type_" + type.replace(/\s+/g,"_").toLowerCase();
+        const row = document.createElement("label");
+        row.className = "check-row";
+        row.innerHTML = `
+          <input type="checkbox" id="${id}" value="${type}" checked />
+          <span>${type}</span>
+        `;
+        listEl.appendChild(row);
+
+        // Initially select all
+        selectedTypes.add(type);
+
+        row.querySelector("input").addEventListener("change", (e) => {
+          if (e.target.checked) selectedTypes.add(type);
+          else selectedTypes.delete(type);
+          filterAndRender();
+        });
+      });
+    }
+
+    // ------- Load data -------
+    fetch(GEOJSON_URL)
+      .then(r => {
+        if (!r.ok) throw new Error("GeoJSON konnte nicht geladen werden.");
+        return r.json();
+      })
+      .then(gj => {
+        rawGeojson = gj;
+
+        // determine year from data (fallback to 2025)
+        const d0 = parseDate((gj.features?.[0]?.properties||{})[DATE_FIELD]);
+        const year = d0 ? d0.getFullYear() : 2025;
+
+        initSlider(year);
+        initTypeChecklist(gj.features || []);
+        filterAndRender();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Die Datendatei konnte nicht geladen werden. Bitte prüfen Sie Pfad/Server.");
+      });
+
+    // ------- UI controls -------
+    // Legend collapse
+    const legendEl = document.getElementById("legend");
+    document.getElementById("legendHeader").addEventListener("click", () => {
+      legendEl.classList.toggle("collapsed");
+      const expanded = !legendEl.classList.contains("collapsed");
+      document.getElementById("legendHeader").setAttribute("aria-expanded", expanded);
+    });
+
+    // Reset view
+    document.getElementById("resetView").addEventListener("click", () => {
+      if (dataBounds) fitAndConstrain(dataBounds);
+    });
+
+    // Sources modal open/close
+    const backdrop = document.getElementById("modalBackdrop");
+    function openModal(){ backdrop.style.display = "flex"; backdrop.setAttribute("aria-hidden", "false"); }
+    function closeModal(){ backdrop.style.display = "none"; backdrop.setAttribute("aria-hidden", "true"); }
+    document.getElementById("sourcesBtn").addEventListener("click", openModal);
+    document.getElementById("closeModal").addEventListener("click", closeModal);
+    backdrop.addEventListener("click", (e) => { if (e.target === backdrop) closeModal(); });
+
+    // Search / filter
+    const searchInput = document.getElementById("searchInput");
+    const searchClear = document.getElementById("searchClear");
+
+    let debounce;
+    searchInput.addEventListener("input", (e) => {
+      searchTerm = e.target.value || "";
+      clearTimeout(debounce);
+      debounce = setTimeout(filterAndRender, 160);
+    });
+    searchClear.addEventListener("click", () => {
+      searchTerm = "";
+      searchInput.value = "";
+      filterAndRender();
+      searchInput.focus();
+    });
+
+    // Filter dropdown open/close
+    const filterBtn = document.getElementById("filterBtn");
+    const filterPanel = document.getElementById("filterPanel");
+
+    function toggleFilters(){
+      const open = filterPanel.classList.toggle("open");
+      filterPanel.setAttribute("aria-hidden", String(!open));
+    }
+    filterBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleFilters();
+    });
+    document.addEventListener("click", (e) => {
+      if (!filterPanel.contains(e.target) && e.target !== filterBtn){
+        filterPanel.classList.remove("open");
+        filterPanel.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    // Clear filters
+    document.getElementById("clearFilters").addEventListener("click", () => {
+      if (!slider) return;
+
+      // reset slider to full year range
+      slider.set([0, slider._allSundays.length - 1]);
+
+      // reset type checks to all
+      selectedTypes.clear();
+      document.querySelectorAll("#activityList input[type=checkbox]").forEach(cb => {
+        cb.checked = true;
+        selectedTypes.add(cb.value);
+      });
+
+      filterAndRender();
+    });
+  </script>
+</body>
+</html>
