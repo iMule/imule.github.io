@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sonntagsruhe und Lärmverstöße – Pliezhausen 2025</title>
+
+  <!-- Leaflet + MarkerCluster CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-o9N1j7kP6+H2U6kG3wZ9WmGkPp1LQp1C6tGZ8m2M+7E="
+    crossorigin=""
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+  />
+
+  <style>
+    :root{
+      /* Atlas / textbook neutrals */
+      --bg: #f3f3f1;
+      --panel: rgba(255,255,255,0.95);
+      --panel-border: rgba(0,0,0,0.10);
+      --ink: #222427;
+      --muted: #61666d;
+      --hairline: rgba(0,0,0,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.10);
+      --radius: 12px;
+
+      /* Thematic palette (desaturated, print-friendly) */
+      --c1: #4a5561;
+      --c2: #6b6f74;
+      --c3: #7b6a5a;
+      --c4: #5f6d67;
+      --c5: #7a7f8a;
+      --c6: #6b5f72;
+    }
+
+    html, body{
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+    }
+
+    /* Frame */
+    .app{
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #map{
+      height: 100%;
+      width: 100%;
+      background: #e6e7e3;
+    }
+
+    /* Atlas-style header */
+    .header{
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      z-index: 1000;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    .titleblock{
+      display: grid;
+      gap: 2px;
+    }
+    .title{
+      font-size: clamp(17px, 2.4vw, 22px);
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .subtitle{
+      font-size: clamp(12px, 1.8vw, 13px);
+      color: var(--muted);
+    }
+
+    .header-tools{
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn{
+      appearance: none;
+      border: 1px solid var(--panel-border);
+      background: white;
+      color: var(--ink);
+      font-size: 13px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background .2s ease, transform .05s ease;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+      white-space: nowrap;
+    }
+    .btn:hover{ background: #f6f6f4; }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Left atlas legend + notes */
+    .atlas-panel{
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 1000;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px 12px 10px 12px;
+      width: min(78vw, 320px);
+      display: grid;
+      gap: 10px;
+      backdrop-filter: blur(4px);
+    }
+
+    .panel-title{
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.25px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .legend{
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .legend-item{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .swatch{
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+      flex: 0 0 auto;
+    }
+
+    .notes{
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--ink);
+      border-top: 1px solid var(--hairline);
+      padding-top: 8px;
+      display: grid;
+      gap: 6px;
+    }
+    .notes .muted{
+      color: var(--muted);
+    }
+
+    /* Modal for sources */
+    .modal-backdrop{
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 2000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+    }
+    .modal{
+      width: min(92vw, 520px);
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--panel-border);
+      padding: 14px 16px;
+    }
+    .modal h3{
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .modal p, .modal li{
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+    .modal .muted{ color: var(--muted); }
+    .modal .close-row{
+      display:flex; justify-content:flex-end; margin-top: 10px;
+    }
+
+    /* Atlas popups */
+    .leaflet-popup-content-wrapper{
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--panel-border);
+    }
+    .leaflet-popup-content{
+      margin: 10px 12px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .popup-title{
+      font-weight: 800;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .popup-row{
+      display:flex; gap: 6px;
+      margin: 2px 0;
+    }
+    .popup-key{ color: var(--muted); min-width: 110px; }
+    .popup-val{ font-weight: 600; }
+
+    /* Cluster subdued */
+    .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {
+      background-color: rgba(70,75,80,0.15);
+    }
+    .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div{
+      background-color: rgba(70,75,80,0.78);
+      color: #fff;
+      font-weight: 800;
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+    }
+
+    /* Hide default Leaflet controls for clean atlas UI */
+    .leaflet-control-container{ display:none; }
+
+    @media (max-width: 560px){
+      .atlas-panel{ width: min(92vw, 300px); }
+      .popup-key{ min-width: 90px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header class="header" role="banner">
+    <div class="titleblock">
+      <h1 class="title">Sonntagsruhe und Lärmverstöße</h1>
+      <div class="subtitle">Pliezhausen (Landkreis Reutlingen), Sonntage im Jahr 2025</div>
+    </div>
+    <div class="header-tools">
+      <button id="resetView" class="btn" type="button">Ansicht zurücksetzen</button>
+      <button id="sourcesBtn" class="btn" type="button">Quellen / About</button>
+    </div>
+  </header>
+
+  <div id="map" role="application" aria-label="Atlas-Karte"></div>
+
+  <!-- Atlas panel -->
+  <aside class="atlas-panel" aria-label="Legende und Kontext">
+    <div>
+      <div class="panel-title">Legende – Verstoßtypen</div>
+      <div id="legendList" class="legend"></div>
+    </div>
+
+    <div class="notes">
+      <div><strong>Worum geht’s?</strong></div>
+      <div>
+        Diese Karte zeigt gemeldete Lärmverstöße an Sonntagen.
+        In Deutschland hat der Sonntag historisch einen besonderen Schutz
+        als <em>Tag der Ruhe</em> – religiös, rechtlich und sozial.
+      </div>
+      <div class="muted">
+        Punkte markieren Meldungen. Bei dichter Verteilung werden Meldungen gruppiert.
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sources modal -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h3>Quellen & Hinweise</h3>
+      <p>
+        <strong>Daten:</strong> Sunday-Lärmverstöße Pliezhausen (2025), bereitgestellt durch die Gemeinde /
+        lokale Meldesysteme. Datei: <em>pliezhausen_noise_violations_2025.geojson</em>.
+      </p>
+      <p class="muted">
+        Positionen können aus Datenschutz- und Meldegründen leicht generalisiert sein.
+      </p>
+      <ul>
+        <li><strong>Basiskarte:</strong> CARTO Positron (OpenStreetMap-Daten).</li>
+        <li><strong>Erstellt mit:</strong> Web Mapper GPT.</li>
+      </ul>
+      <div class="close-row">
+        <button id="closeModal" class="btn" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Leaflet + MarkerCluster JS -->
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-o8EeB9QHk7QG0uSx4j0YvVw3kS8nYQK7Wv5A2f1r0XQ="
+  crossorigin=""
+></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<script>
+  // ---------------- Configuration ----------------
+  const GEOJSON_URL = "./pliezhausen_noise_violations_2025.geojson";
+  const DATE_FIELD = "date";
+  const TYPE_FIELD = "activity";
+
+  // muted atlas palette (cycled if more categories appear)
+  const palette = [
+    getCss("--c1"), getCss("--c2"), getCss("--c3"),
+    getCss("--c4"), getCss("--c5"), getCss("--c6")
+  ];
+  function getCss(varName){
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  }
+
+  // ---------------- Map setup ----------------
+  const basemap = L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO | Web Mapper GPT',
+      maxZoom: 19
+    }
+  );
+
+  const map = L.map("map", {
+    zoomControl: false,
+    attributionControl: false,
+    scrollWheelZoom: true,
+    doubleClickZoom: true,
+    keyboard: false
+  }).addLayer(basemap);
+
+  L.control.attribution({ position:"bottomright" })
+    .addAttribution("Web Mapper GPT")
+    .addTo(map);
+
+  const clusters = L.markerClusterGroup({
+    showCoverageOnHover: false,
+    spiderfyOnMaxZoom: true,
+    disableClusteringAtZoom: 18,
+    maxClusterRadius: 42
+  });
+
+  let raw;
+  let geoLayer;
+  let dataBounds;
+
+  // ---------------- Helpers ----------------
+  const pad2 = n => String(n).padStart(2,"0");
+  function fmtDate(val){
+    const d = new Date(val);
+    if (isNaN(d)) return String(val);
+    return `${pad2(d.getDate())}.${pad2(d.getMonth()+1)}.${d.getFullYear()}`;
+  }
+
+  function prettyKey(k){
+    return k.replace(/_/g," ").replace(/\b[a-z]/g, m => m.toUpperCase());
+  }
+
+  function buildPopup(props){
+    const title =
+      props[TYPE_FIELD] || props.typ || props.kategorie || "Lärmmeldung";
+
+    const orderedKeys = [DATE_FIELD, TYPE_FIELD, "place", "address", "description", "estimated_decibel"];
+    const keys = Object.keys(props || {});
+    const finalKeys = [
+      ...orderedKeys.filter(k => keys.includes(k)),
+      ...keys.filter(k => !orderedKeys.includes(k))
+    ];
+
+    const rows = finalKeys.map(k => {
+      const v = props[k];
+      if (v === null || v === undefined || v === "") return "";
+      const val = (k === DATE_FIELD) ? fmtDate(v) : String(v);
+      return `
+        <div class="popup-row">
+          <div class="popup-key">${prettyKey(k)}</div>
+          <div class="popup-val">${val}</div>
+        </div>
+      `;
+    }).join("");
+
+    return `
+      <div class="popup-title">${title}</div>
+      <div>${rows || "<em>Keine Details vorhanden.</em>"}</div>
+    `;
+  }
+
+  function fitAndConstrain(bounds){
+    if (!bounds || !bounds.isValid()) return;
+
+    map.fitBounds(bounds.pad(0.18), { animate:false });
+
+    // restrict panning to data extent + 10 degrees (default)
+    const sw = bounds.getSouthWest();
+    const ne = bounds.getNorthEast();
+    const padded = L.latLngBounds(
+      L.latLng(sw.lat - 10, sw.lng - 10),
+      L.latLng(ne.lat + 10, ne.lng + 10)
+    );
+    map.setMaxBounds(padded);
+    map.setMinZoom(Math.max(map.getZoom() - 3, 10));
+    map.setMaxZoom(19);
+  }
+
+  // ---------------- Thematic styling ----------------
+  let typeToColor = new Map();
+
+  function assignColors(features){
+    const types = Array.from(new Set(
+      features.map(f => String((f.properties||{})[TYPE_FIELD]||"").trim())
+    )).filter(Boolean).sort((a,b) => a.localeCompare(b));
+
+    types.forEach((t,i) => {
+      typeToColor.set(t, palette[i % palette.length]);
+    });
+
+    buildLegend(types);
+  }
+
+  function buildLegend(types){
+    const legendEl = document.getElementById("legendList");
+    legendEl.innerHTML = "";
+
+    types.forEach(t => {
+      const item = document.createElement("div");
+      item.className = "legend-item";
+      const color = typeToColor.get(t) || "#444";
+      item.innerHTML = `
+        <span class="swatch" style="background:${color};"></span>
+        <span>${t}</span>
+      `;
+      legendEl.appendChild(item);
+    });
+
+    if (!types.length){
+      legendEl.innerHTML = `<div class="legend-item"><span>Keine Kategorien gefunden.</span></div>`;
+    }
+  }
+
+  function pointToLayer(feature, latlng){
+    const t = String((feature.properties||{})[TYPE_FIELD]||"").trim();
+    const color = typeToColor.get(t) || "#3f4348";
+
+    const marker = L.circleMarker(latlng, {
+      radius: 6.5,
+      weight: 1.2,
+      color: "#ffffff",
+      fillColor: color,
+      fillOpacity: 0.92
+    });
+
+    marker.bindPopup(buildPopup(feature.properties||{}), { maxWidth: 340 });
+    return marker;
+  }
+
+  function render(fc){
+    clusters.clearLayers();
+    geoLayer = L.geoJSON(fc, { pointToLayer });
+    clusters.addLayer(geoLayer);
+    map.addLayer(clusters);
+
+    dataBounds = geoLayer.getBounds();
+    fitAndConstrain(dataBounds);
+  }
+
+  // ---------------- Load data ----------------
+  fetch(GEOJSON_URL)
+    .then(r => {
+      if (!r.ok) throw new Error("GeoJSON konnte nicht geladen werden.");
+      return r.json();
+    })
+    .then(gj => {
+      raw = gj;
+      const feats = raw.features || [];
+      assignColors(feats);
+      render(raw);
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Die Datendatei konnte nicht geladen werden. Bitte Pfad/Server prüfen.");
+    });
+
+  // ---------------- UI hooks ----------------
+  document.getElementById("resetView").addEventListener("click", () => {
+    if (dataBounds) fitAndConstrain(dataBounds);
+  });
+
+  const backdrop = document.getElementById("modalBackdrop");
+  function openModal(){ backdrop.style.display="flex"; backdrop.setAttribute("aria-hidden","false"); }
+  function closeModal(){ backdrop.style.display="none"; backdrop.setAttribute("aria-hidden","true"); }
+  document.getElementById("sourcesBtn").addEventListener("click", openModal);
+  document.getElementById("closeModal").addEventListener("click", closeModal);
+  backdrop.addEventListener("click", (e)=>{ if(e.target===backdrop) closeModal(); });
+</script>
+</body>
+</html>
