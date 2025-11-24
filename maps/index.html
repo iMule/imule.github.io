@@ -316,19 +316,32 @@
     }
   });
 
-  // --- Fetch World Bank population ---
-  const popUrl =
-    `https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?date=${YEAR}&format=json&per_page=20000`;
-  const popRes = await fetch(popUrl);
-  const popJson = await popRes.json();
-  const popData = (popJson && popJson[1]) ? popJson[1] : [];
+  // --- Fetch population via REST Countries (CORS-friendly) ---
+const rcRes = await fetch("https://restcountries.com/v3.1/all");
+const rcJson = await rcRes.json();
 
-  const popByIso3 = new Map();
-  popData.forEach(d=>{
-    if(d.countryiso3code && d.value != null){
-      popByIso3.set(d.countryiso3code, +d.value);
+// Build lookups
+const popByIso3 = new Map();        // ISO3 -> population
+const rcNameToIso3 = new Map();     // common/official names -> ISO3
+
+rcJson.forEach(c => {
+  const iso3 = (c.cca3 || "").toUpperCase();
+  const pop = c.population;
+
+  if(iso3 && pop != null){
+    popByIso3.set(iso3, pop);
+
+    // name keys for fuzzy matching later
+    if(c.name?.common) rcNameToIso3.set(c.name.common, iso3);
+    if(c.name?.official) rcNameToIso3.set(c.name.official, iso3);
+
+    // add alt spellings if present
+    if(c.altSpellings){
+      c.altSpellings.forEach(s => rcNameToIso3.set(s, iso3));
     }
-  });
+  }
+});
+
 
   // --- Name reconciliation between FAOSTAT and Natural Earth ---
   const aliases = new Map([
@@ -377,29 +390,30 @@
     return { feature:f, neName, prod, centroid, pop };
   }).filter(d=>d.prod != null);
 
-  // crude name->ISO3 matching for population (World Bank gives ISO3)
-  // We'll build a helper by country name from WB response.
-  const wbNameToIso3 = new Map(popData.map(d=>[d.country.value, d.countryiso3code]));
-  function wbIso3FromName(neName){
-    const candidates = [
-      neName,
-      aliases.get(neName),
-      normalizeName(neName),
-      aliases.get(normalizeName(neName))
-    ].filter(Boolean);
-    for(const c of candidates){
-      if(wbNameToIso3.has(c)) return wbNameToIso3.get(c);
-    }
-    return null;
-  }
+  // Name -> ISO3 using REST Countries
+function rcIso3FromName(neName){
+  const candidates = [
+    neName,
+    aliases.get(neName),
+    normalizeName(neName),
+    aliases.get(normalizeName(neName))
+  ].filter(Boolean);
 
-  joined.forEach(d=>{
-    const iso3c = wbIso3FromName(d.neName);
-    if(iso3c && popByIso3.has(iso3c)){
-      d.pop = popByIso3.get(iso3c);
-      d.iso3 = iso3c;
-    }
-  });
+  for(const c of candidates){
+    if(rcNameToIso3.has(c)) return rcNameToIso3.get(c);
+  }
+  return null;
+}
+
+
+joined.forEach(d=>{
+  const iso3c = rcIso3FromName(d.neName);
+  if(iso3c && popByIso3.has(iso3c)){
+    d.pop = popByIso3.get(iso3c);
+    d.iso3 = iso3c;
+  }
+});
+
 
   // --- Symbol scaling ---
   const prodValues = joined.map(d=>d.prod);
