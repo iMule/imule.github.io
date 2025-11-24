@@ -1,0 +1,592 @@
+{
+  "type": "FeatureCollection",
+  "name": "pliezhausen_noise_2025_sundays",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4326"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.194695,
+          48.548315
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "party with loud music",
+        "date": "2025-06-22",
+        "time": "21:20",
+        "offender_name": "Lena Q.",
+        "gender": "F",
+        "age": 42,
+        "estimated_decibel": 95
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.219802,
+          48.561486
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "drum practice",
+        "date": "2025-08-10",
+        "time": "20:55",
+        "offender_name": "Heiko X.",
+        "gender": "M",
+        "age": 27,
+        "estimated_decibel": 97
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.222661,
+          48.563392
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "public yodeling",
+        "date": "2025-02-09",
+        "time": "10:25",
+        "offender_name": "Miriam L.",
+        "gender": "F",
+        "age": 25,
+        "estimated_decibel": 86
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.211181,
+          48.538704
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "mowing lawn",
+        "date": "2025-07-13",
+        "time": "12:35",
+        "offender_name": "Felix R.",
+        "gender": "M",
+        "age": 53,
+        "estimated_decibel": 88
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.219087,
+          48.54825
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "power drilling",
+        "date": "2025-12-21",
+        "time": "18:50",
+        "offender_name": "Hannah S.",
+        "gender": "F",
+        "age": 57,
+        "estimated_decibel": 91
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.21589,
+          48.556927
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "drum practice",
+        "date": "2025-12-07",
+        "time": "14:15",
+        "offender_name": "Markus T.",
+        "gender": "M",
+        "age": 37,
+        "estimated_decibel": 91
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.229073,
+          48.55759
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "construction hammering",
+        "date": "2025-10-05",
+        "time": "09:45",
+        "offender_name": "Laura C.",
+        "gender": "F",
+        "age": 33,
+        "estimated_decibel": 93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.187879,
+          48.560195
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "party with loud music",
+        "date": "2025-01-26",
+        "time": "17:40",
+        "offender_name": "Greta W.",
+        "gender": "F",
+        "age": 53,
+        "estimated_decibel": 97
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.207322,
+          48.541828
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "leaf blowing",
+        "date": "2025-08-17",
+        "time": "11:55",
+        "offender_name": "Julia H.",
+        "gender": "F",
+        "age": 31,
+        "estimated_decibel": 95
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.232069,
+          48.548883
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "public yodeling",
+        "date": "2025-04-06",
+        "time": "15:25",
+        "offender_name": "Sven P.",
+        "gender": "M",
+        "age": 30,
+        "estimated_decibel": 94
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.189097,
+          48.56241
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "angle grinder",
+        "date": "2025-03-23",
+        "time": "16:40",
+        "offender_name": "Nina O.",
+        "gender": "F",
+        "age": 45,
+        "estimated_decibel": 100
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.228038,
+          48.548878
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "karaoke on balcony",
+        "date": "2025-05-25",
+        "time": "21:10",
+        "offender_name": "Matthias U.",
+        "gender": "M",
+        "age": 26,
+        "estimated_decibel": 93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.212652,
+          48.540532
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "party with loud music",
+        "date": "2025-03-30",
+        "time": "20:00",
+        "offender_name": "Peter A.",
+        "gender": "M",
+        "age": 24,
+        "estimated_decibel": 92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.185004,
+          48.548398
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "revving car engine",
+        "date": "2025-11-23",
+        "time": "13:25",
+        "offender_name": "Heidi V.",
+        "gender": "F",
+        "age": 41,
+        "estimated_decibel": 92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.197657,
+          48.555892
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "mowing lawn",
+        "date": "2025-09-07",
+        "time": "10:55",
+        "offender_name": "Tom Z.",
+        "gender": "M",
+        "age": 35,
+        "estimated_decibel": 93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.232124,
+          48.563116
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "leaf blowing",
+        "date": "2025-07-27",
+        "time": "08:20",
+        "offender_name": "Katrin D.",
+        "gender": "F",
+        "age": 37,
+        "estimated_decibel": 92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.229501,
+          48.563741
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "construction hammering",
+        "date": "2025-06-29",
+        "time": "18:30",
+        "offender_name": "Florian N.",
+        "gender": "M",
+        "age": 49,
+        "estimated_decibel": 95
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.196642,
+          48.541722
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "drum practice",
+        "date": "2025-02-23",
+        "time": "19:35",
+        "offender_name": "Markus T.",
+        "gender": "M",
+        "age": 50,
+        "estimated_decibel": 98
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.227608,
+          48.543609
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "public yodeling",
+        "date": "2025-10-12",
+        "time": "12:20",
+        "offender_name": "Ute E.",
+        "gender": "F",
+        "age": 40,
+        "estimated_decibel": 90
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.196133,
+          48.557689
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "power drilling",
+        "date": "2025-05-11",
+        "time": "14:35",
+        "offender_name": "Jonas B.",
+        "gender": "M",
+        "age": 22,
+        "estimated_decibel": 93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.224602,
+          48.56149
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "party with loud music",
+        "date": "2025-01-05",
+        "time": "22:15",
+        "offender_name": "Anna G.",
+        "gender": "F",
+        "age": 56,
+        "estimated_decibel": 96
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.223523,
+          48.55432
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "leaf blowing",
+        "date": "2025-09-28",
+        "time": "09:10",
+        "offender_name": "Oliver T.",
+        "gender": "M",
+        "age": 59,
+        "estimated_decibel": 90
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.219503,
+          48.552505
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "mowing lawn",
+        "date": "2025-04-20",
+        "time": "11:45",
+        "offender_name": "Sven P.",
+        "gender": "M",
+        "age": 52,
+        "estimated_decibel": 90
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.220891,
+          48.563312
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "angle grinder",
+        "date": "2025-07-06",
+        "time": "13:30",
+        "offender_name": "Sabine F.",
+        "gender": "F",
+        "age": 48,
+        "estimated_decibel": 102
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.2218,
+          48.543884
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "karaoke on balcony",
+        "date": "2025-11-30",
+        "time": "19:10",
+        "offender_name": "Klaus M.",
+        "gender": "M",
+        "age": 36,
+        "estimated_decibel": 92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.204777,
+          48.54632
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "revving car engine",
+        "date": "2025-08-31",
+        "time": "16:05",
+        "offender_name": "Nora Y.",
+        "gender": "F",
+        "age": 23,
+        "estimated_decibel": 93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.225733,
+          48.56184
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "construction hammering",
+        "date": "2025-03-09",
+        "time": "08:05",
+        "offender_name": "Jörg L.",
+        "gender": "M",
+        "age": 28,
+        "estimated_decibel": 92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.188038,
+          48.547788
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "power drilling",
+        "date": "2025-10-26",
+        "time": "17:50",
+        "offender_name": "Laura J.",
+        "gender": "F",
+        "age": 52,
+        "estimated_decibel": 94
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.214928,
+          48.566043
+        ]
+      },
+      "properties": {
+        "place": "Pliezhausen",
+        "activity": "party with loud music",
+        "date": "2025-02-16",
+        "time": "21:35",
+        "offender_name": "Matthias Q.",
+        "gender": "M",
+        "age": 39,
+        "estimated_decibel": 94
+      }
+    }
+  ]
+}
