@@ -315,13 +315,13 @@
   // 1) CONFIG: field candidates
   // Edit these if your GeoJSON uses different names.
   // ---------------------------
-  const FIELD_CANDIDATES = {
-    name: ["name","full_name","resident","person","offender","comrade","violator"],
-    gender: ["gender","sex"],
-    age: ["age","years","age_years"],
-    offense: ["offense","offense_type","violation","violation_type","type","category"],
-    date: ["date","offense_date","timestamp","datetime","reported_at"]
-  };
+const FIELD_CANDIDATES = {
+  name: ["offender_name","name","full_name","resident","person","offender","comrade","violator"],
+  gender: ["gender","sex"],
+  age: ["age","years","age_years"],
+  offense: ["activity","offense","offense_type","violation","violation_type","type","category"],
+  date: ["date","offense_date","timestamp","datetime","reported_at"]
+};
 
   // Colors per offense (fallback palette if unknown)
   const OFFENSE_COLORS = [
@@ -363,22 +363,26 @@
   // ---------------------------
   // 4) FIELD DETECTION
   // ---------------------------
-  function detectField(props, candidates){
-    if(!props) return null;
-    const keys = Object.keys(props);
-    const lower = keys.map(k => k.toLowerCase());
-    for(const c of candidates){
-      const idx = lower.indexOf(c.toLowerCase());
-      if(idx !== -1) return keys[idx];
-    }
-    return null;
+function detectField(allFeatures, candidates){
+  const keySet = new Set();
+  allFeatures.slice(0, 25).forEach(f=>{
+    Object.keys(f.properties || {}).forEach(k=> keySet.add(k));
+  });
+  const keys = [...keySet];
+  const lower = keys.map(k => k.toLowerCase());
+
+  for(const c of candidates){
+    const idx = lower.indexOf(c.toLowerCase());
+    if(idx !== -1) return keys[idx];
   }
+  return null;
+}
 
   const sampleProps = features[0]?.properties || {};
   const FIELDS = {};
   for(const k in FIELD_CANDIDATES){
-    FIELDS[k] = detectField(sampleProps, FIELD_CANDIDATES[k]);
-  }
+    FIELDS[k] = detectField(features, FIELD_CANDIDATES[k]);
+    }
 
   // ---------------------------
   // 5) NORMALIZERS
@@ -635,6 +639,15 @@
 
   els.applyBtn.addEventListener("click", applyFilters);
   els.resetBtn.addEventListener("click", resetFilters);
+
+// Auto-apply on change for kiosk friendliness
+["nameSearch","genderSelect","ageMin","ageMax","offenseSelect","dateFrom","dateTo"]
+  .forEach(id=>{
+      document.getElementById(id).addEventListener("change", applyFilters);
+      document.getElementById(id).addEventListener("keyup", (e)=>{
+      if(id==="nameSearch") applyFilters();
+    });
+  });
 
   // ---------------------------
   // 11) STATS
