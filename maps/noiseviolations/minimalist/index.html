@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lärmverstöße an Sonntagen – Pliezhausen 2025</title>
+
+  <!-- Leaflet + MarkerCluster CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-o9N1j7kP6+H2U6kG3wZ9WmGkPp1LQp1C6tGZ8m2M+7E="
+    crossorigin=""
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+  />
+
+  <style>
+    :root{
+      --bg: #f4f5f7;
+      --panel: rgba(255,255,255,0.92);
+      --panel-border: rgba(0,0,0,0.08);
+      --text: #1f2328;
+      --muted: #606770;
+      --accent: #3a3f45;
+      --accent-soft: #8a9097;
+      --danger: #2f3337;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+      --radius: 14px;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+    }
+
+    /* App frame */
+    .app {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+      background: #e9eaec;
+    }
+
+    /* Top title bar */
+    .titlebar {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      z-index: 1000;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(6px);
+    }
+    .titlebar h1{
+      font-size: clamp(16px, 2.2vw, 20px);
+      line-height: 1.2;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .titlebar .subtitle{
+      font-size: clamp(12px, 1.8vw, 13px);
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Right-side tools */
+    .tools{
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .tool-btn{
+      appearance: none;
+      border: 1px solid var(--panel-border);
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+      white-space: nowrap;
+    }
+    .tool-btn:hover{ background:#f7f8f9; border-color: rgba(0,0,0,0.12); }
+    .tool-btn:active{ transform: translateY(1px); }
+
+    .search-wrap{
+      position: relative;
+    }
+    .search-input{
+      border: 1px solid var(--panel-border);
+      background: #fff;
+      padding: 7px 30px 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      outline: none;
+      width: min(44vw, 260px);
+    }
+    .search-input::placeholder{ color:#9aa0a6; }
+    .search-clear{
+      position:absolute; right:6px; top:50%; transform:translateY(-50%);
+      border:none; background:transparent; cursor:pointer; color:#9aa0a6; font-size:16px; line-height:1;
+      padding:2px 6px;
+    }
+
+    /* Legend panel */
+    .legend {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 1000;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      width: min(74vw, 280px);
+      backdrop-filter: blur(6px);
+    }
+    .legend header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      cursor:pointer;
+      user-select:none;
+    }
+    .legend h2{
+      font-size: 14px;
+      margin: 0;
+      font-weight: 700;
+    }
+    .legend .chev{
+      font-size: 18px;
+      color: var(--muted);
+      transform: rotate(0deg);
+      transition: transform .2s ease;
+    }
+    .legend.collapsed .chev{ transform: rotate(-90deg); }
+    .legend .content{
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .legend.collapsed .content{ display:none; }
+    .legend-item{
+      display:flex; align-items:center; gap:8px;
+      color: var(--text);
+    }
+    .dot{
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--danger);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.08) inset;
+      flex: 0 0 auto;
+    }
+    .dot.muted{
+      background: var(--accent-soft);
+    }
+    .legend small{ color: var(--muted); line-height:1.35; }
+
+    /* Modal */
+    .modal-backdrop{
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 2000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+    }
+    .modal{
+      width: min(92vw, 520px);
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--panel-border);
+      padding: 14px 16px;
+    }
+    .modal h3{
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .modal p, .modal li{
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text);
+    }
+    .modal .muted{ color: var(--muted); }
+    .modal .close-row{
+      display:flex; justify-content:flex-end; margin-top: 10px;
+    }
+
+    /* Leaflet popup restyle */
+    .leaflet-popup-content-wrapper{
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--panel-border);
+    }
+    .leaflet-popup-content{
+      margin: 10px 12px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .popup-title{
+      font-weight: 800; margin-bottom: 6px; font-size: 15px;
+    }
+    .popup-grid{
+      display: grid;
+      gap: 4px;
+    }
+    .popup-row{
+      display:flex; gap: 6px;
+    }
+    .popup-key{ color: var(--muted); min-width: 105px; }
+    .popup-val{ color: var(--text); font-weight: 600; }
+
+    /* MarkerCluster subdued style */
+    .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {
+      background-color: rgba(70,75,80,0.15);
+    }
+    .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div{
+      background-color: rgba(70,75,80,0.75);
+      color: #fff;
+      font-weight: 800;
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+    }
+
+    /* Keep UI above map; Leaflet controls hidden by default */
+    .leaflet-control-container{ display:none; }
+
+    @media (max-width: 560px){
+      .titlebar{ padding: 8px 10px; }
+      .search-input{ width: 52vw; }
+      .popup-key{ min-width: 90px; }
+    }
+  </style>
+</head>
+
+<body>
