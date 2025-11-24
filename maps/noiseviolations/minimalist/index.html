@@ -266,3 +266,297 @@
 </head>
 
 <body>
+  <div class="app">
+    <div class="titlebar" role="banner" aria-label="Kartentitel und Werkzeuge">
+      <div>
+        <h1>Lärmverstöße an Sonntagen – Pliezhausen 2025</h1>
+        <div class="subtitle">Gemeldete Ruhestörungen im Gemeindegebiet</div>
+      </div>
+
+      <div class="tools" role="group" aria-label="Werkzeuge">
+        <div class="search-wrap">
+          <input id="searchInput" class="search-input" type="search"
+                 placeholder="Adresse / Stichwort filtern…" aria-label="Filter" />
+          <button id="searchClear" class="search-clear" aria-label="Filter löschen">×</button>
+        </div>
+        <button id="resetView" class="tool-btn" type="button" aria-label="Ansicht zurücksetzen">
+          Ansicht zurücksetzen
+        </button>
+        <button id="sourcesBtn" class="tool-btn" type="button" aria-label="Quellen und Hinweise">
+          Quellen / About
+        </button>
+      </div>
+    </div>
+
+    <div id="map" role="application" aria-label="Karte der Lärmbeschwerden"></div>
+
+    <section id="legend" class="legend" aria-label="Legende">
+      <header id="legendHeader" aria-expanded="true">
+        <h2>Legende</h2>
+        <div class="chev">▾</div>
+      </header>
+      <div class="content">
+        <div class="legend-item">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Einzelne Meldung</span>
+        </div>
+        <div class="legend-item">
+          <span class="dot muted" aria-hidden="true"></span>
+          <span>Mehrere Meldungen (Cluster)</span>
+        </div>
+        <small>
+          Tipp: Klicken Sie auf Punkte für Details. Bei dichtem
+          Auftreten werden Meldungen gruppiert.
+        </small>
+      </div>
+    </section>
+
+    <!-- Sources / About Modal -->
+    <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal">
+        <h3>Quellen & Hinweise</h3>
+        <p>
+          <strong>Daten:</strong> Sunday-Lärmverstöße Pliezhausen (2025), bereitgestellt durch die Gemeinde /
+          lokale Meldesysteme. (Datei: <em>pliezhausen_noise_violations_2025.geojson</em>)
+        </p>
+        <p class="muted">
+          Die Karte dient der Orientierung. Positionen können aus Datenschutz-
+          und Meldegründen leicht generalisiert sein.
+        </p>
+        <ul>
+          <li><strong>Basiskarte:</strong> CARTO Positron (OpenStreetMap-Daten).</li>
+          <li><strong>Erstellt mit:</strong> Web Mapper GPT.</li>
+        </ul>
+        <div class="close-row">
+          <button id="closeModal" class="tool-btn" type="button">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet + MarkerCluster JS (loads before our script; our script at end as requested) -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o8EeB9QHk7QG0uSx4j0YvVw3kS8nYQK7Wv5A2f1r0XQ="
+    crossorigin=""
+  ></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <script>
+    // ------- Config -------
+    const GEOJSON_URL = "./pliezhausen_noise_violations_2025.geojson";
+
+    // Soft gray basemap without texture
+    const BASEMAP = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; OpenStreetMap contributors &copy; CARTO | Web Mapper GPT',
+        maxZoom: 19
+      }
+    );
+
+    // ------- Map init (no Leaflet zoom UI) -------
+    const map = L.map("map", {
+      zoomControl: false,
+      attributionControl: false,
+      scrollWheelZoom: true,
+      doubleClickZoom: true,
+      boxZoom: false,
+      keyboard: false
+    }).addLayer(BASEMAP);
+
+    // Custom attribution, subtle, bottom-right
+    L.control.attribution({ position: "bottomright" })
+      .addAttribution('Web Mapper GPT')
+      .addTo(map);
+
+    // Marker cluster group for readability in small community context
+    const clusterGroup = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      spiderfyOnMaxZoom: true,
+      disableClusteringAtZoom: 18,
+      maxClusterRadius: 40
+    });
+
+    let rawGeojson;
+    let geoLayer;
+    let dataBounds;
+
+    function prettyKey(k){
+      return k
+        .replace(/_/g," ")
+        .replace(/\b[a-z]/g, m => m.toUpperCase());
+    }
+
+    function buildPopup(props){
+      // Try to pick a stable title field if present
+      const title =
+        props.titel || props.title || props.typ || props.type ||
+        props.kategorie || props.category || "Lärmmeldung";
+
+      // Order some likely fields first, then the rest
+      const likelyOrder = [
+        "datum","date","uhrzeit","time","adresse","address","ort","location",
+        "kategorie","category","typ","type","beschreibung","description",
+        "meldestatus","status","quelle","source"
+      ];
+
+      const keys = Object.keys(props || {});
+      const ordered = [
+        ...likelyOrder.filter(k => keys.includes(k)),
+        ...keys.filter(k => !likelyOrder.includes(k))
+      ];
+
+      const rows = ordered.map(k => {
+        const v = props[k];
+        if (v === null || v === undefined || v === "") return "";
+        return `
+          <div class="popup-row">
+            <div class="popup-key">${prettyKey(k)}</div>
+            <div class="popup-val">${String(v)}</div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="popup-title">${title}</div>
+        <div class="popup-grid">${rows || "<em>Keine Details vorhanden.</em>"}</div>
+      `;
+    }
+
+    function markerStyle(feature){
+      return {
+        radius: 6,
+        weight: 1,
+        color: "#ffffff",
+        fillColor: "#2f3337",
+        fillOpacity: 0.9
+      };
+    }
+
+    function pointToLayer(feature, latlng){
+      const marker = L.circleMarker(latlng, markerStyle(feature));
+      marker.bindPopup(buildPopup(feature.properties || {}), { maxWidth: 320 });
+      return marker;
+    }
+
+    function fitAndConstrain(bounds){
+      if (!bounds || !bounds.isValid()) return;
+
+      map.fitBounds(bounds.pad(0.18), { animate: false });
+
+      // Restrict panning to dataset extent + 10 degrees in all directions (per default)
+      const southWest = bounds.getSouthWest();
+      const northEast = bounds.getNorthEast();
+      const padded = L.latLngBounds(
+        L.latLng(southWest.lat - 10, southWest.lng - 10),
+        L.latLng(northEast.lat + 10, northEast.lng + 10)
+      );
+      map.setMaxBounds(padded);
+
+      // Reasonable zoom limits for a small community map
+      map.setMinZoom(Math.max(map.getZoom() - 3, 10));
+      map.setMaxZoom(19);
+    }
+
+    function renderGeojson(features){
+      if (geoLayer) clusterGroup.clearLayers();
+
+      geoLayer = L.geoJSON(features, {
+        pointToLayer
+      });
+
+      clusterGroup.addLayer(geoLayer);
+      map.addLayer(clusterGroup);
+
+      dataBounds = geoLayer.getBounds();
+      fitAndConstrain(dataBounds);
+    }
+
+    // ------- Load data -------
+    fetch(GEOJSON_URL)
+      .then(r => {
+        if (!r.ok) throw new Error("GeoJSON konnte nicht geladen werden.");
+        return r.json();
+      })
+      .then(gj => {
+        rawGeojson = gj;
+        renderGeojson(rawGeojson);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Die Datendatei konnte nicht geladen werden. Bitte prüfen Sie Pfad/Server.");
+      });
+
+    // ------- UI controls -------
+    // Legend collapse
+    const legendEl = document.getElementById("legend");
+    document.getElementById("legendHeader").addEventListener("click", () => {
+      legendEl.classList.toggle("collapsed");
+      const expanded = !legendEl.classList.contains("collapsed");
+      document.getElementById("legendHeader").setAttribute("aria-expanded", expanded);
+    });
+
+    // Reset view
+    document.getElementById("resetView").addEventListener("click", () => {
+      if (dataBounds) fitAndConstrain(dataBounds);
+    });
+
+    // Sources modal open/close
+    const backdrop = document.getElementById("modalBackdrop");
+    function openModal(){
+      backdrop.style.display = "flex";
+      backdrop.setAttribute("aria-hidden", "false");
+    }
+    function closeModal(){
+      backdrop.style.display = "none";
+      backdrop.setAttribute("aria-hidden", "true");
+    }
+    document.getElementById("sourcesBtn").addEventListener("click", openModal);
+    document.getElementById("closeModal").addEventListener("click", closeModal);
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) closeModal(); // click outside modal
+    });
+
+    // Search / filter
+    const searchInput = document.getElementById("searchInput");
+    const searchClear = document.getElementById("searchClear");
+
+    function filterFeatures(term){
+      if (!rawGeojson) return;
+
+      const t = term.trim().toLowerCase();
+      if (!t){
+        renderGeojson(rawGeojson);
+        return;
+      }
+
+      // Support FeatureCollection or bare geojson
+      const feats = rawGeojson.type === "FeatureCollection"
+        ? rawGeojson.features
+        : (rawGeojson.features || []);
+
+      const filtered = feats.filter(f => {
+        const props = f.properties || {};
+        const hay = Object.values(props).join(" ").toLowerCase();
+        return hay.includes(t);
+      });
+
+      renderGeojson({ type: "FeatureCollection", features: filtered });
+    }
+
+    let debounce;
+    searchInput.addEventListener("input", (e) => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => filterFeatures(e.target.value), 180);
+    });
+
+    searchClear.addEventListener("click", () => {
+      searchInput.value = "";
+      filterFeatures("");
+      searchInput.focus();
+    });
+  </script>
+</body>
+</html>
