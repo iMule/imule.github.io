@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Pliezhausen Sunday Silence Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <!-- Soviet-ish fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --red:#c5161d;
+      --deep-red:#8f0e13;
+      --cream:#f3e6c6;
+      --paper:#efe2bf;
+      --black:#0c0c0c;
+      --gold:#d8b24c;
+      --ink:#1d1d1d;
+      --muted:#b9a883;
+    }
+    html, body { height:100%; margin:0; background:var(--paper); }
+    #app { height:100%; width:100%; display:flex; flex-direction:column; }
+
+    /* Propaganda header */
+    #header{
+      position:relative;
+      background:
+        radial-gradient(1200px 300px at 20% 0%, #ffdd77 0%, transparent 60%),
+        linear-gradient(180deg, var(--deep-red), var(--red));
+      color:var(--cream);
+      border-bottom:5px solid var(--gold);
+      padding:10px 16px 8px 16px;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    #title{
+      font-family:"Russo One", system-ui, sans-serif;
+      font-size: clamp(18px, 2.4vw, 30px);
+      line-height:1.1;
+      text-shadow: 2px 2px 0 var(--black), 0 0 12px rgba(0,0,0,0.4);
+      display:flex; align-items:center; gap:10px;
+    }
+    #subtitle{
+      font-family:"PT Sans Narrow", sans-serif;
+      font-size: clamp(12px, 1.5vw, 16px);
+      opacity:0.95;
+      margin-top:2px;
+      color:#ffeab4;
+    }
+    .star{
+      width:22px; height:22px; display:inline-block;
+      background: conic-gradient(from 0deg, var(--gold), #fff1c5, var(--gold));
+      clip-path: polygon(50% 0%, 62% 35%, 98% 35%, 69% 57%, 79% 91%, 50% 70%, 21% 91%, 31% 57%, 2% 35%, 38% 35%);
+      filter: drop-shadow(2px 2px 0 var(--black));
+    }
+
+    /* Layout */
+    #content{ flex:1; display:grid; grid-template-columns: 360px 1fr; min-height:0; }
+    #sidebar{
+      background: linear-gradient(180deg, var(--cream), var(--paper));
+      border-right:4px solid var(--gold);
+      padding:12px 10px;
+      overflow:auto;
+      font-family:"PT Sans Narrow", sans-serif;
+      color:var(--ink);
+      z-index: 900;
+    }
+    #map{ height:100%; width:100%; background:#eee2bf; }
+
+    /* Soviet panel styling */
+    .panel{
+      border:3px solid var(--black);
+      background: repeating-linear-gradient(135deg, #f7edcf, #f7edcf 12px, #f1e5c3 12px, #f1e5c3 24px);
+      box-shadow: 6px 6px 0 var(--black);
+      padding:10px;
+      margin-bottom:12px;
+    }
+    .panel h3{
+      font-family:"Russo One", sans-serif;
+      margin:0 0 8px 0;
+      font-size:18px;
+      color:var(--deep-red);
+      text-shadow:1px 1px 0 #fff;
+      border-bottom:2px solid var(--black);
+      padding-bottom:4px;
+      letter-spacing:0.8px;
+    }
+    label{ font-weight:700; font-size:14px; display:block; margin-top:6px; }
+    input, select{
+      width:100%; box-sizing:border-box;
+      border:2px solid var(--black);
+      background:#fff9e6;
+      padding:6px 8px;
+      font-family:"PT Sans Narrow", sans-serif;
+      font-size:15px;
+      outline:none;
+      box-shadow: inset 2px 2px 0 rgba(0,0,0,0.1);
+    }
+    input:focus, select:focus{
+      background:#fff3c9;
+      border-color:var(--deep-red);
+    }
+
+    .btn-row{ display:flex; gap:8px; margin-top:10px; }
+    .btn{
+      flex:1;
+      cursor:pointer;
+      font-family:"Russo One", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.8px;
+      font-size:14px;
+      padding:8px 8px;
+      border:3px solid var(--black);
+      color:var(--cream);
+      background:
+        linear-gradient(180deg, #ffcc66, var(--gold)),
+        linear-gradient(180deg, var(--deep-red), var(--red));
+      background-blend-mode:multiply;
+      box-shadow: 4px 4px 0 var(--black);
+    }
+    .btn:active{ transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--black); }
+    .btn.secondary{
+      background: linear-gradient(180deg, #3f3f3f, var(--black));
+      color:#f7f0dc;
+    }
+
+    /* Legend */
+    #legendWrap{
+      position:absolute; right:14px; bottom:14px; z-index: 800;
+      width:260px; max-width:40vw;
+      font-family:"PT Sans Narrow", sans-serif;
+      border:3px solid var(--black);
+      box-shadow:6px 6px 0 var(--black);
+      background:var(--cream);
+    }
+    #legendHeader{
+      font-family:"Russo One", sans-serif;
+      background:var(--deep-red);
+      color:var(--cream);
+      padding:6px 8px;
+      display:flex; justify-content:space-between; align-items:center;
+      cursor:pointer;
+      border-bottom:3px solid var(--black);
+      letter-spacing:0.7px;
+    }
+    #legendBody{ padding:8px; display:block; }
+    .leg-item{ display:flex; align-items:center; gap:8px; margin:4px 0; font-size:15px; }
+    .swatch{ width:16px; height:16px; border:2px solid var(--black); flex:0 0 auto; }
+
+    /* Popup styling */
+    .leaflet-popup-content-wrapper{
+      border:3px solid var(--black);
+      background:var(--cream);
+      box-shadow:4px 4px 0 var(--black);
+      font-family:"PT Sans Narrow", sans-serif;
+    }
+    .leaflet-popup-tip{
+      background:var(--cream);
+      border:3px solid var(--black);
+    }
+    .popup-title{
+      font-family:"Russo One", sans-serif;
+      color:var(--deep-red);
+      margin-bottom:4px;
+      font-size:16px;
+    }
+    .muted{ color:#514b3d; opacity:0.9; }
+
+    /* Top-right info / sources button */
+    #sourcesBtn{
+      position:absolute; top:72px; right:14px; z-index: 900;
+      width:46px; height:46px; border-radius:50%;
+      border:3px solid var(--black);
+      background: radial-gradient(circle at 30% 30%, #fff3c9, var(--gold));
+      box-shadow:4px 4px 0 var(--black);
+      cursor:pointer;
+      display:grid; place-items:center;
+      font-family:"Russo One", sans-serif;
+      color:var(--black);
+    }
+    #sourcesBtn span{ font-size:20px; line-height:1; }
+
+    #sourcesModal{
+      position:fixed; inset:0; background:rgba(0,0,0,0.5);
+      z-index: 2000; display:none; align-items:center; justify-content:center;
+    }
+    #sourcesCard{
+      width:min(520px, 92vw);
+      background:var(--cream);
+      border:4px solid var(--black);
+      box-shadow:8px 8px 0 var(--black);
+      padding:12px;
+      font-family:"PT Sans Narrow", sans-serif;
+    }
+    #sourcesCard h2{
+      font-family:"Russo One", sans-serif; margin:0 0 6px 0; color:var(--deep-red);
+    }
+
+    /* Loading overlay */
+    #loading{
+      position:absolute; inset:0; background:rgba(239,226,191,0.9);
+      z-index:1500; display:flex; align-items:center; justify-content:center;
+      font-family:"Russo One", sans-serif; color:var(--deep-red);
+      letter-spacing:1px; font-size:20px; text-transform:uppercase;
+    }
+
+    @media (max-width: 900px){
+      #content{ grid-template-columns: 1fr; }
+      #sidebar{ order:2; border-right:none; border-top:4px solid var(--gold); }
+      #map{ order:1; height:60vh; }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header id="header">
+    <div id="title"><span class="star"></span> Citizens of Pliezhausen — Defend the Sacred Quiet of Sunday!</div>
+    <div id="subtitle">A People’s Ledger of Noise Violations • 2025 • Discipline Builds the Commune</div>
+  </header>
+
+  <div id="content">
+    <aside id="sidebar">
+      <div class="panel">
+        <h3>Filter the Ledger</h3>
+
+        <label for="nameSearch">Comrade (name search)</label>
+        <input id="nameSearch" placeholder="Type a name (admin-only use recommended)"/>
+
+        <label for="genderSelect">Gender</label>
+        <select id="genderSelect">
+          <option value="">All</option>
+        </select>
+
+        <label for="ageMin">Age range</label>
+        <div style="display:flex; gap:6px;">
+          <input id="ageMin" type="number" placeholder="Min" min="0" style="width:50%"/>
+          <input id="ageMax" type="number" placeholder="Max" min="0" style="width:50%"/>
+        </div>
+
+        <label for="offenseSelect">Offense type</label>
+        <select id="offenseSelect">
+          <option value="">All</option>
+        </select>
+
+        <label for="dateFrom">From date</label>
+        <input id="dateFrom" type="date"/>
+
+        <label for="dateTo">To date</label>
+        <input id="dateTo" type="date"/>
+
+        <div class="btn-row">
+          <button id="applyBtn" class="btn">Apply</button>
+          <button id="resetBtn" class="btn secondary">Reset</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Collective Summary</h3>
+        <div id="stats" class="muted">Loading statistics…</div>
+      </div>
+
+      <div class="panel">
+        <h3>Public Privacy Notice</h3>
+        <div class="muted" style="font-size:14px;">
+          This kiosk shows <b>anonymized</b> violation records for civic education.
+          Personal names are hidden to protect residents while promoting Sunday quiet.
+        </div>
+      </div>
+    </aside>
+
+    <main style="position:relative;">
+      <div id="map"></div>
+      <div id="loading">Loading comrades’ records…</div>
+
+      <button id="sourcesBtn" title="Sources & credits" aria-label="Sources and credits">
+        <span>ⓘ</span>
+      </button>
+
+      <div id="legendWrap" aria-live="polite">
+        <div id="legendHeader">
+          <div>Offense Legend</div>
+          <div id="legendToggle">—</div>
+        </div>
+        <div id="legendBody"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="sourcesModal" role="dialog" aria-modal="true">
+  <div id="sourcesCard">
+    <h2>Sources & Credits</h2>
+    <div style="font-size:15px;">
+      <ul>
+        <li>Noise violation dataset: Pliezhausen municipal records, 2025 (your provided GeoJSON).</li>
+        <li>Basemap: OpenStreetMap contributors.</li>
+        <li>Made with Web Mapper GPT.</li>
+      </ul>
+      <div class="muted">Click anywhere outside this card to close.</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(async function(){
+
+  // ---------------------------
+  // 1) CONFIG: field candidates
+  // Edit these if your GeoJSON uses different names.
+  // ---------------------------
+  const FIELD_CANDIDATES = {
+    name: ["name","full_name","resident","person","offender","comrade","violator"],
+    gender: ["gender","sex"],
+    age: ["age","years","age_years"],
+    offense: ["offense","offense_type","violation","violation_type","type","category"],
+    date: ["date","offense_date","timestamp","datetime","reported_at"]
+  };
+
+  // Colors per offense (fallback palette if unknown)
+  const OFFENSE_COLORS = [
+    "#c5161d", "#0c0c0c", "#d8b24c", "#7a1b1f", "#3f3f3f", "#ffcc66", "#a11318"
+  ];
+
+  // ---------------------------
+  // 2) MAP INIT (no zoom UI)
+  // ---------------------------
+  const map = L.map("map", {
+    zoomControl: false,
+    attributionControl: true,
+    preferCanvas: true
+  });
+
+  const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; OpenStreetMap contributors • Web Mapper GPT'
+  }).addTo(map);
+
+  // ---------------------------
+  // 3) LOAD DATA
+  // ---------------------------
+  let geojson;
+  try{
+    const resp = await fetch("./pliezhausen_noise_violations_2025.geojson", {cache:"no-store"});
+    geojson = await resp.json();
+  } catch(err){
+    document.getElementById("loading").textContent =
+      "Could not load GeoJSON. Check file name/path.";
+    console.error(err);
+    return;
+  }
+
+  const features = (geojson.features || []).filter(f => f && f.geometry);
+
+  // Hide loading overlay
+  document.getElementById("loading").style.display = "none";
+
+  // ---------------------------
+  // 4) FIELD DETECTION
+  // ---------------------------
+  function detectField(props, candidates){
+    if(!props) return null;
+    const keys = Object.keys(props);
+    const lower = keys.map(k => k.toLowerCase());
+    for(const c of candidates){
+      const idx = lower.indexOf(c.toLowerCase());
+      if(idx !== -1) return keys[idx];
+    }
+    return null;
+  }
+
+  const sampleProps = features[0]?.properties || {};
+  const FIELDS = {};
+  for(const k in FIELD_CANDIDATES){
+    FIELDS[k] = detectField(sampleProps, FIELD_CANDIDATES[k]);
+  }
+
+  // ---------------------------
+  // 5) NORMALIZERS
+  // ---------------------------
+  const toStr = v => (v==null ? "" : String(v));
+  const toNum = v => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  };
+  const toDate = v => {
+    if(!v) return null;
+    const d = new Date(v);
+    return isNaN(d.getTime()) ? null : d;
+  };
+
+  // Public-facing anonymization
+  function anonIdFromName(name){
+    if(!name) return "Comrade (unlisted)";
+    let hash = 0;
+    for(let i=0;i<name.length;i++){
+      hash = ((hash<<5)-hash) + name.charCodeAt(i);
+      hash |= 0;
+    }
+    const id = Math.abs(hash).toString().slice(0,3).padStart(3,"0");
+    return `Comrade #${id}`;
+  }
+
+  // ---------------------------
+  // 6) PREPARE LOOKUPS
+  // ---------------------------
+  const genders = new Set();
+  const offenses = new Set();
+
+  for(const f of features){
+    const p = f.properties || {};
+    if(FIELDS.gender) genders.add(toStr(p[FIELDS.gender]).trim());
+    if(FIELDS.offense) offenses.add(toStr(p[FIELDS.offense]).trim());
+  }
+
+  function fillSelect(id, values){
+    const sel = document.getElementById(id);
+    [...values].filter(v=>v).sort().forEach(v=>{
+      const o = document.createElement("option");
+      o.value=v; o.textContent=v;
+      sel.appendChild(o);
+    });
+  }
+  fillSelect("genderSelect", genders);
+  fillSelect("offenseSelect", offenses);
+
+  // ---------------------------
+  // 7) SYMBOLIZATION
+  // ---------------------------
+  const offenseList = [...offenses].filter(v=>v);
+  const offenseToColor = new Map();
+  offenseList.forEach((o,i)=>{
+    offenseToColor.set(o, OFFENSE_COLORS[i % OFFENSE_COLORS.length]);
+  });
+
+  function markerStyle(offense){
+    const color = offenseToColor.get(offense) || "#c5161d";
+    return {
+      radius: 7,
+      weight: 2,
+      color: "#0c0c0c",
+      fillColor: color,
+      fillOpacity: 0.9
+    };
+  }
+
+  // ---------------------------
+  // 8) LAYER
+  // ---------------------------
+  let layer = L.geoJSON(features, {
+    pointToLayer: (f, latlng) => L.circleMarker(latlng, markerStyle(
+      FIELDS.offense ? toStr(f.properties[FIELDS.offense]).trim() : ""
+    )),
+    onEachFeature: (f, lyr) => {
+      const p = f.properties || {};
+      const nameVal = FIELDS.name ? toStr(p[FIELDS.name]).trim() : "";
+      const genderVal = FIELDS.gender ? toStr(p[FIELDS.gender]).trim() : "";
+      const ageVal = FIELDS.age ? toNum(p[FIELDS.age]) : null;
+      const offenseVal = FIELDS.offense ? toStr(p[FIELDS.offense]).trim() : "Noise violation";
+      const dateVal = FIELDS.date ? toDate(p[FIELDS.date]) : null;
+
+      const anon = anonIdFromName(nameVal);
+      const dateTxt = dateVal ? dateVal.toLocaleDateString() : "Unknown date";
+
+      lyr.bindPopup(`
+        <div class="popup-title">${anon}</div>
+        <div><b>Offense:</b> ${offenseVal}</div>
+        <div><b>Date:</b> ${dateTxt}</div>
+        ${genderVal ? `<div><b>Gender:</b> ${genderVal}</div>` : ""}
+        ${ageVal!=null ? `<div><b>Age:</b> ${ageVal}</div>` : ""}
+        <div class="muted" style="margin-top:4px;">
+          Let every citizen honor Sunday quiet for the strength of the commune.
+        </div>
+      `);
+    }
+  }).addTo(map);
+
+  // Fit bounds + restrict panning beyond dataset extent
+  const b = layer.getBounds();
+  map.fitBounds(b, {padding:[20,20]});
+  // Extend bounds by ~10 degrees as per your defaults
+  const maxB = b.pad(0.18); // approx; client-side pad
+  map.setMaxBounds(maxB);
+  map.on("drag", ()=> map.panInsideBounds(maxB, {animate:false}));
+
+  // ---------------------------
+  // 9) LEGEND
+  // ---------------------------
+  const legendBody = document.getElementById("legendBody");
+  function renderLegend(){
+    legendBody.innerHTML = "";
+    if(offenseList.length === 0){
+      legendBody.innerHTML = "<div class='muted'>No offense categories detected.</div>";
+      return;
+    }
+    offenseList.forEach(o=>{
+      const row = document.createElement("div");
+      row.className = "leg-item";
+      const sw = document.createElement("div");
+      sw.className = "swatch";
+      sw.style.background = offenseToColor.get(o);
+      row.appendChild(sw);
+      const txt = document.createElement("div");
+      txt.textContent = o;
+      row.appendChild(txt);
+      legendBody.appendChild(row);
+    });
+  }
+  renderLegend();
+
+  // Legend minimize
+  const legendHeader = document.getElementById("legendHeader");
+  const legendToggle = document.getElementById("legendToggle");
+  let legendOpen = true;
+  legendHeader.addEventListener("click", ()=>{
+    legendOpen = !legendOpen;
+    legendBody.style.display = legendOpen ? "block" : "none";
+    legendToggle.textContent = legendOpen ? "—" : "+";
+  });
+
+  // ---------------------------
+  // 10) FILTERING
+  // ---------------------------
+  const els = {
+    nameSearch: document.getElementById("nameSearch"),
+    genderSelect: document.getElementById("genderSelect"),
+    ageMin: document.getElementById("ageMin"),
+    ageMax: document.getElementById("ageMax"),
+    offenseSelect: document.getElementById("offenseSelect"),
+    dateFrom: document.getElementById("dateFrom"),
+    dateTo: document.getElementById("dateTo"),
+    applyBtn: document.getElementById("applyBtn"),
+    resetBtn: document.getElementById("resetBtn"),
+    stats: document.getElementById("stats")
+  };
+
+  function getFilters(){
+    return {
+      name: els.nameSearch.value.trim().toLowerCase(),
+      gender: els.genderSelect.value,
+      ageMin: els.ageMin.value ? Number(els.ageMin.value) : null,
+      ageMax: els.ageMax.value ? Number(els.ageMax.value) : null,
+      offense: els.offenseSelect.value,
+      from: els.dateFrom.value ? new Date(els.dateFrom.value) : null,
+      to: els.dateTo.value ? new Date(els.dateTo.value) : null
+    };
+  }
+
+  function passes(f, filters){
+    const p = f.properties || {};
+
+    const nameVal = FIELDS.name ? toStr(p[FIELDS.name]).toLowerCase() : "";
+    const genderVal = FIELDS.gender ? toStr(p[FIELDS.gender]).trim() : "";
+    const ageVal = FIELDS.age ? toNum(p[FIELDS.age]) : null;
+    const offenseVal = FIELDS.offense ? toStr(p[FIELDS.offense]).trim() : "";
+    const dateVal = FIELDS.date ? toDate(p[FIELDS.date]) : null;
+
+    if(filters.name){
+      // NOTE: on public kiosk this should be used only in admin mode.
+      if(!nameVal.includes(filters.name)) return false;
+    }
+    if(filters.gender && genderVal !== filters.gender) return false;
+
+    if(filters.ageMin != null){
+      if(ageVal == null || ageVal < filters.ageMin) return false;
+    }
+    if(filters.ageMax != null){
+      if(ageVal == null || ageVal > filters.ageMax) return false;
+    }
+
+    if(filters.offense && offenseVal !== filters.offense) return false;
+
+    if(filters.from){
+      if(!dateVal || dateVal < filters.from) return false;
+    }
+    if(filters.to){
+      const dayEnd = new Date(filters.to);
+      dayEnd.setHours(23,59,59,999);
+      if(!dateVal || dateVal > dayEnd) return false;
+    }
+
+    return true;
+  }
+
+  function applyFilters(){
+    const filters = getFilters();
+    const filtered = features.filter(f=>passes(f, filters));
+
+    map.removeLayer(layer);
+    layer = L.geoJSON(filtered, {
+      pointToLayer: (f, latlng) => L.circleMarker(latlng, markerStyle(
+        FIELDS.offense ? toStr(f.properties[FIELDS.offense]).trim() : ""
+      )),
+      onEachFeature: (f, lyr) => {
+        const p = f.properties || {};
+        const nameVal = FIELDS.name ? toStr(p[FIELDS.name]).trim() : "";
+        const genderVal = FIELDS.gender ? toStr(p[FIELDS.gender]).trim() : "";
+        const ageVal = FIELDS.age ? toNum(p[FIELDS.age]) : null;
+        const offenseVal = FIELDS.offense ? toStr(p[FIELDS.offense]).trim() : "Noise violation";
+        const dateVal = FIELDS.date ? toDate(p[FIELDS.date]) : null;
+        const anon = anonIdFromName(nameVal);
+        const dateTxt = dateVal ? dateVal.toLocaleDateString() : "Unknown date";
+
+        lyr.bindPopup(`
+          <div class="popup-title">${anon}</div>
+          <div><b>Offense:</b> ${offenseVal}</div>
+          <div><b>Date:</b> ${dateTxt}</div>
+          ${genderVal ? `<div><b>Gender:</b> ${genderVal}</div>` : ""}
+          ${ageVal!=null ? `<div><b>Age:</b> ${ageVal}</div>` : ""}
+          <div class="muted" style="margin-top:4px;">
+            Let every citizen honor Sunday quiet for the strength of the commune.
+          </div>
+        `);
+      }
+    }).addTo(map);
+
+    updateStats(filtered);
+  }
+
+  function resetFilters(){
+    els.nameSearch.value = "";
+    els.genderSelect.value = "";
+    els.ageMin.value = "";
+    els.ageMax.value = "";
+    els.offenseSelect.value = "";
+    els.dateFrom.value = "";
+    els.dateTo.value = "";
+    applyFilters();
+  }
+
+  els.applyBtn.addEventListener("click", applyFilters);
+  els.resetBtn.addEventListener("click", resetFilters);
+
+  // ---------------------------
+  // 11) STATS
+  // ---------------------------
+  function updateStats(fs){
+    const total = fs.length;
+    const byOffense = {};
+    fs.forEach(f=>{
+      const p=f.properties||{};
+      const o=FIELDS.offense ? toStr(p[FIELDS.offense]).trim() : "Noise violation";
+      byOffense[o]=(byOffense[o]||0)+1;
+    });
+    const lines = Object.entries(byOffense).sort((a,b)=>b[1]-a[1])
+      .map(([o,c])=>`${o}: <b>${c}</b>`);
+    els.stats.innerHTML = `
+      <div><b>Total records shown:</b> ${total}</div>
+      <div style="margin-top:6px;">${lines.join("<br/>") || "No records."}</div>
+    `;
+  }
+  updateStats(features);
+
+  // ---------------------------
+  // 12) SOURCES MODAL
+  // ---------------------------
+  const modal = document.getElementById("sourcesModal");
+  document.getElementById("sourcesBtn").addEventListener("click", ()=>{
+    modal.style.display="flex";
+  });
+  modal.addEventListener("click",(e)=>{
+    if(e.target===modal) modal.style.display="none";
+  });
+
+})();
+</script>
+</body>
+</html>
